@@ -176,10 +176,8 @@ public class UserService {
         if(users != null)
             for (User user:
                  users) {
-                if(!user.getScreenName().equals(screenname)) {
                     UserResponse userResponse = new UserResponse(user);
                     snames.add(userResponse);
-                }
             }
 
         return ResponseEntity.ok().body(snames);
