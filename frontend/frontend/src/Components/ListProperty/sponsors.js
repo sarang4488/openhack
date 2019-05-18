@@ -375,4 +375,4 @@ class ListHackathon extends Component {
   }
 }
 //export Login Component
-export default ListHackathon;
+export default Sponsors;
