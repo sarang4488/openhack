@@ -27,11 +27,18 @@ public class OrganizationDao {
         if(query.getResultList().isEmpty()) return null;
         return (Organization) query.getResultList().get(0);
     }
+    
 
     public List readOrgNames(){
         Query query = this.entityManager.createNativeQuery("select * from organization",Organization.class);
         if(query.getResultList().isEmpty()) return null;
 
+        return query.getResultList();
+    }
+
+    public List findItems() {
+        Query query = this.entityManager.createNativeQuery("select * from organization",Organization.class);
+        if(query.getResultList().isEmpty()) return null;
         return query.getResultList();
     }
 

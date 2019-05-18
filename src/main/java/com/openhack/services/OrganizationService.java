@@ -81,6 +81,21 @@ public class OrganizationService {
     }
 
     @Transactional
+    public ResponseEntity<?> readOrganizations(String screenname){
+        List<Object> orgObjects = organizationDao.findItems();
+        List<OrganizationResponse> user_org = new ArrayList<OrganizationResponse>();
+        for(Object obj:orgObjects) {
+            Organization tmp = (Organization)obj;
+            if(tmp.getOwner().getScreenName().equals(screenname)) {
+                OrganizationResponse organizationResponse = new OrganizationResponse(tmp);
+                user_org.add(organizationResponse);
+            }
+        }
+
+        return ResponseEntity.ok().body(user_org);
+    }
+
+    @Transactional
     public ResponseEntity<?> readOrganizationNames(){
         List<String> org_names = new ArrayList<String>();
         List<Object> names = organizationDao.readOrgNames();

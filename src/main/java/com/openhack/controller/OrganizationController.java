@@ -37,7 +37,15 @@ public class OrganizationController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/organization/{name}/join/{screenname}", method = {RequestMethod.PUT})
+    @RequestMapping(value = "/organization/owner/{screenname}", method = {RequestMethod.GET})
+    public ResponseEntity<?> getOrganizations(@PathVariable String screenname){
+
+        ResponseEntity responseEntity = organizationService.readOrganizations(screenname);
+
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/organization/{name}/join/{screenname}", method = {RequestMethod.POST})
     public ResponseEntity<?> joinOrganization(@PathVariable String name,
                                               @PathVariable String screenname){
 
@@ -46,7 +54,7 @@ public class OrganizationController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/organization/{name}/approve/{screenname}", method = {RequestMethod.PUT})
+    @RequestMapping(value = "/organization/{name}/approve/{screenname}", method = {RequestMethod.POST})
     public ResponseEntity<?> approveJoinRequest(@PathVariable String name,
                                                 @PathVariable String screenname){
         ResponseEntity responseEntity = userService.updateUserOrganization(screenname,name,"Approved");
