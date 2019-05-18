@@ -30,17 +30,28 @@ public class OrganizationService {
                                                 String description,
                                                 String owner_sname){
 
+        if(name==null || owner_sname==null || name=="" || owner_sname=="" ) {
+            return ResponseEntity.badRequest().body("Please fill up a unique name");
+        }
+
         User owner = null;
         if(owner_sname != null)
             owner = userDao.findByScreenname(owner_sname);
 
+        if(owner == null)
+            return ResponseEntity.badRequest().body("No such owner");
+
+        Organization tmp_org = organizationDao.findItemByName(name);
+        if(tmp_org != null)
+            return ResponseEntity.badRequest().body("Organization name already in use");
+
         Organization organization = new Organization();
 
-        if(name != null)
+        //if(name != null)
             organization.setName(name);
         if(description != null)
             organization.setDesciption(description);
-        if(owner != null)
+        //if(owner != null)
             organization.setOwner(owner);
 
         organizationDao.createItem(organization);
