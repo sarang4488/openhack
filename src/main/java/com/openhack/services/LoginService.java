@@ -21,6 +21,11 @@ public class LoginService {
     public ResponseEntity<?> createLogin(String email,
                                          String password){
 
+        Login email_login = loginDao.findByEmail(email);
+        if(email_login != null){
+            return ResponseEntity.badRequest().body("Email id exists");
+        }
+
         Login login = new Login();
         login.setEmail(email);
         login.setPassword(password);

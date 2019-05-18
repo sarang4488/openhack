@@ -21,6 +21,7 @@ public class UserService {
     @Autowired
     private OrganizationDao organizationDao;
 
+    @Transactional
     public ResponseEntity<?> createUser(String name,
                                         String screenname,
                                         String email,
@@ -28,11 +29,22 @@ public class UserService {
                                         String userStatus){
 
         if(name==null || screenname==null || email==null || name=="" || screenname=="" || email=="") {
-            return ResponseEntity.badRequest().body("Invalid Request Parameters");
+            return ResponseEntity.badRequest().body("Please fill up all the fields");
         }
 
         if(!email.contains("@")){
             return ResponseEntity.badRequest().body("Invalid email id");
+        }
+
+        User email_user = userDao.findByEmail(email);
+        if(email_user != null){
+            System.out.println("user exists");
+            return ResponseEntity.badRequest().body("Email id already in use");
+        }
+
+        User screen_user = userDao.findByScreenname(screenname);
+        if(screen_user != null){
+            return ResponseEntity.badRequest().body("screenname already in use");
         }
 
         User user = new User();
@@ -136,6 +148,7 @@ public class UserService {
             return ResponseEntity.ok().body(screenname+" is no longr part of organization");
     }
 
+    @Transactional
     public ResponseEntity<?> readUser(String screenname){
         User user = userDao.findByScreenname(screenname);
 
