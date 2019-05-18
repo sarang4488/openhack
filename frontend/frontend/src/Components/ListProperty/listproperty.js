@@ -95,8 +95,8 @@ class listproperty extends Component {
           });
         } else {
           this.setState({
-            authFlag: false,
-            message: "Organisation Already Exist "
+            error: true,
+            errorMessage: response.data.body
           });
         }
       });
@@ -110,6 +110,23 @@ class listproperty extends Component {
     if (this.state.authFlag) {
       redirectVar = <Redirect to="/organizations" />;
     }
+    let errorMessage = null;
+    if (this.state.error) {
+      errorMessage = (
+        <div
+          style={{
+            fontSize: "14px",
+            backgroundColor: "#ed605a",
+            lineHeight: "20px",
+            //  color: "white",
+            textAlign: "center",
+            padding: "10px"
+          }}
+        >
+          <p>{this.state.errorMessage}</p>
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -121,7 +138,7 @@ class listproperty extends Component {
               <div class="panel">
                 <h2>Create Organisation</h2>
                 <p>Please enter organisation details</p>
-                <p style={{ fontSize: "18px" }}>{this.state.message}</p>
+                {errorMessage}
               </div>
 
               <div class="form-group">
