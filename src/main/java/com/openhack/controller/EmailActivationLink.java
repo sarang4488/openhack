@@ -14,7 +14,7 @@ public class EmailActivationLink {
 
     public void sendActivationLink(String email){
 
-        String html = "Activation link http://localhost:8080/activate?email="+email;
+        String html = "Activation link http://localhost:3000/activate?email="+email;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);

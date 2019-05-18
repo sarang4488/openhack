@@ -44,7 +44,7 @@ public class SignUpController {
             return new ResponseEntity<>(responseEntity,responseHeader.getHeader(),HttpStatus.CREATED);
         }
 
-        //emailActivationLink.sendActivationLink(email);
+        emailActivationLink.sendActivationLink(email);
 
 
 
