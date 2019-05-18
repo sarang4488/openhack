@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -129,7 +130,8 @@ public class HackathonService {
         for (Object obj:
                 hacks) {
             Hackathon tmp = (Hackathon)obj;
-            if(!tmp.getOwner().getScreenName().equals(screenname))
+            String [] judges = tmp.getJudge_screenname().split("$");
+            if(!tmp.getOwner().getScreenName().equals(screenname) && !Arrays.asList(judges).contains(screenname))
                 hackathonResponses.add(new HackathonResponse(tmp));
         }
 
