@@ -1,0 +1,200 @@
+.App1 {
+
+    text-align: center;
+  
+  }
+  
+  .home .quotes .heading {
+  
+    color: rgb(255, 255, 255);
+  
+    margin-top: 200px;
+  
+    margin-left: 220px;
+  
+    text-align: left;
+  
+    font-size: 40px;
+  
+    font-weight: 400;
+  
+    line-height: normal;
+  
+    letter-spacing: 0.1px;
+  
+  }
+  
+  
+  
+  .listdiv .list {
+  
+    width: 100%;
+  
+    color: white;
+  
+  }
+  
+  
+  .listdiv .list .listitem {
+  
+    display: inline;
+  
+  }
+  
+  .row {
+  
+    margin-bottom: 20px;
+  
+  }
+  
+  
+  .row .sitem {
+  
+    color: white;
+  
+    font-size: 1.5em;
+  
+  }
+  
+  
+  .row .listspan {
+  
+    color: white;
+  
+    text-align: center;
+  
+    width: 33.33%;
+  
+  }
+  
+  
+  .navbar-right .homecontact {
+  
+    color: #fff;
+  
+    margin-top: 30px;
+  
+    margin-right: 50px;
+  
+    font-size: 16px;
+  
+    font-family: Lato, Roboto, Arial, Helvetica Neue, Helvetica, sans-serif;
+  
+    line-height: 24px;
+  
+  }
+  
+  
+  .navbar-right .homecontact .link {
+  
+    color: #fff;
+  
+    font-size: 16px;
+  
+    font-family: Lato, Roboto, Arial, Helvetica Neue, Helvetica, sans-serif;
+  
+    text-decoration: underline;
+  
+    text-align: center;
+  
+  }
+  
+  
+  .listprop {
+  
+    background: linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) ),url(earn-header.jpg);
+    opacity: 0.9;
+    background-size: cover;
+    text-shadow: 0px 1px 14px rgba(0,0,0,1.0);
+  
+    height: 500px;
+  
+  }
+  
+  
+  .listprop .earn {
+  
+    color: white;
+  
+    font-size: 60px;
+  
+    font-weight: 500;
+  
+    margin-top: 120px;
+  
+    text-align: left;
+  
+    margin-left: 150px;
+  
+    margin-bottom: 100px;
+    text-shadow: 0px 1px 14px rgba(0,0,0,1.0);
+  
+  }
+  
+  
+  .listprop .earn .span2 {
+  
+    text-align: left;
+  
+  }
+  
+  
+  .property {
+  
+    min-height: 450px;
+    min-width: 620px;
+    color: #323f4d;
+    border: 1px white;
+    box-shadow: 0 10px 40px 0 rgba(0,0,0,.15);
+    margin-left: 120px;
+    z-index: 11;
+  
+  }
+  
+  
+  #bt {
+  
+    color: white;
+  
+    border-radius: 100px;
+  
+    width: 100px;
+
+    background-color: #0067db;
+
+    height: 50px;
+
+    line-height: 24px;
+
+    margin-left: 250px;
+    margin-bottom: 10px;
+  
+  }
+  
+  
+  .property .basics {
+  
+    margin-top: 50px;
+  
+    font-size: 24px;
+  
+    font-weight: 700;
+  
+    margin-bottom: 20px;
+
+    text-align: center;
+  
+  }
+  
+  
+  #vacation {
+  
+    font-size: 40px;
+  
+    font-weight: 300;
+  
+    margin-top: 80px;
+  
+    margin-bottom: 60px;
+  
+  }

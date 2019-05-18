@@ -1,0 +1,24 @@
+delete from login;
+delete from user;
+delete from hackathon;
+delete from organization;
+delete from role;
+delete from team;
+delete from team_member;
+delete from role;
+delete from payment;
+
+SET foreign_key_checks = 0;
+
+drop table team_member;
+drop table team;
+drop table role;
+drop table organization;
+drop table hackathon;
+drop table login;
+drop table user;
+drop table payment;
+
+SET foreign_key_checks = 1;
+
+show tables;

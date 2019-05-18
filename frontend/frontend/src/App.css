@@ -1,0 +1,553 @@
+.App {
+  text-align: center;
+}
+.navbar-right .dropdown .dropdown-toggle {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+  font-size: 15px;
+}
+.navbar-right .dropdown .droptext {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: transparent;
+  color: #0067db;
+  font-size: 15px;
+}
+.navbar-right .dropdown .dropdown-toggle:hover {
+  background-color: transparent;
+}
+.navbar-right .dropdown .dropdown-toggle:focus {
+  background-color: transparent;
+}
+.navbar-right .dropdown .dropdown-menu {
+  background-color: white;
+  width: 220px;
+  border-radius: 10px;
+  height: auto;
+  align-items: left;
+}
+.navbar-right .dropdown .dropdown-menu li {
+  background-color: white;
+  color: #0067db;
+  font-size: 20px;
+  padding: 2px;
+  width: 220px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.navbar-right .dropdown .dropdown-menu li .test:hover {
+  color: white;
+  background-color: #0067db;
+}
+.navbar-right .dropdown .dropdown-menu li .test {
+  color: #0067db;
+  background-color: white;
+  text-align: left;
+}
+.navbar-right .dropdown .dropdown-menu .navbar-btn {
+  color: #0067db;
+  background-color: white;
+  width: 168px;
+  text-align: left;
+}
+
+.navbar-right .dropdown .dropdown-menu .navbar-btn:active:focus {
+  background-color: transparent;
+}
+.navbar-right .navbar-btn1 {
+  width: 180px;
+  height: 50px;
+  margin-top: 20px;
+  border-radius: 30px;
+  background-color: white;
+  border-color: #0067db;
+  color: #0067db;
+}
+
+.navbar-right .logoimage:hover {
+  background-color: transparent;
+}
+
+.page-landing .MainContent .Headline {
+  color: #fff;
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: 0.1px;
+  text-align: left;
+  line-height: normal;
+  margin-left: 210px;
+  margin-top: 180px;
+}
+.form-inline {
+  margin-left: 205px;
+  color: #5e6d77;
+}
+.navform {
+  margin-left: 10px;
+  margin-bottom: 15px;
+}
+.navform .form-inline .navform_group {
+  margin-right: 50px;
+}
+
+.form-inline .form-group {
+  padding: 3px;
+}
+.form-inline .form-group .form-control:focus {
+  outline: #0067db;
+}
+.form-inline .btn {
+  background-color: #0067db;
+  color: #fff;
+  border-radius: 30px;
+  width: 150px;
+}
+.navform .navbtn1 {
+  background-color: #0067db;
+  color: #fff;
+  border-radius: 10px;
+  height: 50px;
+  width: 100px;
+  margin-bottom: 0px;
+}
+
+.form-control {
+  height: 56px;
+}
+
+.SubContent {
+  color: white;
+}
+
+.SubContent .Font_List .Font_Item {
+  display: block;
+  float: left;
+  padding: 10px;
+  width: 33.3%;
+  margin-top: 250px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.SubContent .Font_List .Font_Item .Font_Title {
+  font-size: 20px;
+}
+
+.SubContent .Font_List .Font_Item .Font_subTitle {
+  font-size: 12px;
+}
+
+.form-heading {
+  color: #fff;
+  font-size: 23px;
+}
+
+.panel {
+  background-color: #eee;
+  margin-top: 18px;
+}
+.panel h2 {
+  color: #353e44;
+  font-size: 40px;
+  margin-top: 18px;
+  text-align: center;
+}
+.panel p {
+  color: #666;
+  font-size: 20px;
+  line-height: 34px;
+  text-align: center;
+}
+#LoginForm {
+  background: #eee; /* fallback for old browsers */
+}
+#SignUpForm {
+  background: #eee; /* fallback for old browsers */
+}
+#check {
+  background: #2c3e50; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #3498db,
+    #2c3e50
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #3498db,
+    #2c3e50
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.login-form .form-control {
+  background: white;
+  font-size: 14px;
+  height: 50px;
+  line-height: 50px;
+  padding: 10px;
+  margin-top: 12px;
+}
+.signup-form .form-control {
+  background: white;
+  font-size: 14px;
+  height: 50px;
+  line-height: 50px;
+  padding: 10px;
+  margin-top: 12px;
+}
+.main-div {
+  background: #ffffff none repeat scroll 0 0;
+  color: #353e44;
+  margin: 10px auto 300px;
+  max-width: 31%;
+  padding: 5px 7px 7px 7px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.main-div-signup {
+  background: #ffffff none repeat scroll 0 0;
+  color: #353e44;
+  margin: 10px auto 300px;
+  max-width: 50%;
+  padding: 5px 7px 7px 7px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.login-form .form-group {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-top: 1px solid #eee;
+}
+.signup-form .form-group {
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.forgot a {
+  color: #777777;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.login-form .btn.btn-warning {
+  background: #ff8a00;
+  border-color: #ff8a00;
+  color: #ffffff;
+  font-size: 14px;
+  width: 95%;
+  height: 50px;
+  padding: 0;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 30px;
+}
+
+.signup-form .btn.btn-warning {
+  background: #ff8a00;
+  border-color: #ff8a00;
+  color: #ffffff;
+  font-size: 14px;
+  width: 55%;
+  height: 50px;
+  padding: 0;
+  margin: auto;
+  margin-left: 130px;
+  margin-bottom: 20px;
+}
+
+.main-div .title {
+  font-size: 22px;
+  line-height: 20px;
+  color: #666;
+  margin: 5px;
+  padding: 8px;
+  text-align: left;
+}
+
+.content {
+  margin-top: 50px;
+  background: rgba(0, 0, 0, 0.5);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("list-your-property.jpg");
+  background-size: cover;
+  height: 600px;
+  display: block;
+}
+
+#hh {
+  position: absolute;
+  top: 1050px;
+  left: 480px;
+  font-size: 24px;
+  text-align: center;
+  vertical-align: middle;
+  color: #fff;
+}
+
+.content_btn {
+  position: absolute;
+  top: 1175px;
+  left: 650px;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #fff;
+}
+
+.content_btn:hover {
+  color: white;
+}
+
+.SiteFooterSocial__links {
+  display: flex;
+  margin-top: 50px;
+  justify-content: flex-end;
+}
+
+.SiteFooterSocial__link {
+  align-items: center;
+  background-color: #5e6d77;
+  display: flex;
+  height: 35px;
+  margin: 2px;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  width: 35px;
+  color: #323f4d;
+}
+
+.SiteFooterSocial__link:first-of-type {
+  margin-left: 0;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
+.SVGIcon {
+  stroke-width: 1.5;
+  stroke: currentColor;
+}
+
+.footerin:hover {
+  color: #0067db;
+  background-color: #fff;
+}
+
+.headline {
+  font-size: 16px;
+  margin-top: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  cursor: pointer;
+  color: #0067db;
+  font-weight: 700;
+}
+
+.propdetails {
+  line-height: 1em;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  padding-top: 0;
+  overflow: hidden;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.price-hit {
+  bottom: 0;
+  position: relative;
+  width: 100%;
+  background-color: #f1f3f5;
+  border-radius: 5px;
+  min-height: 50px;
+  color: #353e44;
+  font-size: 18px;
+  margin-top: 60px;
+  padding: 25px 0px 0px 0px;
+  margin-bottom: 0px;
+}
+
+.displaypropinfo {
+  border: 0;
+  width: 95%;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  background-color: #fff;
+  margin: 20px;
+  margin-left: 10px;
+}
+
+/* .displaypropinfo :hover{
+  width:95%;
+  box-shadow: 0 4px 8px rgba(0,0,0,.2);
+  background-color: #eefefe;
+  cursor: pointer;
+}  */
+
+.bookpropinfo {
+  border-top: 1px solid #d4d8dd;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  background-color: #fff;
+}
+
+.imagecontainer {
+  cursor: pointer;
+  height: 512px;
+}
+
+.leftside {
+  border-right: 1px solid #d4d8dd;
+}
+
+.headlinebook {
+  color: #323f4d;
+  font-weight: 700;
+  font-size: 2.5em;
+  background: #fff;
+  margin-left: 30px;
+}
+
+.leftsidepropinfo {
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 30px;
+  border-top: 1px solid #d4d8dd;
+}
+
+.location_text {
+  color: #5e6d77;
+  font-size: 1.5em;
+  background: #fff;
+  margin-left: 30px;
+}
+.rental-price {
+  color: #323f4d;
+  font-size: 32px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 40px;
+  padding: 10px;
+}
+
+.bookform {
+  margin-top: 100px;
+  padding: 0px;
+}
+
+.bookcheckout {
+  margin-left: 0px;
+  padding: 0px;
+}
+
+.bookcheckin {
+  margin-right: 0px;
+  padding: 0px;
+}
+
+.bookguests {
+  padding: 0px;
+}
+
+.total_text {
+  text-align: left;
+  padding: 0px;
+  color: #5e6d77;
+  font-size: 16px;
+}
+
+.pricetotal {
+  margin-top: 20px;
+  padding: 0px;
+}
+
+.total_price {
+  text-align: right;
+  padding: 0px;
+  color: #5e6d77;
+  font-size: 16px;
+}
+
+.bookbtn {
+  background-color: #0067db;
+  color: #fff;
+  border-radius: 30px;
+  font-size: 14px;
+  width: 70%;
+  height: 50px;
+  margin-left: 60px;
+}
+
+.btnprofile {
+  background-color: #0067db;
+  color: #fff;
+  border-radius: 30px;
+  font-size: 14px;
+  width: 70%;
+  height: 50px;
+  margin-left: 60px;
+}
+
+.bookbutton {
+  margin-top: 20px;
+}
+
+.assist {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.iconarea {
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #5e6d77;
+}
+
+.icon .iconText {
+  margin-top: 10px;
+}
+
+.icon .iconinfo {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.descriptionarea .desc_title {
+  font-size: 18px;
+  color: #323f4d;
+  font-family: Lato, Arial, Helvetica Neue, sans-serif;
+  font-weight: 700;
+  margin-top: 50px;
+}
+
+.descriptionarea .descriptionmain {
+  font-size: 16px;
+  color: #5e6d77;
+  margin-top: 10px;
+}
+
+.bedroomarea .bedroom_title {
+  color: #323f4d;
+  font-weight: 700;
+  font-size: 2.5em;
+  background: #fff;
+  margin-top: 40px;
+}
+
+.confirmtext {
+  font-size: 16px;
+  color: #5e6d77;
+  margin-top: 10px;
+  text-align: center;
+}

@@ -1,0 +1,100 @@
+package com.openhack.controller;
+
+import com.openhack.services.HackathonService;
+import com.openhack.services.OrganizationService;
+import com.openhack.services.TeamService;
+import com.openhack.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class HackathonController {
+
+    @Autowired
+    private HackathonService hackathonService;
+
+    @Autowired
+    private TeamService teamService;
+
+    @Autowired
+    private EmailActivationLink emailActivationLink;
+
+
+    @RequestMapping(value = "/hackathon", method = {RequestMethod.POST})
+    public ResponseEntity<?> postHackathon(@RequestParam(value = "name",required = true) String name,
+                                           @RequestParam(value = "start_date",required = false) String start_date,
+                                           @RequestParam(value = "end_date",required = false) String end_date,
+                                           @RequestParam(value = "creation_date",required = false) String creation_date,
+                                           @RequestParam(value = "owner_screenname",required = false) String owner_screenname,
+                                           @RequestParam(value = "judge_screenname",required = false) String judge_screenname,
+                                           @RequestParam(value = "min_team_size",required = false) Integer min_team_size,
+                                           @RequestParam(value = "max_team_size",required = false) Integer max_team_size,
+                                           @RequestParam(value = "fee",required = false) Float fee,
+                                           @RequestParam(value = "discount",required = false) Integer discount,
+                                           @RequestParam(value = "organization_name",required = false) String organization_name){
+        ResponseEntity responseEntity = hackathonService.createHackathon(name,start_date,end_date,creation_date,owner_screenname,judge_screenname,min_team_size,max_team_size,fee,discount,"created",organization_name);
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "/hackathon", method = {RequestMethod.GET})
+    public ResponseEntity<?> getHackathonList(){
+
+        ResponseEntity responseEntity = hackathonService.readHackathonList();
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "/hackathon/names/{screenname}", method = {RequestMethod.GET})
+    public ResponseEntity<?> getHackathonList(@PathVariable String screenname){
+
+        ResponseEntity responseEntity = hackathonService.readHackathonByOwner(screenname);
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "/hackathon/{hid}", method = {RequestMethod.GET})
+    public ResponseEntity<?> getHackathon(@PathVariable Long hid){
+        ResponseEntity responseEntity = hackathonService.readHackathon(hid);
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "/hackathon/{hid}/register", method = {RequestMethod.POST})
+    public ResponseEntity<?> registerTeam(@PathVariable Long hid,
+                                          @RequestParam(value = "leader_screenname", required = true) String leader_screenname,
+                                          @RequestParam(value = "leader_email", required = true) String email,
+                                          @RequestParam(value = "member2_screenname", required = false) String member2_screenname,
+                                          @RequestParam(value = "member2_email", required = false) String member2_email,
+                                          @RequestParam(value = "member3_screenname", required = false) String member3_screenname,
+                                          @RequestParam(value = "member3_email", required = false) String member3_email,
+                                          @RequestParam(value = "member4_screenname", required = false) String member4_screenname,
+                                          @RequestParam(value = "member4_email", required = false) String member4_email){
+
+//        emailActivationLink.sendActivationLinkTeamMember(member2_email,member2_name);
+//        emailActivationLink.sendActivationLinkTeamMember(member3_email,member3_name);
+//        emailActivationLink.sendActivationLinkTeamMember(member4_email,member4_name);
+
+        ResponseEntity responseEntity = teamService.registerTeam(hid,leader_screenname,email,member2_screenname,member2_email,member3_screenname,member3_email,member4_screenname,member4_email);
+
+        return responseEntity;
+
+    }
+
+    @RequestMapping(value = "hackathon/{hid}/opened")
+    public ResponseEntity<?> openHackathon(@PathVariable Long hid){
+        ResponseEntity responseEntity = hackathonService.updateHackathonStatus(hid,"opened");
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "hackathon/{hid}/closed")
+    public ResponseEntity<?> closeHackathon(@PathVariable Long hid){
+        ResponseEntity responseEntity = hackathonService.updateHackathonStatus(hid,"closed");
+        return responseEntity;
+    }
+
+    @RequestMapping(value="hackathon/{tid}/codesubmission",method= {RequestMethod.POST})
+    public ResponseEntity<?> codeSubmission(@PathVariable long tid,
+                                            @RequestParam(value="code_url",required=true) String code_url){
+        ResponseEntity responseEntity=hackathonService.codeSubmission(code_url,tid);
+        return responseEntity;
+    }
+
+}
