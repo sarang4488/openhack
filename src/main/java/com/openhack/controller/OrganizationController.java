@@ -62,6 +62,15 @@ public class OrganizationController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/organization/{name}/leave/{screenname}", method = {RequestMethod.POST})
+    public ResponseEntity<?> leaveRequest(@PathVariable String name,
+                                                @PathVariable String screenname){
+
+        ResponseEntity responseEntity = userService.updateUserOrganization(screenname,name,"Leave");
+
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
     @RequestMapping(value = "/organization/names",method = {RequestMethod.GET})
     public ResponseEntity<?> getOrganizationNames(){
         ResponseEntity responseEntity = organizationService.readOrganizationNames();

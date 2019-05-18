@@ -144,8 +144,13 @@ public class UserService {
             return ResponseEntity.ok().body("Request sent of organization owner");
         else if (orgStatus.equals("Approved"))
             return ResponseEntity.ok().body(screenname+" is now part of organization");
-        else
-            return ResponseEntity.ok().body(screenname+" is no longr part of organization");
+        else {
+
+            user.setOrganization(null);
+            user.setOrgStatus(null);
+
+            return ResponseEntity.ok().body(screenname + " is no longr part of organization");
+        }
     }
 
     @Transactional
