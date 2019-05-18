@@ -34,7 +34,14 @@ public class SignUpController {
         ResponseEntity responseEntity;
 
         responseEntity = userService.createUser(name,screenname,email,userType,"registered");
+        if(responseEntity.getStatusCode() != HttpStatus.OK){
+            new ResponseEntity<>(responseEntity.getBody(),responseHeader.getHeader(),HttpStatus.BAD_REQUEST);
+        }
+
         responseEntity = loginService.createLogin(email,password);
+        if(responseEntity.getStatusCode() != HttpStatus.OK){
+            new ResponseEntity<>(responseEntity.getBody(),responseHeader.getHeader(),HttpStatus.BAD_REQUEST);
+        }
 
         //emailActivationLink.sendActivationLink(email);
 

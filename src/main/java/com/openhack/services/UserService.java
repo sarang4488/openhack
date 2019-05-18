@@ -31,6 +31,10 @@ public class UserService {
             return ResponseEntity.badRequest().body("Invalid Request Parameters");
         }
 
+        if(!email.contains("@")){
+            return ResponseEntity.badRequest().body("Invalid email id");
+        }
+
         User user = new User();
         user.setScreenName(screenname);
         user.setName(name);
