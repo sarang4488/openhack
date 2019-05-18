@@ -41,6 +41,7 @@ public class HackathonService {
                                              String start_date,
                                              String end_date,
                                              String creation_date,
+                                             String description,
                                              String owner_screenname,
                                              String judge_screenname,
                                              Integer min_team_size,
@@ -50,11 +51,18 @@ public class HackathonService {
                                              String status,
                                              String org_name){
 
+        if(name==null || start_date==null || end_date==null || name=="" || start_date=="" || end_date=="" ||
+        description == null || owner_screenname == null || judge_screenname == null ||description == "" || owner_screenname == "" || judge_screenname == "" ||
+        fee == null) {
+            return ResponseEntity.badRequest().body("Please fill up all the fields marked *");
+        }
+
         Hackathon hackathon = new Hackathon();
         hackathon.setName(name);
         hackathon.setStart_date(start_date);
         hackathon.setEnd_date(end_date);
         hackathon.setCreation_date(creation_date);
+        hackathon.setDescription(description);
 
         User owner = userDao.findByScreenname(owner_screenname);
         if(owner.getUserType().equals("admin"))

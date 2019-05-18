@@ -25,6 +25,9 @@ public class Hackathon {
     @Column(name = "creation_date")
     private String creation_date;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "screenname")
     private User Owner;
@@ -60,7 +63,7 @@ public class Hackathon {
 
     }
 
-    public Hackathon(long hid, String name, String start_date, String end_date, String creation_date, User owner, int min_team_size, int max_team_size, float fee, int discount, String status, String judge_screenname, List<Team> teams, Organization sponser) {
+    public Hackathon(long hid, String name, String description,String start_date, String end_date, String creation_date, User owner, int min_team_size, int max_team_size, float fee, int discount, String status, String judge_screenname, List<Team> teams, Organization sponser) {
         this.hid = hid;
         this.name = name;
         this.start_date = start_date;
@@ -75,6 +78,7 @@ public class Hackathon {
         this.judge_screenname = judge_screenname;
         this.teams = teams;
         this.sponser = sponser;
+        this.description = description;
     }
 
     public long getHid() {
@@ -187,5 +191,13 @@ public class Hackathon {
 
     public void setSponser(Organization sponser) {
         this.sponser = sponser;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
