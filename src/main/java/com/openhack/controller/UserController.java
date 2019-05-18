@@ -3,6 +3,7 @@ package com.openhack.controller;
 import com.openhack.model.User;
 import com.openhack.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,8 @@ public class UserController{
 
     @Autowired
     private UserService userService;
+
+    private ResponseHeader responseHeader = new ResponseHeader();
 
     @RequestMapping(value = "/user" , method = {RequestMethod.POST})
     public ResponseEntity<?> postUser(@RequestParam(value = "name",required = true) String name,
@@ -28,7 +31,7 @@ public class UserController{
 
         ResponseEntity<?> responseEntity = userService.readUser(screenname);
 
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/user/{screenname}",method = {RequestMethod.PUT})
@@ -44,7 +47,7 @@ public class UserController{
 
         ResponseEntity responseEntity = userService.updateUser(name,screenname,title,aboutMe,purl,street,city,state,zip);
 
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
 }

@@ -33,6 +33,10 @@ public class LoginService {
     public ResponseEntity<?> readLogin(String email,String password){
         Login login = loginDao.findByEmail(email);
 
+        if(login == null){
+            return ResponseEntity.badRequest().body("Invalid login/password");
+        }
+
         if(login.getPassword().equals(password)){
             User user = userDao.findByEmail(email);
 

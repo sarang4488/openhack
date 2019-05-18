@@ -5,6 +5,7 @@ import com.openhack.services.OrganizationService;
 import com.openhack.services.TeamService;
 import com.openhack.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,27 +37,27 @@ public class HackathonController {
                                            @RequestParam(value = "discount",required = false) Integer discount,
                                            @RequestParam(value = "organization_name",required = false) String organization_name){
         ResponseEntity responseEntity = hackathonService.createHackathon(name,start_date,end_date,creation_date,owner_screenname,judge_screenname,min_team_size,max_team_size,fee,discount,"created",organization_name);
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/hackathon", method = {RequestMethod.GET})
     public ResponseEntity<?> getHackathonList(){
 
         ResponseEntity responseEntity = hackathonService.readHackathonList();
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/hackathon/names/{screenname}", method = {RequestMethod.GET})
     public ResponseEntity<?> getHackathonList(@PathVariable String screenname){
 
         ResponseEntity responseEntity = hackathonService.readHackathonByOwner(screenname);
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/hackathon/{hid}", method = {RequestMethod.GET})
     public ResponseEntity<?> getHackathon(@PathVariable Long hid){
         ResponseEntity responseEntity = hackathonService.readHackathon(hid);
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/hackathon/{hid}/register", method = {RequestMethod.POST})
@@ -76,27 +77,27 @@ public class HackathonController {
 
         ResponseEntity responseEntity = teamService.registerTeam(hid,leader_screenname,email,member2_screenname,member2_email,member3_screenname,member3_email,member4_screenname,member4_email);
 
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
 
     }
 
     @RequestMapping(value = "hackathon/{hid}/opened")
     public ResponseEntity<?> openHackathon(@PathVariable Long hid){
         ResponseEntity responseEntity = hackathonService.updateHackathonStatus(hid,"opened");
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "hackathon/{hid}/closed")
     public ResponseEntity<?> closeHackathon(@PathVariable Long hid){
         ResponseEntity responseEntity = hackathonService.updateHackathonStatus(hid,"closed");
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value="hackathon/{tid}/codesubmission",method= {RequestMethod.POST})
     public ResponseEntity<?> codeSubmission(@PathVariable long tid,
                                             @RequestParam(value="code_url",required=true) String code_url){
         ResponseEntity responseEntity=hackathonService.codeSubmission(code_url,tid);
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
 }

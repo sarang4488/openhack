@@ -20,7 +20,6 @@ public class LoginController {
 
         ResponseEntity responseEntity = loginService.readLogin(email,password);
 
-
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
 
     }
