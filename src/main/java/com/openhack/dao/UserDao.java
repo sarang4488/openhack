@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 
 import com.openhack.model.*;
 
+import java.util.List;
 
 
 /**
@@ -51,6 +52,13 @@ public class UserDao {
         query.setParameter("email",email);
         if(query.getResultList().isEmpty()) return null;
         return (User)query.getResultList().get(0);
+    }
+
+    public List readItems(){
+        Query query = this.entityManager.createNativeQuery("select * from user;",User.class);
+        if(query.getResultList().isEmpty()) return null;
+
+        return query.getResultList();
     }
 
 	@Transactional

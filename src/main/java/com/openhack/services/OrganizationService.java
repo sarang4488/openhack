@@ -97,14 +97,15 @@ public class OrganizationService {
 
     @Transactional
     public ResponseEntity<?> readOrganizationNames(){
-        List<String> org_names = new ArrayList<String>();
+        List<OrganizationResponse> orgs = new ArrayList<OrganizationResponse>();
         List<Object> names = organizationDao.readOrgNames();
         for (Object obj:
                 names) {
             Organization org = (Organization)obj;
-            org_names.add(org.getName());
+            OrganizationResponse organizationResponse = new OrganizationResponse(org);
+            orgs.add(organizationResponse);
         }
-        return ResponseEntity.ok().body(org_names);
+        return ResponseEntity.ok().body(orgs);
     }
 
 }

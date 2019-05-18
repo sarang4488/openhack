@@ -31,13 +31,14 @@ public class HackathonController {
                                            @RequestParam(value = "creation_date",required = false) String creation_date,
                                            @RequestParam(value = "description", required = false) String description,
                                            @RequestParam(value = "owner_screenname",required = false) String owner_screenname,
-                                           @RequestParam(value = "judge_screenname",required = false) String judge_screenname,
+                                           @RequestParam(value = "judge_screennames",required = false) String judge_screennames,
                                            @RequestParam(value = "min_team_size",required = false) Integer min_team_size,
                                            @RequestParam(value = "max_team_size",required = false) Integer max_team_size,
                                            @RequestParam(value = "fee",required = false) Float fee,
                                            @RequestParam(value = "discount",required = false) Integer discount,
-                                           @RequestParam(value = "organization_name",required = false) String organization_name){
-        ResponseEntity responseEntity = hackathonService.createHackathon(name,start_date,end_date,creation_date,description,owner_screenname,judge_screenname,min_team_size,max_team_size,fee,discount,"created",organization_name);
+                                           @RequestParam(value = "organization_names",required = false) String organization_names){
+
+        ResponseEntity responseEntity = hackathonService.createHackathon(name,start_date,end_date,creation_date,description,owner_screenname,judge_screennames,min_team_size,max_team_size,fee,discount,"created",organization_names);
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 

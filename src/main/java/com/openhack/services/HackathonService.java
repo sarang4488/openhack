@@ -49,13 +49,20 @@ public class HackathonService {
                                              Float fee,
                                              Integer discount,
                                              String status,
-                                             String org_name){
+                                             String org_names){
 
-        if(name==null || start_date==null || end_date==null || name=="" || start_date=="" || end_date=="" ||
-        description == null || owner_screenname == null || judge_screenname == null ||description == "" || owner_screenname == "" || judge_screenname == "" ||
-        fee == null) {
+//        if(name==null || start_date==null || end_date==null || name=="" || start_date=="" || end_date=="" || description == null || owner_screenname == null || judge_screenname == null ||description == "" || owner_screenname == "" || judge_screenname == "" || fee == null) {
+//            return ResponseEntity.badRequest().body("Please fill up all the fields marked *");
+//        }
+
+        if(name == null || start_date == null || end_date == null || description == null || owner_screenname == null || judge_screenname == null){
             return ResponseEntity.badRequest().body("Please fill up all the fields marked *");
         }
+
+        if(name.equals("") || start_date.equals("") || end_date.equals("") || description.equals("") || owner_screenname.equals("") || judge_screenname.equals("")){
+            return ResponseEntity.badRequest().body("Please fill up all the fields marked *");
+        }
+
 
         Hackathon hackathon = new Hackathon();
         hackathon.setName(name);
@@ -72,6 +79,7 @@ public class HackathonService {
 
         if(owner_screenname.equals(judge_screenname))
             return ResponseEntity.badRequest().body("You can't be the judge of your hackathon");
+
         hackathon.setJudge_screenname(judge_screenname);
 
         hackathon.setMax_team_size(Optional.ofNullable(max_team_size).orElse(-1));
@@ -80,15 +88,19 @@ public class HackathonService {
         hackathon.setDiscount(Optional.ofNullable(discount).orElse(-1));
         hackathon.setStatus(status);
 
-        System.out.println(org_name);
+        System.out.println(org_names);
 
         Organization organization = null;
-        if( org_name != null)
-           organization = organizationDao.findItemByName(org_name);
+        if( org_names != null){
+            //String [] org_name = org_names.split("$");
+            hackathon.setSponser(org_names);
+        }
 
-        System.out.println(organization);
+        //organization = organizationDao.findItemByName(org_name);
 
-        hackathon.setSponser(organization);
+        //System.out.println(organization);
+
+        //hackathon.setSponser(organization);
 
         hackathonDao.createItem(hackathon);
         HackathonResponse hackathonResponse = new HackathonResponse(hackathon);

@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -164,6 +166,23 @@ public class UserService {
         UserResponse userResponse = new UserResponse(user);
 
         return ResponseEntity.ok().body(userResponse);
+    }
+
+    @Transactional
+    public ResponseEntity<?> readScreennames(String screenname){
+        List<User> users = userDao.readItems();
+        List<UserResponse> snames = new ArrayList<UserResponse>();
+
+        if(users != null)
+            for (User user:
+                 users) {
+                if(!user.getScreenName().equals(screenname)) {
+                    UserResponse userResponse = new UserResponse(user);
+                    snames.add(userResponse);
+                }
+            }
+
+        return ResponseEntity.ok().body(snames);
     }
 
 

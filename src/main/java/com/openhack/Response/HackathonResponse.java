@@ -109,7 +109,7 @@ public class HackathonResponse {
     private int discount;
     private String status;
     private HackOwnerResponse owner;
-    private HackSponserResponse sponser;
+    private String [] sponser;
 
     private List<HackTeamResponse> teams = new ArrayList<HackTeamResponse>();
 
@@ -131,10 +131,12 @@ public class HackathonResponse {
             this.owner = new HackOwnerResponse(user.getName(),user.getScreenName(),user.getEmail());
         }
 
-        Organization organization = hackathon.getSponser();
-        if(organization != null){
-            this.sponser = new HackSponserResponse(organization.getOid(),organization.getName(),organization.getDesciption());
-        }
+//        Organization organization = hackathon.getSponser();
+//        if(organization != null){
+//            this.sponser = new HackSponserResponse(organization.getOid(),organization.getName(),organization.getDesciption());
+//        }
+
+        this.sponser = hackathon.getSponser().split("$");
 
         List<Team> team_list = hackathon.getTeams();
         for (Team t:
@@ -231,11 +233,11 @@ public class HackathonResponse {
         this.owner = owner;
     }
 
-    public HackSponserResponse getSponser() {
+    public String[] getSponser() {
         return sponser;
     }
 
-    public void setSponser(HackSponserResponse sponser) {
+    public void setSponser(String [] sponser) {
         this.sponser = sponser;
     }
 

@@ -27,6 +27,8 @@ public class Organization {
     @Column(name = "description")
     private String desciption;
 
+
+
     public Organization() {
     }
 

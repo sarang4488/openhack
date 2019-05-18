@@ -1,9 +1,6 @@
 package com.openhack.services;
 
-import com.openhack.dao.HackathonDao;
-import com.openhack.dao.PaymentDao;
-import com.openhack.dao.TeamMemberDao;
-import com.openhack.dao.UserDao;
+import com.openhack.dao.*;
 import com.openhack.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +23,9 @@ public class PaymentService {
 
     @Autowired
     private TeamMemberDao teamMemberDao;
+
+    @Autowired
+    private OrganizationDao organizationDao;
 
     @Transactional
     public ResponseEntity<?> createPayment(Long uid,Long hid){
@@ -56,11 +56,18 @@ public class PaymentService {
         float fee = hackathon.getFee();
         int discount = hackathon.getDiscount();
         float amount = fee;
-        if(user != null)
-            if(user.getOrganization().getName().equals(hackathon.getSponser().getName()) && user.getOrgStatus().equals("Approved")){
-                amount = (fee * discount)/100;
+        if(user != null) {
+
+            String [] org_names = hackathon.getSponser().split("$");
+            for (String org_name:
+                 org_names) {
+
+                if (user.getOrganization().getName().equals(org_name) && user.getOrgStatus().equals("Approved")) {
+                    amount = (fee * discount) / 100;
+                }
             }
 
+        }
         return ResponseEntity.ok().body(Float.toString(amount));
     }
 

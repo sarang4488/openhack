@@ -54,16 +54,15 @@ public class Hackathon {
     @JsonIgnore
     private List<Team> teams = new ArrayList<Team>();
 
-    @ManyToOne
-    @JoinColumn(name = "oid")
-    private Organization sponser;
+    @Column(name = "sponser_names")
+    private String sponser_names;
 
 
     public Hackathon() {
 
     }
 
-    public Hackathon(long hid, String name, String description,String start_date, String end_date, String creation_date, User owner, int min_team_size, int max_team_size, float fee, int discount, String status, String judge_screenname, List<Team> teams, Organization sponser) {
+    public Hackathon(long hid, String name, String description,String start_date, String end_date, String creation_date, User owner, int min_team_size, int max_team_size, float fee, int discount, String status, String judge_screenname, List<Team> teams, String sponser_names) {
         this.hid = hid;
         this.name = name;
         this.start_date = start_date;
@@ -77,7 +76,7 @@ public class Hackathon {
         this.status = status;
         this.judge_screenname = judge_screenname;
         this.teams = teams;
-        this.sponser = sponser;
+        this.sponser_names = sponser_names;
         this.description = description;
     }
 
@@ -185,12 +184,12 @@ public class Hackathon {
         this.teams = teams;
     }
 
-    public Organization getSponser() {
-        return sponser;
+    public String getSponser() {
+        return sponser_names;
     }
 
-    public void setSponser(Organization sponser) {
-        this.sponser = sponser;
+    public void setSponser(String sponsername) {
+        this.sponser_names = sponsername;
     }
 
     public String getDescription() {

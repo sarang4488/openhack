@@ -18,6 +18,7 @@ public class Team {
     @JoinColumn(name = "hid")
     private Hackathon hackathon;
 
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "team")
     @JsonIgnore
     private List<TeamMember> teamMembers = new ArrayList<TeamMember>();

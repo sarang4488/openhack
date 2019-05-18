@@ -50,4 +50,11 @@ public class UserController{
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/user/names",method = {RequestMethod.GET})
+    public ResponseEntity<?> getScreennames(@RequestParam(value = "screenname",required = true)  String screenname){
+        ResponseEntity responseEntity = userService.readScreennames(screenname);
+
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
 }
