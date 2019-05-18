@@ -36,17 +36,19 @@ public class SignUpController {
         responseEntity = userService.createUser(name,screenname,email,userType,"registered");
         if(responseEntity.getStatusCode() != HttpStatus.OK){
             System.out.println("called######");
-            return new ResponseEntity<>(responseEntity.getBody(),responseHeader.getHeader(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(responseEntity,responseHeader.getHeader(),HttpStatus.CREATED);
         }
 
         responseEntity = loginService.createLogin(email,password);
         if(responseEntity.getStatusCode() != HttpStatus.OK){
-            return new ResponseEntity<>(responseEntity.getBody(),responseHeader.getHeader(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(responseEntity,responseHeader.getHeader(),HttpStatus.CREATED);
         }
 
         //emailActivationLink.sendActivationLink(email);
 
-        return new ResponseEntity<>("Please activate account using link sent to email",responseHeader.getHeader(), HttpStatus.CREATED);
+
+
+        return new ResponseEntity<>(ResponseEntity.ok().body("Please activate account using link sent to email"),responseHeader.getHeader(), HttpStatus.CREATED);
 
     }
 
