@@ -95,7 +95,7 @@ class Login extends Component {
       redirectVar = (
         <Redirect
           to={{
-            pathname: "/profile"
+            pathname: "/list"
           }}
         />
       );

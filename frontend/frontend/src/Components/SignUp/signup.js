@@ -19,7 +19,8 @@ class SignUp extends Component {
       email: "",
       password: "",
       error: false,
-      authFlag: false
+      authFlag: false,
+      errorMessage: ""
     };
     //Bind the handlers to this class
     this.nameChangeHandler = this.nameChangeHandler.bind(this);
@@ -81,7 +82,7 @@ class SignUp extends Component {
       )
       .then(response => {
         console.log("Status Code : ", response);
-        if (response.status == 201) {
+        if (response.data.statusCodeValue == 200) {
           this.setState({
             authFlag: true
           });
@@ -89,7 +90,8 @@ class SignUp extends Component {
         } else {
           console.log("test");
           this.setState({
-            authFlag: false
+            error: true,
+            errorMessage: response.data.body
           });
         }
       })
@@ -121,7 +123,7 @@ class SignUp extends Component {
             padding: "10px"
           }}
         >
-          <p>The user already exists. Try to log in.</p>
+          <p>{this.state.errorMessage}</p>
         </div>
       );
     }

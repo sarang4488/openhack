@@ -46,19 +46,14 @@ class Profile extends Component {
   }
   //Call the Will Mount to set the auth Flag to false
   componentWillMount() {
-    this.setState({
-      authFlag: false,
-      UserData: []
-    });
-    console.log("my cookie", cookie.load("cookie"));
-    console.log("testprops", this.state.UserData);
+    //window.location.reload(1);
   }
   componentDidMount() {
     //  window.location.reload(1);
     const data = {
-      screenName: localStorage.getItem("screenName")
+      screenName: window.localStorage.getItem("screenName")
     };
-    console.log("User Info:", data.screenName);
+    console.log("User Info:", localStorage.getItem("screenName"));
     axios
       .get(`http://localhost:8080/user/${data.screenName}`)
       .then(response => {
@@ -423,7 +418,7 @@ class Profile extends Component {
                   name="firstname"
                   ref="First Name"
                   // ref= {this.first_name}
-                  value={this.state.name}
+                  value={localStorage.getItem("screenName")}
                   placeholder="First Name"
                   // value={first_name}
                   // placeholder={first_name}
@@ -442,7 +437,7 @@ class Profile extends Component {
                   className="form-control"
                   name="email"
                   placeholder="Email"
-                  value={this.state.email}
+                  value={localStorage.getItem("email")}
                   ref="Email"
                   // placeholder={user.Gender}
                   onChange={this.emailChangeHandler}
