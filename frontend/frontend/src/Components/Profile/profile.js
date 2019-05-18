@@ -28,7 +28,8 @@ class Profile extends Component {
       authFlag: false,
       orgFlag: false,
       leaveFlag: false,
-      MainName: ""
+      MainName: "",
+      status: ""
     };
     //Bind the handlers to this class
     this.emailChangeHandler = this.emailChangeHandler.bind(this);
@@ -106,7 +107,8 @@ class Profile extends Component {
 
           if (response.data.body.organization != null) {
             this.setState({
-              organization: response.data.body.organization.organization_name
+              organization: response.data.body.organization.organization_name,
+              status: response.data.body.organization.status
             });
           }
 
@@ -259,7 +261,7 @@ class Profile extends Component {
       )
       .then(response => {
         console.log("Status Code : ", response);
-        if (response.status === 200) {
+        if (response.data.statusCodeValue === 200) {
           this.setState({
             orgFlag: true,
 
@@ -278,14 +280,19 @@ class Profile extends Component {
     //prevent page from refresh
     e.preventDefault();
     const data = {
-      leaveorgname: this.state.leaveorgname
+      orgname: this.state.organization,
+      screenName: localStorage.getItem("screenName")
     };
     console.log("data", data);
     //set the with credentials to true
     axios.defaults.withCredentials = true;
     //make a post request with the user data
     axios
-      .post("http://localhost:3031/leaveorganisation", data)
+      .post(
+        `http://localhost:8080/organization/${data.orgname}/leave/${
+          data.screenName
+        }`
+      )
       .then(response => {
         console.log("Status Code : ", response.data);
         if (response.data.statusCodeValue === 200) {
@@ -388,6 +395,17 @@ class Profile extends Component {
                     />
                   </div>
                   <div class="col-md-3">
+                    <span
+                      style={{
+                        backgroundColor: "#0067db",
+                        borderColor: "#0067db",
+                        fontSize: "18px",
+                        marginTop: "2px"
+                      }}
+                      class="btn btn-primary button-search"
+                    >
+                      {this.state.status}
+                    </span>
                     <button
                       onClick={this.submitLeave}
                       style={{
@@ -398,7 +416,7 @@ class Profile extends Component {
                       }}
                       class="btn btn-primary button-search"
                     >
-                      Requested
+                      Leave Organization
                     </button>
                   </div>
                 </div>

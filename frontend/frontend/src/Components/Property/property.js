@@ -93,6 +93,35 @@ class Property extends Component {
       });
   }
 
+  submitDelete(name) {
+    const data = name;
+
+    console.log(data);
+    //set the with credentials to true
+    axios.defaults.withCredentials = true;
+    //make a post request with the user data
+    axios
+      .post(
+        `http://localhost:8080/organization/${
+          this.state.organization
+        }/leave/${data}`
+      )
+      .then(response => {
+        console.log("Status Code : ", response);
+        if (response.data.statusCodeValue === 200) {
+          this.setState({
+            authFlag: true
+          });
+          window.location.reload(1);
+        } else {
+          this.setState({
+            authFlag: false,
+            message: "Organisation Already Exist "
+          });
+        }
+      });
+  }
+
   render() {
     let foot = <Footer data={this.props.data} />;
     // console.log(this.props.location);
@@ -124,7 +153,9 @@ class Property extends Component {
                 Accept
               </button>
               <button
-                onClick={this.submitLogin}
+                onClick={name => {
+                  this.submitDelete(member.screenname);
+                }}
                 style={{ marginLeft: "10px" }}
                 class="btn btn-danger"
               >

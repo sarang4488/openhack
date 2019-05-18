@@ -91,6 +91,37 @@ class FinalMembers extends Component {
       });
   }
 
+  submitDelete(name) {
+    const data = name;
+
+    console.log(data);
+    //set the with credentials to true
+    axios.defaults.withCredentials = true;
+    //make a post request with the user data
+    axios
+      .post(
+        `http://localhost:8080/organization/${
+          this.state.organization
+        }/leave/${data}`
+      )
+      .then(response => {
+        console.log("Status Code : ", response);
+        if (response.data.statusCodeValue === 200) {
+          this.setState({
+            authFlag: true,
+            message:
+              "Congratulations! You have successfully listed your organisation"
+          });
+          window.location.reload(1);
+        } else {
+          this.setState({
+            authFlag: false,
+            message: "Organisation Already Exist "
+          });
+        }
+      });
+  }
+
   render() {
     let foot = <Footer data={this.props.data} />;
     // console.log(this.props.location);
@@ -120,13 +151,6 @@ class FinalMembers extends Component {
                 class="btn btn-primary"
               >
                 Accept
-              </button>
-              <button
-                onClick={this.submitLogin}
-                style={{ marginLeft: "10px" }}
-                class="btn btn-danger"
-              >
-                Delete
               </button>
             </div>
           </div>
