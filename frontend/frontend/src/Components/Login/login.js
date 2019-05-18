@@ -17,7 +17,8 @@ class Login extends Component {
       email: "",
       password: "",
       authFlag: false,
-      error: false
+      error: false,
+      errorMessage: ""
     };
     //Bind the handlers to this class
     this.emailChangeHandler = this.emailChangeHandler.bind(this);
@@ -66,7 +67,7 @@ class Login extends Component {
         }`
       )
       .then(response => {
-        console.log("Status Code : ", response.data.body.screenname);
+        console.log("Status Code : ", response);
         // console.log(response.data);
         if (response.data.statusCodeValue === 200) {
           this.setState({
@@ -77,7 +78,8 @@ class Login extends Component {
           localStorage.setItem("email", response.data.body.email);
         } else {
           this.setState({
-            authFlag: false
+            error: true,
+            errorMessage: response.data.body
           });
         }
       })
@@ -115,7 +117,7 @@ class Login extends Component {
             padding: "10px"
           }}
         >
-          <p>The username or password you entered is incorrect.</p>
+          <p>{this.state.errorMessage}</p>
         </div>
       );
     }
