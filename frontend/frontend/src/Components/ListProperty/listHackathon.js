@@ -23,18 +23,18 @@ class ListHackathon extends Component {
       fee: 0,
       minTeam: 0,
       maxTeam: 0,
-      judge: "",
-      sponsor: "",
+
       discount: "",
-      sponsors: "",
-      judgeboxes: [
-        { key: 1, name: "Shabiri", label: "Apple" },
-        { key: 2, name: "Sarang", label: "Google" }
-      ],
-      checkboxes: [
-        { key: 1, name: "Apple", label: "Apple" },
-        { key: 2, name: "Google", label: "Google" }
-      ],
+      sponsors: [],
+      judges: [],
+      // judgeboxes: [
+      //   { key: 1, name: "Shabiri", label: "Apple" },
+      //   { key: 2, name: "Sarang", label: "Google" }
+      // ],
+      // checkboxes: [
+      //   { key: 1, name: "Apple", label: "Apple" },
+      //   { key: 2, name: "Google", label: "Google" }
+      // ],
       authFlag: false,
       checkedItems: new Map(),
       judgeItems: new Map(),
@@ -53,7 +53,33 @@ class ListHackathon extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleJudgeChange = this.handleJudgeChange.bind(this);
     this.submitHackathon = this.submitHackathon.bind(this);
+    //this.getNave = this.getNave.bind(this);
   }
+
+  // getNave() {
+  //   const data = {
+  //     screenName: window.localStorage.getItem("screenName")
+  //   };
+  //   console.log(data);
+  //   return axios
+  //     .all([
+  //       axios.get(
+  //         `http://localhost:8080/user/names/?screenname=${data.screenName}`
+  //       ),
+  //       axios.get(`http://localhost:8080/organization/names`)
+  //     ])
+  //     .then(
+  //       axios.spread(function(judges, sponsors) {
+  //         console.log(sponsors.data.body);
+  //         console.log(judges.data.body);
+
+  //         this.state.sponsors = sponsors.data.body;
+  //         this.state.judges = sponsors.data.judges;
+  //         console.log(this.state.sponsors);
+  //         console.log(this.state.judges);
+  //       })
+  //     );
+  // }
   //Call the Will Mount to set the auth Flag to false
   componentWillMount() {
     this.setState({
@@ -63,26 +89,49 @@ class ListHackathon extends Component {
   }
 
   componentDidMount() {
-    //  window.location.reload(1);
     const data = {
       screenName: window.localStorage.getItem("screenName")
     };
     console.log(data);
     axios
-      .all([
-        axios.get(
-          `http://localhost:8080/user/names/?screenname=${data.screenName}`
-        ),
-        axios.get("/api/volkswagen/models")
-      ])
-      .then(
-        axios.spread(function(sponsors, judges) {
-          console.log(sponsors);
-          console.log(judges);
-          //  this.setState({ vehicles: vehicles });
-        })
-      )
-      .catch(error => console.log(error));
+      .get(`http://localhost:8080/user/names/?screenname=${data.screenName}`)
+      .then(response => {
+        console.log(response);
+        //update the state with the response data
+        this.setState({
+          judges: response.data.body
+        });
+        console.log("Search :", this.state.judges);
+        // console.log("No of results :", this.state.properties.length);
+      });
+
+    axios.get(`http://localhost:8080/organization/names/`).then(response => {
+      console.log(response);
+      //update the state with the response data
+      this.setState({
+        sponsors: response.data.body
+      });
+      console.log("Search :", this.state.sponsors);
+      // console.log("No of results :", this.state.properties.length);
+    });
+    // return axios
+    //   .all([
+    //     axios.get(
+    //       `http://localhost:8080/user/names/?screenname=${data.screenName}`
+    //     ),
+    //     axios.get(`http://localhost:8080/organization/names`)
+    //   ])
+    //   .then(
+    //     axios.spread(function(judges, sponsors) {
+    //       console.log(sponsors.data.body);
+    //       console.log(judges.data.body);
+    //       this.state.sponsors = sponsors.data.body;
+    //       this.state.judges = sponsors.data.judges;
+    //       console.log(this.state.sponsors);
+    //       console.log(this.state.judges);
+    //     })
+    //   );
+    //  window.location.reload(1);
     // console.log("User Info:", localStorage.getItem("screenName"));
   }
   //username change handler to update state variable with the text entered by the user
@@ -182,8 +231,10 @@ class ListHackathon extends Component {
     var sponsors = "";
     for (const [k, v] of this.state.checkedItems.entries()) {
       console.log(k, v);
-      sponsors += k;
-      sponsors += "$";
+      if (v) {
+        sponsors += k;
+        sponsors += "$";
+      }
 
       console.log(sponsors);
     }
@@ -191,8 +242,10 @@ class ListHackathon extends Component {
     var judges = "";
     for (const [k, v] of this.state.judgeItems.entries()) {
       console.log(k, v);
-      judges += k;
-      judges += "$";
+      if (v) {
+        judges += k;
+        judges += "$";
+      }
 
       console.log(judges);
     }
@@ -201,87 +254,93 @@ class ListHackathon extends Component {
     date = moment(date).format("YYYY-MM-DD");
     console.log(date);
     console.log(this.state.startDate);
+    console.log(this.st);
     if (this.state.description.length < 10) {
       this.setState({
         error: true,
         errorMessage: "Description must be atleast 10 alphanumeric characters"
       });
-    } else if (this.state.startDate < date || this.state.endDate < date) {
-      this.setState({
-        error: true,
-        errorMessage: "Start and End Date should be greater than todays date"
-      });
-    } else if (this.state.startDate >= this.state.endDate) {
-      this.setState({
-        error: true,
-        errorMessage: "End date should be greater than start date"
-      });
-    } else if (this.state.fee <= 0) {
-      this.setState({
-        error: true,
-        errorMessage: "Registration fees must be greater than 0$"
-      });
-    } else if (this.state.minTeam <= 0) {
-      this.setState({
-        error: true,
-        errorMessage: "Min Team Size must be 1"
-      });
-    } else if (this.state.maxTeam > 4) {
-      this.setState({
-        error: true,
-        errorMessage: "Max Team Size can be 4"
-      });
-    } else if (this.state.discount > 50) {
-      this.setState({
-        error: true,
-        errorMessage: "Max discount can be 50%"
-      });
+      // } else if (this.state.startDate < date || this.state.endDate < date) {
+      //   this.setState({
+      //     error: true,
+      //     errorMessage: "Start and End Date should be greater than todays date"
+      //   });
+      // } else if (this.state.startDate >= this.state.endDate) {
+      //   this.setState({
+      //     error: true,
+      //     errorMessage: "End date should be greater than start date"
+      //   });
+      // } else if (this.state.fee <= 0) {
+      //   this.setState({
+      //     error: true,
+      //     errorMessage: "Registration fees must be greater than 0$"
+      //   });
+      // } else if (this.state.minTeam <= 0) {
+      //   this.setState({
+      //     error: true,
+      //     errorMessage: "Min Team Size must be 1"
+      //   });
+      // } else if (this.state.maxTeam > 4) {
+      //   this.setState({
+      //     error: true,
+      //     errorMessage: "Max Team Size can be 4"
+      //   });
+      // } else if (this.state.discount > 50) {
+      //   this.setState({
+      //     error: true,
+      //     errorMessage: "Max discount can be 50%"
+      //   });
+      // } else if (this.state.judges === "") {
+      //   this.setState({
+      //     error: true,
+      //     errorMessage: "Please Select a Judge"
+      //   });
+    } else {
+      const data = {
+        owner: localStorage.getItem("screenName"),
+        name: this.state.name,
+        description: this.state.description,
+        startDate: this.state.startDate,
+        endDate: this.state.endDate,
+        fee: this.state.fee,
+        minTeam: this.state.minTeam,
+        maxTeam: this.state.maxTeam,
+        judge: judges,
+        sponsor: sponsors,
+        discount: this.state.discount
+      };
+      console.log(data);
+      //set the with credentials to true
+      axios.defaults.withCredentials = true;
+      //make a post request with the user data
+      // axios
+      //   .post(
+      //     `http://localhost:8080/hackathon/?name=${data.name}&description=${
+      //       data.description
+      //     }&start_date=${data.startDate}&end_date=${
+      //       data.endDate
+      //     }&owner_screenname=${data.owner}&judge_screennames=${
+      //       data.judge
+      //     }&min_team_size=${data.minTeam}&max_team_size=${data.maxTeam}&fee=${
+      //       data.fee
+      //     }&discount=${data.discount}&organization_names=${data.sponsor}`
+      //   )
+      //   .then(response => {
+      //     console.log("Status Code : ", response);
+      //     if (response.data.statusCodeValue === 200) {
+      //       this.setState({
+      //         authFlag: true,
+      //         message:
+      //           "Congratulations! You have successfully listed your hackathon"
+      //       });
+      //     } else {
+      //       this.setState({
+      //         authFlag: false
+      //         // message: "Hackathon Already Exist "
+      //       });
+      //     }
+      //   });
     }
-
-    const data = {
-      owner: localStorage.getItem("screenName"),
-      name: this.state.name,
-      description: this.state.description,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate,
-      fee: this.state.fee,
-      minTeam: this.state.minTeam,
-      maxTeam: this.state.maxTeam,
-      judge: judges,
-      sponsor: sponsors,
-      discount: this.state.discount
-    };
-    console.log(data);
-    //set the with credentials to true
-    axios.defaults.withCredentials = true;
-    //make a post request with the user data
-    axios
-      .post(
-        `http://localhost:8080/hackathon/?name=${data.name}&description=${
-          data.description
-        }&start_date=${data.startDate}&end_date=${
-          data.endDate
-        }&owner_screenname=${data.owner}&judge_screennames=${
-          data.judge
-        }&min_team_size=${data.minTeam}&max_team_size=${data.maxTeam}&fee=${
-          data.fee
-        }&discount=${data.discount}&organization_names=${data.sponsor}`
-      )
-      .then(response => {
-        console.log("Status Code : ", response);
-        if (response.data.statusCodeValue === 200) {
-          this.setState({
-            authFlag: true,
-            message:
-              "Congratulations! You have successfully listed your hackathon"
-          });
-        } else {
-          this.setState({
-            authFlag: false,
-            message: "Hackathon Already Exist "
-          });
-        }
-      });
   };
 
   render() {
@@ -422,15 +481,15 @@ class ListHackathon extends Component {
                 >
                   Judge:{" "}
                 </label>
-                {this.state.judgeboxes.map(item => (
+                {this.state.judges.map(item => (
                   <label
-                    key={item.key}
+                    key={item.uid}
                     style={{ fontSize: "15px", marginRight: "10px" }}
                   >
-                    {item.name}
+                    {item.screenname}
                     <Checkbox
-                      name={item.name}
-                      checked={this.state.judgeItems.get(item.name)}
+                      name={item.screenname}
+                      checked={this.state.judgeItems.get(item.screenname)}
                       onChange={this.handleJudgeChange}
                     />
                   </label>
@@ -443,15 +502,17 @@ class ListHackathon extends Component {
                 >
                   Sponsor:{" "}
                 </label>
-                {this.state.checkboxes.map(item => (
+                {this.state.sponsors.map(item => (
                   <label
-                    key={item.key}
+                    key={item.organization_id}
                     style={{ fontSize: "15px", marginRight: "10px" }}
                   >
-                    {item.name}
+                    {item.organization_name}
                     <Checkbox
-                      name={item.name}
-                      checked={this.state.checkedItems.get(item.name)}
+                      name={item.organization_name}
+                      checked={this.state.checkedItems.get(
+                        item.organization_name
+                      )}
                       onChange={this.handleChange}
                     />
                   </label>
