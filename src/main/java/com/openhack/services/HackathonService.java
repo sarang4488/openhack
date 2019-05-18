@@ -77,9 +77,6 @@ public class HackathonService {
         else
             return ResponseEntity.badRequest().body("Not authorised to create a hackathon");
 
-        if(owner_screenname.equals(judge_screenname))
-            return ResponseEntity.badRequest().body("You can't be the judge of your hackathon");
-
         hackathon.setJudge_screenname(judge_screenname);
 
         hackathon.setMax_team_size(Optional.ofNullable(max_team_size).orElse(-1));
