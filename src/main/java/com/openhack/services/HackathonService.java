@@ -51,17 +51,18 @@ public class HackathonService {
                                              String status,
                                              String org_names){
 
-//        if(name==null || start_date==null || end_date==null || name=="" || start_date=="" || end_date=="" || description == null || owner_screenname == null || judge_screenname == null ||description == "" || owner_screenname == "" || judge_screenname == "" || fee == null) {
-//            return ResponseEntity.badRequest().body("Please fill up all the fields marked *");
-//        }
 
-        if(name == null || start_date == null || end_date == null || description == null || owner_screenname == null || judge_screenname == null){
+        if(name == null || start_date == null || end_date == null || description == null || owner_screenname == null || judge_screenname == null || fee ==null){
             return ResponseEntity.badRequest().body("Please fill up all the fields marked *");
         }
 
         if(name.equals("") || start_date.equals("") || end_date.equals("") || description.equals("") || owner_screenname.equals("") || judge_screenname.equals("")){
             return ResponseEntity.badRequest().body("Please fill up all the fields marked *");
         }
+
+        Hackathon tmpHack = hackathonDao.findItemByName(name);
+        if(tmpHack != null)
+            return ResponseEntity.badRequest().body("Hackathon name already in use");
 
 
         Hackathon hackathon = new Hackathon();
@@ -114,6 +115,22 @@ public class HackathonService {
                 hacks) {
             Hackathon tmp = (Hackathon)obj;
             hackathonResponses.add(new HackathonResponse(tmp));
+        }
+
+        return ResponseEntity.ok().body(hackathonResponses);
+    }
+
+    @Transactional
+    public ResponseEntity<?> readHackathonPublic(String screenname){
+
+        List<HackathonResponse> hackathonResponses = new ArrayList<HackathonResponse>();
+
+        List hacks = hackathonDao.finditems();
+        for (Object obj:
+                hacks) {
+            Hackathon tmp = (Hackathon)obj;
+            if(!tmp.getOwner().getScreenName().equals(screenname))
+                hackathonResponses.add(new HackathonResponse(tmp));
         }
 
         return ResponseEntity.ok().body(hackathonResponses);
