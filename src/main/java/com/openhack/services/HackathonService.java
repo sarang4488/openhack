@@ -130,7 +130,8 @@ public class HackathonService {
         for (Object obj:
                 hacks) {
             Hackathon tmp = (Hackathon)obj;
-            String [] judges = tmp.getJudge_screenname().split("$");
+            String [] judges = tmp.getJudge_screenname().split("\\$");
+            
             if(!tmp.getOwner().getScreenName().equals(screenname) && !Arrays.asList(judges).contains(screenname))
                 hackathonResponses.add(new HackathonResponse(tmp));
         }
