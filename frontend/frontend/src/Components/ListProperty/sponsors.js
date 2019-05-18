@@ -5,9 +5,7 @@ import cookie from "react-cookies";
 import NavbarOwner from "../Navbar/navbar5";
 import TextField from "@material-ui/core/TextField";
 import Checkbox from "./checkBox";
-import DateTime from "react-datetime";
 import { Redirect } from "react-router";
-var moment = require("moment");
 
 class ListHackathon extends Component {
   //call the constructor method
@@ -27,19 +25,9 @@ class ListHackathon extends Component {
       sponsor: "",
       discount: "",
       sponsors: "",
-      judgeboxes: [
-        { key: 1, name: "Shabiri", label: "Apple" },
-        { key: 2, name: "Sarang", label: "Google" }
-      ],
-      checkboxes: [
-        { key: 1, name: "Apple", label: "Apple" },
-        { key: 2, name: "Google", label: "Google" }
-      ],
-      authFlag: false,
-      checkedItems: new Map(),
-      judgeItems: new Map(),
-      errorMessage: "",
-      error: false
+      sponsors: [{ id: 1, name: "Apple" }, { id: 2, name: "Google" }],
+      checkedSponsors: new Map(),
+      authFlag: false
     };
     //Bind the handlers to this class
     this.nameChangeHandler = this.nameChangeHandler.bind(this);
@@ -50,8 +38,7 @@ class ListHackathon extends Component {
     this.minTeamChangeHandler = this.minTeamChangeHandler.bind(this);
     this.maxTeamChangeHandler = this.maxTeamChangeHandler.bind(this);
     this.judgeChangeHandler = this.judgeChangeHandler.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleJudgeChange = this.handleJudgeChange.bind(this);
+
     this.submitHackathon = this.submitHackathon.bind(this);
   }
   //Call the Will Mount to set the auth Flag to false
@@ -60,30 +47,6 @@ class ListHackathon extends Component {
       authFlag: false,
       message: ""
     });
-  }
-
-  componentDidMount() {
-    //  window.location.reload(1);
-    const data = {
-      screenName: window.localStorage.getItem("screenName")
-    };
-    console.log(data);
-    axios
-      .all([
-        axios.get(
-          `http://localhost:8080/user/names/?screenname=${data.screenName}`
-        ),
-        axios.get("/api/volkswagen/models")
-      ])
-      .then(
-        axios.spread(function(sponsors, judges) {
-          console.log(sponsors);
-          console.log(judges);
-          //  this.setState({ vehicles: vehicles });
-        })
-      )
-      .catch(error => console.log(error));
-    // console.log("User Info:", localStorage.getItem("screenName"));
   }
   //username change handler to update state variable with the text entered by the user
   nameChangeHandler = e => {
@@ -152,91 +115,18 @@ class ListHackathon extends Component {
     }));
   };
 
-  handleJudgeChange(e) {
+  handleSponsors(e) {
     const item = e.target.name;
     const isChecked = e.target.checked;
     this.setState(prevState => ({
-      judgeItems: prevState.judgeItems.set(item, isChecked)
+      checkedSponsors: prevState.checkedSponsors.set(item, isChecked)
     }));
   }
-
-  handleChange(e) {
-    const item = e.target.name;
-    const isChecked = e.target.checked;
-    this.setState(prevState => ({
-      checkedItems: prevState.checkedItems.set(item, isChecked)
-    }));
-  }
-  // handleSponsors(e) {
-  //   const item = e.target.name;
-  //   const isChecked = e.target.checked;
-  //   this.setState(prevState => ({
-  //     checkedSponsors: prevState.checkedSponsors.set(item, isChecked)
-  //   }));
-  // }
 
   //submit Property handler to send a request to the node backend
   submitHackathon = e => {
     //prevent page from refresh
     e.preventDefault();
-    var sponsors = "";
-    for (const [k, v] of this.state.checkedItems.entries()) {
-      console.log(k, v);
-      sponsors += k;
-      sponsors += "$";
-
-      console.log(sponsors);
-    }
-
-    var judges = "";
-    for (const [k, v] of this.state.judgeItems.entries()) {
-      console.log(k, v);
-      judges += k;
-      judges += "$";
-
-      console.log(judges);
-    }
-
-    var date = moment().toDate();
-    date = moment(date).format("YYYY-MM-DD");
-    console.log(date);
-    console.log(this.state.startDate);
-    if (this.state.description.length < 10) {
-      this.setState({
-        error: true,
-        errorMessage: "Description must be atleast 10 alphanumeric characters"
-      });
-    } else if (this.state.startDate < date || this.state.endDate < date) {
-      this.setState({
-        error: true,
-        errorMessage: "Start and End Date should be greater than todays date"
-      });
-    } else if (this.state.startDate >= this.state.endDate) {
-      this.setState({
-        error: true,
-        errorMessage: "End date should be greater than start date"
-      });
-    } else if (this.state.fee <= 0) {
-      this.setState({
-        error: true,
-        errorMessage: "Registration fees must be greater than 0$"
-      });
-    } else if (this.state.minTeam <= 0) {
-      this.setState({
-        error: true,
-        errorMessage: "Min Team Size must be 1"
-      });
-    } else if (this.state.maxTeam > 4) {
-      this.setState({
-        error: true,
-        errorMessage: "Max Team Size can be 4"
-      });
-    } else if (this.state.discount > 50) {
-      this.setState({
-        error: true,
-        errorMessage: "Max discount can be 50%"
-      });
-    }
 
     const data = {
       owner: localStorage.getItem("screenName"),
@@ -247,8 +137,8 @@ class ListHackathon extends Component {
       fee: this.state.fee,
       minTeam: this.state.minTeam,
       maxTeam: this.state.maxTeam,
-      judge: judges,
-      sponsor: sponsors,
+      judge: this.state.judge,
+      sponsor: this.state.checkedSponsors,
       discount: this.state.discount
     };
     console.log(data);
@@ -261,11 +151,11 @@ class ListHackathon extends Component {
           data.description
         }&start_date=${data.startDate}&end_date=${
           data.endDate
-        }&owner_screenname=${data.owner}&judge_screennames=${
+        }&owner_screenname=${data.owner}&judge_screenname=${
           data.judge
         }&min_team_size=${data.minTeam}&max_team_size=${data.maxTeam}&fee=${
           data.fee
-        }&discount=${data.discount}&organization_names=${data.sponsor}`
+        }&discount=${data.discount}&organization_name=${data.sponsor}`
       )
       .then(response => {
         console.log("Status Code : ", response);
@@ -293,28 +183,34 @@ class ListHackathon extends Component {
       console.log("test");
       redirectVar = <Redirect to="/hackmain" />;
     }
-    let errorMessage = null;
-    if (this.state.error) {
-      errorMessage = (
-        <div
-          style={{
-            fontSize: "14px",
-            backgroundColor: "#ed605a",
-            lineHeight: "20px",
-            color: "white",
-            textAlign: "center",
-            padding: "10px"
-          }}
-        >
-          <p>{this.state.errorMessage}</p>
+    let details = this.state.sponsors.map(sponsor => {
+      // const imgurl1 = require(`../uploads/${property.img}`);
+
+      return (
+        <div>
+          <label
+            key={sponsor.id}
+            for="subscribeNews"
+            style={{ marginLeft: "4px", fontSize: "15px" }}
+          >
+            {sponsor.name}
+            <Checkbox
+              name={sponsor.name}
+              checked={this.state.checkedSponsors.get(sponsor.name)}
+              onChange={this.handleSponsors}
+            />
+          </label>
         </div>
       );
-    }
+    });
+
+    // if(cookie.load('cookie')){
+    //         redirectVar = <Redirect to= "/home"/>
+    //     }
 
     return (
       <div>
         {redirectVar}
-
         {navbar}
         <div class="container">
           <div class="panel login-form">
@@ -324,7 +220,6 @@ class ListHackathon extends Component {
                 <p>Please enter hackathon details</p>
                 <p style={{ fontSize: "18px" }}>{this.state.message}</p>
               </div>
-              {errorMessage}
               <div class="form-group">
                 <label for="name" style={{ fontSize: "15px" }}>
                   Event Name: <span style={{ color: "red" }}>*</span>
@@ -416,25 +311,17 @@ class ListHackathon extends Component {
                 />
               </div>
               <div class="form-group">
-                <label
-                  for="judge"
-                  style={{ fontSize: "15px", marginRight: "10px" }}
-                >
-                  Judge:{" "}
+                <label for="judge" style={{ fontSize: "15px" }}>
+                  Appoint Judge:{" "}
                 </label>
-                {this.state.judgeboxes.map(item => (
-                  <label
-                    key={item.key}
-                    style={{ fontSize: "15px", marginRight: "10px" }}
-                  >
-                    {item.name}
-                    <Checkbox
-                      name={item.name}
-                      checked={this.state.judgeItems.get(item.name)}
-                      onChange={this.handleJudgeChange}
-                    />
-                  </label>
-                ))}
+                <input
+                  onChange={this.judgeChangeHandler}
+                  type="text"
+                  class="form-control"
+                  name="description"
+                  id="description"
+                  placeholder="Judge"
+                />
               </div>
               <div class="form-group">
                 <label
@@ -443,20 +330,8 @@ class ListHackathon extends Component {
                 >
                   Sponsor:{" "}
                 </label>
-                {this.state.checkboxes.map(item => (
-                  <label
-                    key={item.key}
-                    style={{ fontSize: "15px", marginRight: "10px" }}
-                  >
-                    {item.name}
-                    <Checkbox
-                      name={item.name}
-                      checked={this.state.checkedItems.get(item.name)}
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                ))}
-                {/* {details} */}
+
+                {details}
                 {/* <input
                   type="checkbox"
                   id="subscribeNews"
