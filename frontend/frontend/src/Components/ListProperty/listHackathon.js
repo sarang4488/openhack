@@ -260,41 +260,41 @@ class ListHackathon extends Component {
         error: true,
         errorMessage: "Description must be atleast 10 alphanumeric characters"
       });
-      // } else if (this.state.startDate < date || this.state.endDate < date) {
-      //   this.setState({
-      //     error: true,
-      //     errorMessage: "Start and End Date should be greater than todays date"
-      //   });
-      // } else if (this.state.startDate >= this.state.endDate) {
-      //   this.setState({
-      //     error: true,
-      //     errorMessage: "End date should be greater than start date"
-      //   });
-      // } else if (this.state.fee <= 0) {
-      //   this.setState({
-      //     error: true,
-      //     errorMessage: "Registration fees must be greater than 0$"
-      //   });
-      // } else if (this.state.minTeam <= 0) {
-      //   this.setState({
-      //     error: true,
-      //     errorMessage: "Min Team Size must be 1"
-      //   });
-      // } else if (this.state.maxTeam > 4) {
-      //   this.setState({
-      //     error: true,
-      //     errorMessage: "Max Team Size can be 4"
-      //   });
-      // } else if (this.state.discount > 50) {
-      //   this.setState({
-      //     error: true,
-      //     errorMessage: "Max discount can be 50%"
-      //   });
-      // } else if (this.state.judges === "") {
-      //   this.setState({
-      //     error: true,
-      //     errorMessage: "Please Select a Judge"
-      //   });
+    } else if (this.state.startDate < date || this.state.endDate < date) {
+      this.setState({
+        error: true,
+        errorMessage: "Start and End Date should be greater than todays date"
+      });
+    } else if (this.state.startDate >= this.state.endDate) {
+      this.setState({
+        error: true,
+        errorMessage: "End date should be greater than start date"
+      });
+    } else if (this.state.fee <= 0) {
+      this.setState({
+        error: true,
+        errorMessage: "Registration fees must be greater than 0$"
+      });
+    } else if (this.state.minTeam <= 0) {
+      this.setState({
+        error: true,
+        errorMessage: "Min Team Size must be 1"
+      });
+    } else if (this.state.maxTeam > 4) {
+      this.setState({
+        error: true,
+        errorMessage: "Max Team Size can be 4"
+      });
+    } else if (this.state.discount > 50) {
+      this.setState({
+        error: true,
+        errorMessage: "Max discount can be 50%"
+      });
+    } else if (this.state.judges === "") {
+      this.setState({
+        error: true,
+        errorMessage: "Please Select a Judge"
+      });
     } else {
       const data = {
         owner: localStorage.getItem("screenName"),
@@ -312,34 +312,34 @@ class ListHackathon extends Component {
       console.log(data);
       //set the with credentials to true
       axios.defaults.withCredentials = true;
-      //make a post request with the user data
-      // axios
-      //   .post(
-      //     `http://localhost:8080/hackathon/?name=${data.name}&description=${
-      //       data.description
-      //     }&start_date=${data.startDate}&end_date=${
-      //       data.endDate
-      //     }&owner_screenname=${data.owner}&judge_screennames=${
-      //       data.judge
-      //     }&min_team_size=${data.minTeam}&max_team_size=${data.maxTeam}&fee=${
-      //       data.fee
-      //     }&discount=${data.discount}&organization_names=${data.sponsor}`
-      //   )
-      //   .then(response => {
-      //     console.log("Status Code : ", response);
-      //     if (response.data.statusCodeValue === 200) {
-      //       this.setState({
-      //         authFlag: true,
-      //         message:
-      //           "Congratulations! You have successfully listed your hackathon"
-      //       });
-      //     } else {
-      //       this.setState({
-      //         authFlag: false
-      //         // message: "Hackathon Already Exist "
-      //       });
-      //     }
-      //   });
+      // make a post request with the user data
+      axios
+        .post(
+          `http://localhost:8080/hackathon/?name=${data.name}&description=${
+            data.description
+          }&start_date=${data.startDate}&end_date=${
+            data.endDate
+          }&owner_screenname=${data.owner}&judge_screennames=${
+            data.judge
+          }&min_team_size=${data.minTeam}&max_team_size=${data.maxTeam}&fee=${
+            data.fee
+          }&discount=${data.discount}&organization_names=${data.sponsor}`
+        )
+        .then(response => {
+          console.log("Status Code : ", response);
+          if (response.data.statusCodeValue === 200) {
+            this.setState({
+              authFlag: true,
+              message:
+                "Congratulations! You have successfully listed your hackathon"
+            });
+          } else {
+            this.setState({
+              error: true,
+              errorMessage: response.data.body // message: "Hackathon Already Exist "
+            });
+          }
+        });
     }
   };
 
@@ -399,7 +399,7 @@ class ListHackathon extends Component {
               </div>
               <div class="form-group">
                 <label for="description" style={{ fontSize: "15px" }}>
-                  Event Description:{" "}
+                  Event Description: <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   onChange={this.descriptionChangeHandler}
@@ -412,7 +412,7 @@ class ListHackathon extends Component {
               </div>
               <div class="form-group">
                 <label for="checkin" style={{ fontSize: "15px" }}>
-                  Start Date:{" "}
+                  Start Date: <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   onChange={this.startDateChangeHandler}
@@ -425,7 +425,7 @@ class ListHackathon extends Component {
               </div>
               <div class="form-group">
                 <label for="checkout" style={{ fontSize: "15px" }}>
-                  End Date:{" "}
+                  End Date: <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   onChange={this.endDateChangeHandler}
@@ -438,7 +438,7 @@ class ListHackathon extends Component {
               </div>
               <div class="form-group">
                 <label for="fee" style={{ fontSize: "15px" }}>
-                  Registration Fee:{" "}
+                  Registration Fee: <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   onChange={this.feeChangeHandler}
@@ -451,7 +451,7 @@ class ListHackathon extends Component {
               </div>
               <div class="form-group">
                 <label for="minteam" style={{ fontSize: "15px" }}>
-                  Minimum Team Size:{" "}
+                  Minimum Team Size: <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   onChange={this.minTeamChangeHandler}
@@ -464,7 +464,7 @@ class ListHackathon extends Component {
               </div>
               <div class="form-group">
                 <label for="maxteam" style={{ fontSize: "15px" }}>
-                  Max Team Size:{" "}
+                  Max Team Size: <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   onChange={this.maxTeamChangeHandler}
@@ -479,7 +479,7 @@ class ListHackathon extends Component {
                   for="judge"
                   style={{ fontSize: "15px", marginRight: "10px" }}
                 >
-                  Judge:{" "}
+                  Judge: <span style={{ color: "red" }}>*</span>
                 </label>
                 {this.state.judges.map(item => (
                   <label
