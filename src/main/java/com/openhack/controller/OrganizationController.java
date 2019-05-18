@@ -3,6 +3,7 @@ package com.openhack.controller;
 import com.openhack.services.OrganizationService;
 import com.openhack.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class OrganizationController {
 
         ResponseEntity responseEntity = organizationService.createOrganization(name,desctiption,owner_name);
 
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/organization/{org_name}", method = {RequestMethod.GET})
@@ -33,7 +34,7 @@ public class OrganizationController {
 
         ResponseEntity responseEntity = organizationService.readOrganization(org_name,screenname);
 
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/organization/{name}/join/{screenname}", method = {RequestMethod.PUT})
@@ -42,7 +43,7 @@ public class OrganizationController {
 
         ResponseEntity responseEntity = userService.updateUserOrganization(screenname,name,"Requested");
 
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/organization/{name}/approve/{screenname}", method = {RequestMethod.PUT})
@@ -50,13 +51,13 @@ public class OrganizationController {
                                                 @PathVariable String screenname){
         ResponseEntity responseEntity = userService.updateUserOrganization(screenname,name,"Approved");
 
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/organization/names",method = {RequestMethod.GET})
     public ResponseEntity<?> getOrganizationNames(){
         ResponseEntity responseEntity = organizationService.readOrganizationNames();
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
 }

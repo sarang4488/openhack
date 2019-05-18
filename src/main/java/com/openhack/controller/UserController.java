@@ -23,7 +23,7 @@ public class UserController{
 
         ResponseEntity responseEntity = userService.createUser(name,screenname,email,userType,"registered");
 
-        return responseEntity;
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/user/{screenname}", method = {RequestMethod.GET})
