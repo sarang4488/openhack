@@ -20,6 +20,8 @@ public class HackathonController {
     @Autowired
     private EmailActivationLink emailActivationLink;
 
+    private ResponseHeader responseHeader = new ResponseHeader();
+
 
     @RequestMapping(value = "/hackathon", method = {RequestMethod.POST})
     public ResponseEntity<?> postHackathon(@RequestParam(value = "name",required = true) String name,

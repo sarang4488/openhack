@@ -11,6 +11,8 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    private ResponseHeader responseHeader = new ResponseHeader();
+
     @RequestMapping(value = "/login", method = {RequestMethod.GET})
     public ResponseEntity<?> getLogin(@RequestParam(value = "email",required = true) String email,
                                       @RequestParam(value = "password",required = true) String password){

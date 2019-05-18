@@ -15,6 +15,8 @@ public class OrganizationController {
     @Autowired
     private UserService userService;
 
+    private ResponseHeader responseHeader = new ResponseHeader();
+
     @RequestMapping(value = "/organization", method = {RequestMethod.POST})
     public ResponseEntity<?> postOrganization(@RequestParam(value = "name",required = true) String name,
                                         @RequestParam(value = "owner_name",required = true) String owner_name,

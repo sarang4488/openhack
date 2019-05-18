@@ -14,6 +14,8 @@ public class UserActivationController {
     @Autowired
     private ActivationService activationService;
 
+    private ResponseHeader responseHeader = new ResponseHeader();
+
     @RequestMapping(value = "/activate", method = {RequestMethod.GET})
     public ResponseEntity<?> userActivation(@RequestParam(value = "email",required = true) String email){
 

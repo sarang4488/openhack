@@ -40,6 +40,8 @@ public class UserResponse {
     private String email;
     private String about_me;
     private String purl;
+    private String userType;
+    private String userStatus;
     private Address address;
     private UserOrgResponse organization;
 
@@ -52,6 +54,8 @@ public class UserResponse {
         this.purl = user.getPurl();
         this.screenname = user.getScreenName();
         this.title = user.getTitle();
+        this.userType = user.getUserType();
+        this.userStatus = user.getUserStatus();
 
         Organization org = user.getOrganization();
         if(org != null){
@@ -129,5 +133,21 @@ public class UserResponse {
 
     public void setOrganization(UserOrgResponse organization) {
         this.organization = organization;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
     }
 }
