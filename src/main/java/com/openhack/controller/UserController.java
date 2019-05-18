@@ -34,7 +34,7 @@ public class UserController{
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/user/{screenname}",method = {RequestMethod.PUT})
+    @RequestMapping(value = "/user/{screenname}",method = {RequestMethod.POST})
     public ResponseEntity<?> updateUser(@PathVariable String screenname,
                                         @RequestParam(value = "name",required = false) String name,
                                         @RequestParam(value = "purl",required = false) String purl,
