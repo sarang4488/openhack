@@ -13,7 +13,6 @@ class registerhackathon extends Component {
     this.state = {
       name: "",
       teamName: "",
-      members: [{ name: "", role: "" }],
       authFlag: false,
       maxTeam: 0
     };
@@ -49,6 +48,18 @@ class registerhackathon extends Component {
     });
   };
 
+  teamLeadRoleChangeHandler = e => {
+    this.setState({
+      leadRole: e.target.value
+    });
+  };
+
+  ChangeHandler = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
   componentDidMount() {
     // const data = {
     //   hackid: this.props.location.state.displayprop
@@ -72,11 +83,24 @@ class registerhackathon extends Component {
     //prevent page from refresh
 
     //make a post request with the user data
+    const data = {
+      hackid: this.props.location.state.displayprop,
+      register: this.state
+    };
+    console.log(data.register);
     axios
       .post(
-        `http://localhost:8080/hackathon/1/register/?leader_screenname=${
-          this.state.name
-        }`
+        `http://localhost:8080/hackathon/${
+          data.hackid
+        }/register/?leader_screenname=${this.state.name}&leader_role=${
+          this.state.leadRole
+        }&team_name=${this.state.teamName}&member2_screenname=${
+          this.state.Member1name
+        }&member2_role=${this.state.Member1role}&member3_screenname=${
+          this.state.Member2name
+        }&member3_role=${this.state.Member2role}&member4_screenname=${
+          this.state.Member3name
+        }&member4_role=${this.state.Member3role}`
       )
       .then(response => {
         console.log("Status Code : ", response);
@@ -92,29 +116,28 @@ class registerhackathon extends Component {
     let table = [];
     console.log(this.state.maxTeam);
     // Outer loop to create parent
-    for (let i = 0; i < 4; i++) {
+    for (let i = 1; i < this.state.maxTeam; i++) {
       console.log("test" + i);
       table.push(
         <div class="form-group">
           <input
-            onChange={this.typeChangeHandler}
+            onChange={this.ChangeHandler}
             type="text"
             class="form-control"
-            name="type"
-            placeholder="Member 3 email"
+            name={"Member" + i + "name"}
+            placeholder={"Member" + " " + i + " " + "name"}
           />
           <input
-            onChange={this.typeChangeHandler}
+            onChange={this.ChangeHandler}
             type="text"
             class="form-control"
-            name="type"
-            placeholder="Member 3 role"
+            name={"Member" + i + "role"}
+            placeholder={"Member" + " " + i + " " + "role"}
           />
         </div>
       );
-
-      return table;
     }
+    return table;
   };
   render() {
     let navbar = <NavbarOwner data={this.props.data} />;
@@ -153,7 +176,7 @@ class registerhackathon extends Component {
                   type="text"
                   class="form-control"
                   name="name"
-                  placeholder="Property Name"
+                  placeholder="Leader Name"
                   value={this.state.name}
                 />
                 <input
@@ -164,9 +187,9 @@ class registerhackathon extends Component {
                   placeholder="Team Lead Role"
                 />
               </div>
-
+              {this.createTable()}
               {/* <div class="form-group">
-                <input
+                {/* <input
                   onChange={this.typeChangeHandler}
                   type="text"
                   class="form-control"
@@ -180,21 +203,21 @@ class registerhackathon extends Component {
                   name="type"
                   placeholder="Member 1 role"
                 />
-              </div>
-              <div class="form-group">
+              </div> */}
+              {/* <div class="form-group">
                 <input
                   onChange={this.typeChangeHandler}
                   type="text"
                   class="form-control"
                   name="type"
-                  placeholder="Member 2 email"
+                  placeholder="Member 1 Screen Name"
                 />
                 <input
                   onChange={this.typeChangeHandler}
                   type="text"
                   class="form-control"
                   name="type"
-                  placeholder="Member 2 role"
+                  placeholder="Member 1 Role"
                 />
               </div> */}
               {/* <div class="form-group">
