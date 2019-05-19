@@ -32,10 +32,17 @@ public class PaymentService {
         User user = userDao.findByScreenname(screenname);
         Hackathon hackathon = hackathonDao.findItemById(Optional.ofNullable(hid).orElse(-1L));
 
+        System.out.println(user.getUid());
+
+
         TeamMember teamMember = teamMemberDao.findItemByUid((int)user.getUid());
+
+
+        System.out.println(teamMember == null);
 
         if(teamMember.getP_status().equals("Paid"))
             return ResponseEntity.badRequest().body("Payment already received for this hackathon");
+
         teamMember.setP_status("Paid");
 
         Payment payment = new Payment();

@@ -16,8 +16,8 @@ public class TeamMemberDao {
     public void createItem(TeamMember teamMember){this.entityManager.persist(teamMember);}
 
     public TeamMember findItemByUid(int uid){
-        Query query = this.entityManager.createNativeQuery("select * from team_member where uid=uid",TeamMember.class);
-        query.setParameter("uid",uid);
+        Query query = this.entityManager.createNativeQuery("select * from team_member where uid = ?",TeamMember.class);
+        query.setParameter(1,uid);
         if(query.getResultList().isEmpty()) return null;
         return (TeamMember) query.getResultList().get(0);
     }
