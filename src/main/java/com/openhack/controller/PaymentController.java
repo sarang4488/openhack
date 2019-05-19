@@ -31,6 +31,8 @@ public class PaymentController {
     @RequestMapping(value = "/payment/{screenname}/paid/{hid}" , method = {RequestMethod.POST})
     public ResponseEntity<?> updatePaymentStatus(@PathVariable String screenname,
                                               @PathVariable Long hid){
+
+        System.out.println(screenname);
         ResponseEntity responseEntity = paymentService.createPayment(screenname,hid);
 
 
