@@ -40,13 +40,14 @@ class payhackathon extends Component {
     this.amenitiesChangeHandler = this.amenitiesChangeHandler.bind(this);
     this.priceChangeHandler = this.priceChangeHandler.bind(this);
     this.descriptionChangeHandler = this.descriptionChangeHandler.bind(this);
-    this.submitProperty = this.submitProperty.bind(this);
+    this.submitPayment = this.submitPayment.bind(this);
   }
   //Call the Will Mount to set the auth Flag to false
   componentWillMount() {
     this.setState({
       authFlag: false,
-      message: ""
+      message: "",
+      payment: 0
     });
 
     const data = {
@@ -57,16 +58,21 @@ class payhackathon extends Component {
 
   componentDidMount() {
     const data = {
-      screenName: window.localStorage.getItem("screenName")
+      screenName: localStorage.getItem("screenName"),
+      hackid: this.props.location.state.displayprop
     };
+    console.log(data.screenName);
+    console.log(data.hackid);
     axios
-      .get(`http://localhost:8080/hackathon/viewall/${data.screenName}`)
+      .get(
+        `http://localhost:8080/payment/${data.screenName}/amount/${data.hackid}`
+      )
       .then(response => {
         console.log(response);
         //update the state with the response data
         this.setState({
           authFlag: true,
-          hackathons: response.data.body
+          payment: response.data.body
           // properties : this.state.properties,
         });
       });
@@ -149,53 +155,35 @@ class payhackathon extends Component {
   };
 
   //submit Property handler to send a request to the node backend
-  submitProperty = e => {
-    var headers = new Headers();
-    //const { description, selectedFile } = this.state;
-    let formData = new FormData();
-
+  submitPayment = e => {
     //prevent page from refresh
-    e.preventDefault();
     const data = {
-      owner: cookie.load("cookie3"),
-      name: this.state.name,
-      location: this.state.location,
-      checkin: this.state.checkin,
-      checkout: this.state.checkout,
-      guests: this.state.guests,
-      description: this.state.description,
-      descriptionprop: this.state.descriptionprop,
-      type: this.state.type,
-      price: this.state.price,
-      bedrooms: this.state.bedrooms,
-      bathrooms: this.state.bathrooms,
-      amenities: this.state.amenities,
-      selectedFile: this.state.selectedFile
+      screenName: localStorage.getItem("screenName"),
+      hackid: this.props.location.state.displayprop
     };
-    formData.append("description", data.description);
-    formData.append("selectedFile", data.selectedFile);
-    formData.append("selectedFile", data.name);
 
     //set the with credentials to true
     axios.defaults.withCredentials = true;
     //make a post request with the user data
-    axios.post("http://localhost:3031/listproperty", data).then(response => {
-      console.log("Status Code : ", response.data);
-      if (response.data === 200) {
-        this.setState({
-          authFlag: true,
-          message: "Congratulations! You have successfully listed your property"
-        });
-        axios.post("http://localhost:3031/upload", formData).then(results => {
-          // access results...
-        });
-      } else {
-        this.setState({
-          authFlag: false,
-          message: "User Already Exist "
-        });
-      }
-    });
+    axios
+      .post(
+        `http://localhost:8080/payment/${data.screenName}/paid/${data.hackid}`
+      )
+      .then(response => {
+        console.log("Status Code : ", response);
+        if (response.data === 200) {
+          this.setState({
+            authFlag: true,
+            message:
+              "Congratulations! You have successfully listed your property"
+          });
+        } else {
+          this.setState({
+            authFlag: false,
+            message: "User Already Exist "
+          });
+        }
+      });
   };
 
   render() {
@@ -219,7 +207,9 @@ class payhackathon extends Component {
                 <p>Please enter your payment details</p>
                 <p style={{ fontSize: "18px" }}>{this.state.message}</p>
               </div>
-
+              <h3 style={{ marginLeft: "37%", color: "red" }}>
+                Amount to be paid is {this.state.payment}$
+              </h3>
               <div class="form-group">
                 Enter Debit/Credit Card Number :
                 <input
@@ -263,7 +253,7 @@ class payhackathon extends Component {
               </div>
 
               <button
-                onClick={this.submitProperty}
+                onClick={this.submitPayment}
                 class="btn btn-warning btn-lg"
                 style={{ marginLeft: "30px" }}
               >
