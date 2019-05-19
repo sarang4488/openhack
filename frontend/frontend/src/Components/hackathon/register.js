@@ -104,11 +104,11 @@ class registerhackathon extends Component {
       )
       .then(response => {
         console.log("Status Code : ", response);
-
-        this.setState({
-          //authFlag: true,
-          message: "Congratulations! You have successfully listed your property"
-        });
+        if (response.data.statusCodeValue === 200) {
+          this.setState({
+            authFlag: true
+          });
+        }
       });
   };
 
