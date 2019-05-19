@@ -99,7 +99,7 @@ public class TeamService {
         teamMemberDao.createItem(teamMember1);
 
         TeamMember teamMember2 = null ;
-        if(member2_screenname != null) {
+        if(member2_screenname != null && !member2_screenname.equals("")) {
 
             if(member2_screenname.equals(owner))
                 return ResponseEntity.badRequest().body(owner+" is the owner. Owner cannot register for his hackathon");
@@ -117,14 +117,14 @@ public class TeamService {
                 teamMemberDao.createItem(teamMember2);
             }
             else{
-                return ResponseEntity.badRequest().body(member2_screenname+" is not a memebr in the system.");
+                return ResponseEntity.badRequest().body(member2_screenname+" (member2) is not a valid member in the system.");
             }
 
         }
 
 
         TeamMember teamMember3 = null;
-        if(member3_screenname != null) {
+        if(member3_screenname != null && !member3_screenname.equals("")) {
 
             if(member3_screenname.equals(owner))
                 return ResponseEntity.badRequest().body(owner+" is the owner. Owner cannot register for his hackathon");
@@ -141,13 +141,13 @@ public class TeamService {
                 teamMember3.setP_status("None");
                 teamMemberDao.createItem(teamMember3);
             }else{
-                return ResponseEntity.badRequest().body(member3_screenname+" is not a memebr in the system.");
+                return ResponseEntity.badRequest().body(member3_screenname+" (member 3) is not a valid member in the system.");
             }
         }
 
 
         TeamMember teamMember4 = null;
-        if(member4_screenname != null) {
+        if(member4_screenname != null && !member4_screenname.equals("")) {
 
             if(member4_screenname.equals(owner))
                 return ResponseEntity.badRequest().body(owner+" is the owner. Owner cannot register for his hackathon");
@@ -165,7 +165,7 @@ public class TeamService {
                 teamMemberDao.createItem(teamMember4);
             }
             else{
-                return ResponseEntity.badRequest().body(member4_screenname+" is not a memebr in the system.");
+                return ResponseEntity.badRequest().body(member4_screenname+" (member 3) is not a valid member in the system.");
             }
         }
 
