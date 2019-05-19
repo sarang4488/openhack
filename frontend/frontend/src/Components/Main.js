@@ -17,6 +17,7 @@ import listproperty from "./ListProperty/listproperty";
 import listHackathon from "./ListProperty/listHackathon";
 import Property from "./Property/property";
 import organizations from "./Property/organizations";
+import homepage from "./homepage/homepage";
 //import CheckForm from "./CategoryCheck/checkform";
 ////import OwnerMainPage from "./Owner/ownermainpage";
 //mport MyTrips from "./Dashboard/mytrips";
@@ -42,6 +43,7 @@ class Main extends Component {
         <Route path="/navbar4" component={Navbar4} />
         <Route path="/navbar5" component={NavProfile} />
         <Route path="/register" component={SignUp} />
+        <Route exact path="/" component={homepage} />
 
         <Route path="/account" component={Account} />
         <Route path="/profile" component={Profile} />

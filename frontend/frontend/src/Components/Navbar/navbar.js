@@ -42,10 +42,10 @@ handleClick = () => {
     }
     let dropDown = (
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown">Login <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown">User <span class="caret"></span></a>
                          <ul class="dropdown-menu">
-                            <li><Link to="/login" class="test">Traveler Login</Link></li>
-                            <li><Link to="/ownerlogin" class="test">Owner Login </Link></li>
+                            <li><Link to="/login" class="test">Login</Link></li>
+                            <li><Link to="/register" class="test">Register </Link></li>
                           </ul>
                     </li>
                  );
@@ -70,11 +70,15 @@ handleClick = () => {
     {redirectVar}  
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/home"><img src="images/homeAway.svg"></img></a>
+      <a class="navbar-brand" href="/home"><img src="images/open.png"   style={{
+                  marginLeft: "140px",
+                  width: "200px",
+                  height: "60px"
+                }}></img></a>
     </div>
     <ul class="nav navbar-nav navbar-right">
       {dropDown}
-      <li><button class="btn navbar-btn1" onClick={this.handleClick} style={{textDecoration:"none"}}>List Your Property</button></li>
+      {/* <li><button class="btn navbar-btn1" onClick={this.handleClick} style={{textDecoration:"none"}}>List Your Property</button></li> */}
       <li><a class="logoimage" ><img src="images/iconmain.svg"></img></a></li>
     </ul>
   </div>
