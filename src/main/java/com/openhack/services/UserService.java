@@ -84,6 +84,9 @@ public class UserService {
                                         String zip){
 
         User user = userDao.findByScreenname(screenname);
+        
+        if(user == null)
+        	return ResponseEntity.badRequest().body("User does not exist");
 
         if(name != null)
             user.setName(name);
@@ -132,6 +135,10 @@ public class UserService {
                                                     String orgStatus){
 
         User user = userDao.findByScreenname(screenname);
+        
+        if(user == null){
+            return ResponseEntity.badRequest().body("No such user");
+        }
 
         Organization organization = organizationDao.findItemByName(org_name);
 
