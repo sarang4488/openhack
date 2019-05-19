@@ -29,6 +29,7 @@ class Profile extends Component {
       orgFlag: false,
       leaveFlag: false,
       MainName: "",
+      organisationvalue:"",
       status: ""
     };
     //Bind the handlers to this class
@@ -246,7 +247,7 @@ class Profile extends Component {
     //prevent page from refresh
     e.preventDefault();
     const data = {
-      orgname: this.state.orgname,
+      orgname: this.state.organisationvalue,
       screenName: localStorage.getItem("screenName")
     };
     console.log("data", data);
@@ -310,6 +311,9 @@ class Profile extends Component {
         }
       });
   };
+  handleSelect= e =>{
+    this.setState({organisationvalue: e.target.value});
+  }
   render() {
     var redirect = null;
     // if (!cookie.load("cookie")) {
@@ -343,13 +347,22 @@ class Profile extends Component {
               {this.state.organization === "" ? (
                 <div class="row">
                   <div
-                    class="form-group form-group-lg col-md-6"
+                    class="form-group form-group-lg col-md-3"
                     style={{ marginLeft: "15px" }}
                   >
                     <label className="sr-only" for="firstname">
                       Search Organization
                     </label>
-                    <input
+                    <label style={{fontSize:"15px"}}>
+                    Select organization to join : <br></br>
+                    <select value={this.state.organisationvalue} onChange={this.handleSelect}>
+                    <option value="grapefruit">Grapefruit</option>
+            <option value="lime">Lime</option>
+            <option value="coconut">Coconut</option>
+            <option value="mango">Mango</option>
+                    </select>
+                    </label>
+                    {/* <input
                       type="text"
                       className="form-control "
                       id="orgname"
@@ -359,7 +372,7 @@ class Profile extends Component {
                       // value={first_name}
                       // placeholder={first_name}
                       onChange={this.orgnameChangeHandler}
-                    />
+                    /> */}
                   </div>
                   <div class="col-md-3">
                     <button
