@@ -170,6 +170,10 @@ public class HackathonService {
     @Transactional
     public ResponseEntity<?> codeSubmission(String code_url,long tid){
         Team team=teamDao.findById(tid);
+        if(team == null) {
+        	return ResponseEntity.badRequest().body("This team is not yet registered");
+        }
+        
         Hackathon hackathon = team.getHackathon();
 
         List<TeamMember> teamMembers = team.getTeamMembers();
