@@ -20,16 +20,16 @@ public class PaymentController {
 
     ResponseHeader responseHeader = new ResponseHeader();
 
-    @RequestMapping(value = "/payment/{uid}/amount/{hid}" , method = {RequestMethod.GET})
-    public ResponseEntity<?> getPaymentAmount(@PathVariable Long uid,
+    @RequestMapping(value = "/payment/{screenname}/amount/{hid}" , method = {RequestMethod.GET})
+    public ResponseEntity<?> getPaymentAmount(@PathVariable String uid,
                                               @PathVariable Long hid){
 
         ResponseEntity responseEntity = paymentService.getPaymentAmount(uid,hid);
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/payment/{uid}/paid/{hid}" , method = {RequestMethod.POST})
-    public ResponseEntity<?> updatePaymentStatus(@PathVariable Long uid,
+    @RequestMapping(value = "/payment/{screenname}/paid/{hid}" , method = {RequestMethod.POST})
+    public ResponseEntity<?> updatePaymentStatus(@PathVariable String uid,
                                               @PathVariable Long hid){
         ResponseEntity responseEntity = paymentService.createPayment(uid,hid);
 
