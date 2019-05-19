@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -109,6 +111,25 @@ public class TeamService {
         TeamResponse teamResponse = new TeamResponse(updated_team);
 
         return ResponseEntity.ok().body(teamResponse);
+
+    }
+
+    @Transactional
+    public ResponseEntity<?> getTeams(String hackName){
+        Hackathon hackathon = hackathonDao.findItemByName(hackName);
+        List<Team> allTeams = teamDao.findTeams();
+        List<TeamResponse> hackTeams = new ArrayList<>();
+
+        if(allTeams != null) {
+            for (Team team :
+                    allTeams) {
+                if (team.getHackathon().getHid() == hackathon.getHid()) {
+                    TeamResponse teamResponse = new TeamResponse(team);
+                    hackTeams.add(teamResponse);
+                }
+            }
+        }
+        return ResponseEntity.ok().body(hackTeams);
 
     }
 

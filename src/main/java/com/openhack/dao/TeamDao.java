@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 public class TeamDao {
@@ -16,6 +18,12 @@ public class TeamDao {
     public Team findById(Long id){
         Team team=this.entityManager.find(Team.class, id);
         return team;
+    }
+
+    public List findTeams(){
+        Query query = this.entityManager.createNativeQuery("select * from team",Team.class);
+        if(query.getResultList().isEmpty()) return null;
+        return query.getResultList();
     }
 
 }

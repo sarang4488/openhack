@@ -110,6 +110,7 @@ public class HackathonResponse {
     private String status;
     private HackOwnerResponse owner;
     private String [] sponser;
+    private String [] judges;
 
     private List<HackTeamResponse> teams = new ArrayList<HackTeamResponse>();
 
@@ -136,7 +137,8 @@ public class HackathonResponse {
 //            this.sponser = new HackSponserResponse(organization.getOid(),organization.getName(),organization.getDesciption());
 //        }
 
-        this.sponser = hackathon.getSponser().split("$");
+        this.sponser = hackathon.getSponser().split("\\$");
+        this.judges = hackathon.getJudge_screenname().split("\\$");
 
         List<Team> team_list = hackathon.getTeams();
         for (Team t:
@@ -247,5 +249,13 @@ public class HackathonResponse {
 
     public void setTeams(List<HackTeamResponse> teams) {
         this.teams = teams;
+    }
+
+    public String[] getJudges() {
+        return judges;
+    }
+
+    public void setJudges(String[] judges) {
+        this.judges = judges;
     }
 }
