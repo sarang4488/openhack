@@ -26,4 +26,11 @@ public class TeamDao {
         return query.getResultList();
     }
 
+    public Team deleteItem(Long id){
+        Team team = this.entityManager.find(Team.class, id);
+        this.entityManager.remove(team);
+        this.entityManager.flush();
+        return team;
+    }
+
 }

@@ -28,8 +28,8 @@ public class PaymentService {
     private OrganizationDao organizationDao;
 
     @Transactional
-    public ResponseEntity<?> createPayment(Long uid,Long hid){
-        User user = userDao.findById(Optional.ofNullable(uid).orElse(-1L));
+    public ResponseEntity<?> createPayment(String screenname,Long hid){
+        User user = userDao.findByScreenname(screenname);
         Hackathon hackathon = hackathonDao.findItemById(Optional.ofNullable(hid).orElse(-1L));
 
         TeamMember teamMember = teamMemberDao.findItemByUid((int)user.getUid());
@@ -49,8 +49,8 @@ public class PaymentService {
     }
 
     @Transactional
-    public ResponseEntity<?> getPaymentAmount(Long uid,Long hid){
-        User user = userDao.findById(Optional.ofNullable(uid).orElse(-1L));
+    public ResponseEntity<?> getPaymentAmount(String screenname,Long hid){
+        User user = userDao.findByScreenname(screenname);
         Hackathon hackathon = hackathonDao.findItemById(Optional.ofNullable(hid).orElse(-1L));
 
         float fee = hackathon.getFee();
