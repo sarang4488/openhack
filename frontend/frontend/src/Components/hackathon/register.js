@@ -20,27 +20,7 @@ class registerhackathon extends Component {
     this.teamNameChangeHandler = this.teamNameChangeHandler.bind(this);
   }
   //Call the Will Mount to set the auth Flag to false
-  componentWillMount() {
-    const data = {
-      hackid: this.props.location.state.displayprop
-    };
-
-    this.setState({
-      name: localStorage.getItem("screenName")
-    });
-
-    axios
-      .get(`http://localhost:8080/hackathon/${data.hackid}`)
-      .then(response => {
-        console.log(response);
-        //update the state with the response data
-        this.setState({
-          maxTeam: response.data.body.max_team_size
-        });
-
-        console.log("No of results :", this.state.maxTeam);
-      });
-  }
+  componentWillMount() {}
   //username change handler to update state variable with the text entered by the user
   teamNameChangeHandler = e => {
     this.setState({
@@ -61,28 +41,29 @@ class registerhackathon extends Component {
   };
 
   componentDidMount() {
-    // const data = {
-    //   hackid: this.props.location.state.displayprop
-    // };
-    // this.setState({
-    //   name: localStorage.getItem("screenName")
-    // });
-    // axios
-    //   .get(`http://localhost:8080/hackathon/${data.hackid}`)
-    //   .then(response => {
-    //     console.log(response);
-    //     //update the state with the response data
-    //     this.setState({
-    //       maxTeam: response.data.body.max_team_size
-    //     });
-    //     console.log("No of results :", this.state.maxTeam);
-    //   });
-  }
-  //submit Property handler to send a request to the node backend
-  submitProperty = e => {
-    //prevent page from refresh
+    const data = {
+      hackid: this.props.location.state.displayprop
+    };
 
-    //make a post request with the user data
+    this.setState({
+      name: localStorage.getItem("screenName"),
+      hackid: data.hackid
+    });
+
+    axios
+      .get(`http://localhost:8080/hackathon/${data.hackid}`)
+      .then(response => {
+        console.log(response);
+        //update the state with the response data
+        this.setState({
+          maxTeam: response.data.body.max_team_size
+        });
+
+        console.log("No of results :", this.state.maxTeam);
+      });
+  }
+
+  submitProperty = e => {
     const data = {
       hackid: this.props.location.state.displayprop,
       name: localStorage.getItem("screenName")
@@ -103,13 +84,18 @@ class registerhackathon extends Component {
         }&member4_role=${this.state.Member3role}`
       )
       .then(response => {
-        console.log("Status Code : ", response);
-        if (response.data.statusCodeValue === 200) {
-          this.setState({
-            authFlag: true
-          });
-        }
+        //update the state with the response data
+        console.log(response);
+        this.setState({
+          authFlag: true
+        });
       });
+
+    // if (response.data.statusCodeValue === 200) {
+    //   this.setState({
+    //     authflag: true
+    //   });
+    // }
   };
 
   createTable = () => {
@@ -144,7 +130,12 @@ class registerhackathon extends Component {
     //redirect based on successful login
     let redirectVar = null;
     if (this.state.authFlag) {
-      redirectVar = <Redirect to="/payhackathon" />;
+      this.props.history.push({
+        pathname: "/payhackathon",
+        state: {
+          displayprop: this.state.hackid
+        }
+      });
     }
 
     return (

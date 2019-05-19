@@ -48,6 +48,28 @@ class payhackathon extends Component {
       authFlag: false,
       message: ""
     });
+
+    const data = {
+      hackid: this.props.location.state.displayprop
+    };
+    console.log(data.hackid);
+  }
+
+  componentDidMount() {
+    const data = {
+      screenName: window.localStorage.getItem("screenName")
+    };
+    axios
+      .get(`http://localhost:8080/hackathon/viewall/${data.screenName}`)
+      .then(response => {
+        console.log(response);
+        //update the state with the response data
+        this.setState({
+          authFlag: true,
+          hackathons: response.data.body
+          // properties : this.state.properties,
+        });
+      });
   }
   //username change handler to update state variable with the text entered by the user
   nameChangeHandler = e => {
