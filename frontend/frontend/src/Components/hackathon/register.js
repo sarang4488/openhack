@@ -12,39 +12,60 @@ class registerhackathon extends Component {
     //maintain the state required for this component
     this.state = {
       name: "",
-      hackid: 1,
-      authFlag: false
+      teamName: "",
+      members: [{ name: "", role: "" }],
+      authFlag: false,
+      maxTeam: 0
     };
     //Bind the handlers to this class
-    this.nameChangeHandler = this.nameChangeHandler.bind(this);
+    this.teamNameChangeHandler = this.teamNameChangeHandler.bind(this);
   }
   //Call the Will Mount to set the auth Flag to false
   componentWillMount() {
-    this.setState({
-      authFlag: false,
-      message: ""
-    });
-  }
-  //username change handler to update state variable with the text entered by the user
-  nameChangeHandler = e => {
-    this.setState({
-      name: e.target.value
-    });
-  };
-  //password change handler to update state variable with the text entered by the user
-  // locationChangeHandler = e => {
-  //   this.setState({
-  //     location: e.target.value
-  //   });
-  // };
-  //password change handler to update state variable with the text entered by the user
+    const data = {
+      hackid: this.props.location.state.displayprop
+    };
 
-  //for setting image description
-  componentDidMount() {
     this.setState({
-      hackid: 1,
       name: localStorage.getItem("screenName")
     });
+
+    axios
+      .get(`http://localhost:8080/hackathon/${data.hackid}`)
+      .then(response => {
+        console.log(response);
+        //update the state with the response data
+        this.setState({
+          maxTeam: response.data.body.max_team_size
+        });
+
+        console.log("No of results :", this.state.maxTeam);
+      });
+  }
+  //username change handler to update state variable with the text entered by the user
+  teamNameChangeHandler = e => {
+    this.setState({
+      teamName: e.target.value
+    });
+  };
+
+  componentDidMount() {
+    // const data = {
+    //   hackid: this.props.location.state.displayprop
+    // };
+    // this.setState({
+    //   name: localStorage.getItem("screenName")
+    // });
+    // axios
+    //   .get(`http://localhost:8080/hackathon/${data.hackid}`)
+    //   .then(response => {
+    //     console.log(response);
+    //     //update the state with the response data
+    //     this.setState({
+    //       maxTeam: response.data.body.max_team_size
+    //     });
+    //     console.log("No of results :", this.state.maxTeam);
+    //   });
   }
   //submit Property handler to send a request to the node backend
   submitProperty = e => {
@@ -66,6 +87,35 @@ class registerhackathon extends Component {
         });
       });
   };
+
+  createTable = () => {
+    let table = [];
+    console.log(this.state.maxTeam);
+    // Outer loop to create parent
+    for (let i = 0; i < 4; i++) {
+      console.log("test" + i);
+      table.push(
+        <div class="form-group">
+          <input
+            onChange={this.typeChangeHandler}
+            type="text"
+            class="form-control"
+            name="type"
+            placeholder="Member 3 email"
+          />
+          <input
+            onChange={this.typeChangeHandler}
+            type="text"
+            class="form-control"
+            name="type"
+            placeholder="Member 3 role"
+          />
+        </div>
+      );
+
+      return table;
+    }
+  };
   render() {
     let navbar = <NavbarOwner data={this.props.data} />;
     const { description, selectedFile } = this.state;
@@ -74,6 +124,7 @@ class registerhackathon extends Component {
     if (this.state.authFlag) {
       redirectVar = <Redirect to="/payhackathon" />;
     }
+
     return (
       <div>
         {redirectVar}
@@ -89,7 +140,7 @@ class registerhackathon extends Component {
 
               <div class="form-group">
                 <input
-                  onChange={this.teamChangeHandler}
+                  onChange={this.teamNameChangeHandler}
                   type="text"
                   class="form-control"
                   name="descriptionprop"
@@ -106,7 +157,7 @@ class registerhackathon extends Component {
                   value={this.state.name}
                 />
                 <input
-                  onChange={this.descriptionChangeHandler}
+                  onChange={this.teamLeadRoleChangeHandler}
                   type="text"
                   class="form-control"
                   name="descriptionprop"
@@ -114,7 +165,7 @@ class registerhackathon extends Component {
                 />
               </div>
 
-              <div class="form-group">
+              {/* <div class="form-group">
                 <input
                   onChange={this.typeChangeHandler}
                   type="text"
@@ -145,8 +196,8 @@ class registerhackathon extends Component {
                   name="type"
                   placeholder="Member 2 role"
                 />
-              </div>
-              <div class="form-group">
+              </div> */}
+              {/* <div class="form-group">
                 <input
                   onChange={this.typeChangeHandler}
                   type="text"
@@ -161,7 +212,7 @@ class registerhackathon extends Component {
                   name="type"
                   placeholder="Member 3 role"
                 />
-              </div>
+              </div> */}
 
               <button
                 onClick={this.submitProperty}

@@ -30,17 +30,22 @@ class ListAllHackathon extends Component {
     console.log("Successful test - ", this.state.displayprop);
   };
   componentDidMount() {
-    axios.get("http://localhost:8080/hackathon").then(response => {
-      console.log(response);
-      //update the state with the response data
-      this.setState({
-        authFlag: true,
-        hackathons: response.data.body
-        // properties : this.state.properties,
+    const data = {
+      screenName: window.localStorage.getItem("screenName")
+    };
+    axios
+      .get(`http://localhost:8080/hackathon/viewall/${data.screenName}`)
+      .then(response => {
+        console.log(response);
+        //update the state with the response data
+        this.setState({
+          authFlag: true,
+          hackathons: response.data.body
+          // properties : this.state.properties,
+        });
+        console.log("Search :", this.state.properties);
+        console.log("No of results :", this.state.properties.length);
       });
-      console.log("Search :", this.state.properties);
-      console.log("No of results :", this.state.properties.length);
-    });
   }
   render() {
     let foot = <Footer data={this.props.data} />;
@@ -64,11 +69,16 @@ class ListAllHackathon extends Component {
                   {hack.id}:{hack.name}
                 </div>
               </h3>
-              <button class="btn btn-primary">
-                <a href="/registerhackathon" style={{ color: "white" }}>
+              <div class="btn btn-primary" on>
+                <span
+                  onClick={this.propertyChangeHandler}
+                  name="displayprop"
+                  data-value={hack.id}
+                  style={{ color: "white" }}
+                >
                   Register
-                </a>
-              </button>
+                </span>
+              </div>
               {/* <button
                 onClick={this.submitLogin}
                 style={{ marginLeft: "10px" }}
@@ -133,7 +143,7 @@ class ListAllHackathon extends Component {
     let redirectVar = null;
     if (this.state.displayprop != "") {
       this.props.history.push({
-        pathname: "/property",
+        pathname: "/registerhackathon",
         state: {
           displayprop: this.state.displayprop
         }
