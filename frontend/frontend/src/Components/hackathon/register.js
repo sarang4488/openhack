@@ -85,14 +85,14 @@ class registerhackathon extends Component {
     //make a post request with the user data
     const data = {
       hackid: this.props.location.state.displayprop,
-      register: this.state
+      name: localStorage.getItem("screenName")
     };
-    console.log(data.register);
+    console.log(data.name);
     axios
       .post(
         `http://localhost:8080/hackathon/${
           data.hackid
-        }/register/?leader_screenname=${this.state.name}&leader_role=${
+        }/register/?leader_screenname=${data.name}&leader_role=${
           this.state.leadRole
         }&team_name=${this.state.teamName}&member2_screenname=${
           this.state.Member1name
@@ -106,7 +106,7 @@ class registerhackathon extends Component {
         console.log("Status Code : ", response);
 
         this.setState({
-          authFlag: true,
+          //authFlag: true,
           message: "Congratulations! You have successfully listed your property"
         });
       });
@@ -117,7 +117,6 @@ class registerhackathon extends Component {
     console.log(this.state.maxTeam);
     // Outer loop to create parent
     for (let i = 1; i < this.state.maxTeam; i++) {
-      console.log("test" + i);
       table.push(
         <div class="form-group">
           <input

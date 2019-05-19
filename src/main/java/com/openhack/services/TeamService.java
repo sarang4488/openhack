@@ -98,6 +98,9 @@ public class TeamService {
         teamMember1.setP_status("None");
         teamMemberDao.createItem(teamMember1);
 
+        System.out.println(member2_screenname);
+        System.out.println(member2_screenname.equals("undefined"));
+        
         TeamMember teamMember2 = null ;
         if(member2_screenname != null && !member2_screenname.equals("")) {
 
