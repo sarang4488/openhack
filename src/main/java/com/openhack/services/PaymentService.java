@@ -62,7 +62,7 @@ public class PaymentService {
             for (String org_name:
                  org_names) {
 
-                if (user.getOrganization().getName().equals(org_name) && user.getOrgStatus().equals("Approved")) {
+                if (user.getOrganization().getName().equals(org_name) && user.getOrgStatus().equals("Approved") && discount != 0) {
                     amount = (fee * discount) / 100;
                 }
             }

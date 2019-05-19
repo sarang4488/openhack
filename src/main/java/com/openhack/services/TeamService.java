@@ -49,11 +49,11 @@ public class TeamService {
     @Transactional
     public ResponseEntity<?> registerTeam(Long hid,
                                           String leader_screenname,
-                                          String email,
+                                          String leader_rold,
                                           String member2_screenname,
-                                          String member2_email,
+                                          String member2_role,
                                           String member3_screenname,
-                                          String member3_email,
+                                          String member3_role,
                                           String member4_screenname,
                                           String member4_email) {
 
@@ -95,6 +95,7 @@ public class TeamService {
         TeamMember teamMember1 = new TeamMember();
         teamMember1.setTeam(team);
         teamMember1.setMember_id((int)user.getUid());
+        teamMember1.setP_status("None");
         teamMemberDao.createItem(teamMember1);
 
         TeamMember teamMember2 = null ;
@@ -113,6 +114,7 @@ public class TeamService {
         if(user2 != null ) {
             teamMember2.setMember_id((int) user2.getUid());
             teamMember2.setTeam(team);
+            teamMember2.setP_status("None");
             teamMemberDao.createItem(teamMember2);
         }
 
@@ -132,6 +134,7 @@ public class TeamService {
         if(user3 != null) {
             teamMember3.setMember_id((int) user3.getUid());
             teamMember3.setTeam(team);
+            teamMember3.setP_status("None");
             teamMemberDao.createItem(teamMember3);
         }
 
@@ -151,6 +154,7 @@ public class TeamService {
         if(user4 != null) {
             teamMember4.setMember_id((int) user4.getUid());
             teamMember4.setTeam(team);
+            teamMember4.setP_status("None");
             teamMemberDao.createItem(teamMember4);
         }
 

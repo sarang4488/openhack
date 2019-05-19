@@ -6,10 +6,7 @@ import com.openhack.dao.HackathonDao;
 import com.openhack.dao.OrganizationDao;
 import com.openhack.dao.TeamDao;
 import com.openhack.dao.UserDao;
-import com.openhack.model.Hackathon;
-import com.openhack.model.Organization;
-import com.openhack.model.Team;
-import com.openhack.model.User;
+import com.openhack.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -91,15 +88,9 @@ public class HackathonService {
 
         Organization organization = null;
         if( org_names != null){
-            //String [] org_name = org_names.split("$");
             hackathon.setSponser(org_names);
         }
 
-        //organization = organizationDao.findItemByName(org_name);
-
-        //System.out.println(organization);
-
-        //hackathon.setSponser(organization);
 
         hackathonDao.createItem(hackathon);
         HackathonResponse hackathonResponse = new HackathonResponse(hackathon);
@@ -180,6 +171,18 @@ public class HackathonService {
     public ResponseEntity<?> codeSubmission(String code_url,long tid){
         Team team=teamDao.findById(tid);
         Hackathon hackathon = team.getHackathon();
+
+        List<TeamMember> teamMembers = team.getTeamMembers();
+        if(teamMembers == null)
+            return ResponseEntity.badRequest().body("No Team Members for this team id");
+
+        for (TeamMember teamMember:
+             teamMembers) {
+            if(teamMember.getP_status().equals("None"))
+                return ResponseEntity.badRequest().body("All team members must pay the fee before code submission");
+        }
+
+
         if(hackathon.getStatus().equals("opened"))
             team.setCode_url(code_url);
         else

@@ -72,19 +72,19 @@ public class HackathonController {
     @RequestMapping(value = "/hackathon/{hid}/register", method = {RequestMethod.POST})
     public ResponseEntity<?> registerTeam(@PathVariable Long hid,
                                           @RequestParam(value = "leader_screenname", required = true) String leader_screenname,
-                                          @RequestParam(value = "leader_email", required = true) String email,
+                                          @RequestParam(value = "leader_role", required = true) String email,
                                           @RequestParam(value = "member2_screenname", required = false) String member2_screenname,
-                                          @RequestParam(value = "member2_email", required = false) String member2_email,
+                                          @RequestParam(value = "member2_role", required = false) String member2_role,
                                           @RequestParam(value = "member3_screenname", required = false) String member3_screenname,
-                                          @RequestParam(value = "member3_email", required = false) String member3_email,
+                                          @RequestParam(value = "member3_role", required = false) String member3_role,
                                           @RequestParam(value = "member4_screenname", required = false) String member4_screenname,
-                                          @RequestParam(value = "member4_email", required = false) String member4_email){
+                                          @RequestParam(value = "member4_role", required = false) String member4_role){
 
 //        emailActivationLink.sendActivationLinkTeamMember(member2_email,member2_name);
 //        emailActivationLink.sendActivationLinkTeamMember(member3_email,member3_name);
 //        emailActivationLink.sendActivationLinkTeamMember(member4_email,member4_name);
 
-        ResponseEntity responseEntity = teamService.registerTeam(hid,leader_screenname,email,member2_screenname,member2_email,member3_screenname,member3_email,member4_screenname,member4_email);
+        ResponseEntity responseEntity = teamService.registerTeam(hid,leader_screenname,email,member2_screenname,member2_role,member3_screenname,member3_role,member4_screenname,member4_role);
 
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
 
