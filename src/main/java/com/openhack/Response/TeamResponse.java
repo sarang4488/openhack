@@ -51,20 +51,9 @@ class TeamMemberResponse{
 
 public class TeamResponse {
     private long id;
-    private TeamHackResponse teamHackResponse;
-    private List<TeamMemberResponse> teamMemberResponses = new ArrayList<TeamMemberResponse>();
-
-    public TeamResponse(Team team) {
-        this.id = team.getTid();
-        Hackathon hackathon = team.getHackathon();
-        this.teamHackResponse = new TeamHackResponse(hackathon.getHid(),hackathon.getName());
-        List<TeamMember> teamMemberList = team.getTeamMembers();
-
-        for (TeamMember t:
-             teamMemberList) {
-            teamMemberResponses.add(new TeamMemberResponse(t.getTmid()));
-        }
-    }
+    private TeamHackResponse hackathon;
+    private String submission_url;
+    private List<TeamMemberResponse> teamMembers = new ArrayList<TeamMemberResponse>();
 
     public long getId() {
         return id;
@@ -74,19 +63,42 @@ public class TeamResponse {
         this.id = id;
     }
 
-    public TeamHackResponse getTeamHackResponse() {
-        return teamHackResponse;
+    public TeamHackResponse getHackathon() {
+        return hackathon;
     }
 
-    public void setTeamHackResponse(TeamHackResponse teamHackResponse) {
-        this.teamHackResponse = teamHackResponse;
+    public void setHackathon(TeamHackResponse hackathon) {
+        this.hackathon = hackathon;
     }
 
-    public List<TeamMemberResponse> getTeamMemberResponses() {
-        return teamMemberResponses;
+    public List<TeamMemberResponse> getTeamMembers() {
+        return teamMembers;
     }
 
-    public void setTeamMemberResponses(List<TeamMemberResponse> teamMemberResponses) {
-        this.teamMemberResponses = teamMemberResponses;
+    public void setTeamMembers(List<TeamMemberResponse> teamMembers) {
+        this.teamMembers = teamMembers;
     }
+
+    public String getSubmission_url() {
+        return submission_url;
+    }
+
+    public void setSubmission_url(String submission_url) {
+        this.submission_url = submission_url;
+    }
+
+    public TeamResponse(Team team) {
+        this.id = team.getTid();
+        Hackathon hackathon = team.getHackathon();
+        this.submission_url = team.getCode_url();
+        this.hackathon = new TeamHackResponse(hackathon.getHid(),hackathon.getName());
+        List<TeamMember> teamMemberList = team.getTeamMembers();
+
+        for (TeamMember t:
+             teamMemberList) {
+            teamMembers.add(new TeamMemberResponse(t.getTmid()));
+        }
+    }
+
+
 }

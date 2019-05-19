@@ -167,6 +167,19 @@ public class TeamService {
     }
 
     @Transactional
+    public ResponseEntity<?> updateTeamScore(long tid,
+                                             float score){
+
+        Team team = teamDao.findById(tid);
+        if(team != null){
+            team.setScore(score);
+        }
+
+        return ResponseEntity.ok().body("Score submitted");
+
+    }
+
+    @Transactional
     public ResponseEntity<?> getTeams(String hackName){
         Hackathon hackathon = hackathonDao.findItemByName(hackName);
         List<Team> allTeams = teamDao.findTeams();

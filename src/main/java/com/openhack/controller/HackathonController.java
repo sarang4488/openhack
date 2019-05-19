@@ -71,6 +71,7 @@ public class HackathonController {
 
     @RequestMapping(value = "/hackathon/{hid}/register", method = {RequestMethod.POST})
     public ResponseEntity<?> registerTeam(@PathVariable Long hid,
+                                          @RequestParam(value = "team_name",required = false)String team_name,
                                           @RequestParam(value = "leader_screenname", required = true) String leader_screenname,
                                           @RequestParam(value = "leader_role", required = true) String email,
                                           @RequestParam(value = "member2_screenname", required = false) String member2_screenname,
@@ -108,5 +109,14 @@ public class HackathonController {
         ResponseEntity responseEntity=hackathonService.codeSubmission(code_url,tid);
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "hackathon/{tid}/score",method = {RequestMethod.POST})
+    public ResponseEntity<?> updateScore(@PathVariable long tid,
+                                         @RequestParam(value="score",required=true) float score){
+
+        ResponseEntity responseEntity = teamService.updateTeamScore(tid,score);
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
 
 }

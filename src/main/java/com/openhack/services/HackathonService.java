@@ -187,6 +187,7 @@ public class HackathonService {
             team.setCode_url(code_url);
         else
             return ResponseEntity.badRequest().body("Can't submit. Hackathon is closed");
+
         TeamResponse teamResponse=new TeamResponse(team);
         return ResponseEntity.ok().body(teamResponse);
     }
