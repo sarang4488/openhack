@@ -98,11 +98,11 @@ public class TeamService {
         teamMember1.setP_status("None");
         teamMemberDao.createItem(teamMember1);
 
-        System.out.println(member2_screenname);
-        System.out.println(member2_screenname.equals("undefined"));
+        //System.out.println(member2_screenname);
+        //System.out.println(member2_screenname.equals("undefined"));
         
         TeamMember teamMember2 = null ;
-        if(member2_screenname != null && !member2_screenname.equals("")) {
+        if(member2_screenname != null && !member2_screenname.equals("undefined")) {
 
             if(member2_screenname.equals(owner))
                 return ResponseEntity.badRequest().body(owner+" is the owner. Owner cannot register for his hackathon");
@@ -127,7 +127,7 @@ public class TeamService {
 
 
         TeamMember teamMember3 = null;
-        if(member3_screenname != null && !member3_screenname.equals("")) {
+        if(member3_screenname != null && !member3_screenname.equals("undefined")) {
 
             if(member3_screenname.equals(owner))
                 return ResponseEntity.badRequest().body(owner+" is the owner. Owner cannot register for his hackathon");
@@ -150,7 +150,7 @@ public class TeamService {
 
 
         TeamMember teamMember4 = null;
-        if(member4_screenname != null && !member4_screenname.equals("")) {
+        if(member4_screenname != null && !member4_screenname.equals("undefined")) {
 
             if(member4_screenname.equals(owner))
                 return ResponseEntity.badRequest().body(owner+" is the owner. Owner cannot register for his hackathon");
