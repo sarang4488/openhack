@@ -68,10 +68,10 @@ public class TeamService {
         Date date2 = null;
 
         try {
-            date1 = new SimpleDateFormat("yyyy-MM-dd").parse(hackathon.getStart_date());
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String s2 = simpleDateFormat.format(new Date());
+        	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        	String s2 = simpleDateFormat.format(new Date());
             date2 = new SimpleDateFormat("yyy-MM-dd").parse(s2);
+            date1 = new SimpleDateFormat("yyyy-MM-dd").parse(hackathon.getStart_date());
 
             if (date2.compareTo(date1) > 0) {
                 return ResponseEntity.badRequest().body("Hackathon already started");
@@ -169,6 +169,9 @@ public class TeamService {
     @Transactional
     public ResponseEntity<?> getTeams(String hackName){
         Hackathon hackathon = hackathonDao.findItemByName(hackName);
+        if(hackathon==null) {
+        	return ResponseEntity.badRequest().body("No such hackathon exists");
+        }
         List<Team> allTeams = teamDao.findTeams();
         List<TeamResponse> hackTeams = new ArrayList<>();
 
