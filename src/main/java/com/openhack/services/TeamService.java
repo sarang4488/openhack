@@ -109,14 +109,19 @@ public class TeamService {
 
             user2 = userDao.findByScreenname(member4_screenname);
             teamMember2 = new TeamMember();
+
+            if(user2 != null ) {
+                teamMember2.setMember_id((int) user2.getUid());
+                teamMember2.setTeam(team);
+                teamMember2.setP_status("None");
+                teamMemberDao.createItem(teamMember2);
+            }
+            else{
+                return ResponseEntity.badRequest().body(member2_screenname+" is not a memebr in the system.");
+            }
+
         }
 
-        if(user2 != null ) {
-            teamMember2.setMember_id((int) user2.getUid());
-            teamMember2.setTeam(team);
-            teamMember2.setP_status("None");
-            teamMemberDao.createItem(teamMember2);
-        }
 
         TeamMember teamMember3 = null;
         if(member3_screenname != null) {
@@ -129,14 +134,17 @@ public class TeamService {
 
             user3 = userDao.findByScreenname(member4_screenname);
             teamMember3 = new TeamMember();
+
+            if(user3 != null) {
+                teamMember3.setMember_id((int) user3.getUid());
+                teamMember3.setTeam(team);
+                teamMember3.setP_status("None");
+                teamMemberDao.createItem(teamMember3);
+            }else{
+                return ResponseEntity.badRequest().body(member3_screenname+" is not a memebr in the system.");
+            }
         }
 
-        if(user3 != null) {
-            teamMember3.setMember_id((int) user3.getUid());
-            teamMember3.setTeam(team);
-            teamMember3.setP_status("None");
-            teamMemberDao.createItem(teamMember3);
-        }
 
         TeamMember teamMember4 = null;
         if(member4_screenname != null) {
@@ -149,13 +157,16 @@ public class TeamService {
 
             user4 = userDao.findByScreenname(member4_screenname);
             teamMember4 = new TeamMember();
-        }
 
-        if(user4 != null) {
-            teamMember4.setMember_id((int) user4.getUid());
-            teamMember4.setTeam(team);
-            teamMember4.setP_status("None");
-            teamMemberDao.createItem(teamMember4);
+            if(user4 != null) {
+                teamMember4.setMember_id((int) user4.getUid());
+                teamMember4.setTeam(team);
+                teamMember4.setP_status("None");
+                teamMemberDao.createItem(teamMember4);
+            }
+            else{
+                return ResponseEntity.badRequest().body(member4_screenname+" is not a memebr in the system.");
+            }
         }
 
         Team updated_team = teamDao.findById(team.getTid());
@@ -170,8 +181,15 @@ public class TeamService {
     public ResponseEntity<?> updateTeamScore(long tid,
                                              float score){
 
+
+
         Team team = teamDao.findById(tid);
         if(team != null){
+
+            Hackathon hackathon = team.getHackathon();
+            if(hackathon.getStatus().equals("opened"))
+                return ResponseEntity.badRequest().body("Admin has not opened hackthon for grading yet.");
+
             team.setScore(score);
         }
 
