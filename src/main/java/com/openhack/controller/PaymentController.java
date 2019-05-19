@@ -21,10 +21,10 @@ public class PaymentController {
     ResponseHeader responseHeader = new ResponseHeader();
 
     @RequestMapping(value = "/payment/{screenname}/amount/{hid}" , method = {RequestMethod.GET})
-    public ResponseEntity<?> getPaymentAmount(@PathVariable String screename,
+    public ResponseEntity<?> getPaymentAmount(@PathVariable String screenname,
                                               @PathVariable Long hid){
 
-        ResponseEntity responseEntity = paymentService.getPaymentAmount(screename,hid);
+        ResponseEntity responseEntity = paymentService.getPaymentAmount(screenname,hid);
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
