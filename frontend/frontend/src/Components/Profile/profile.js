@@ -13,6 +13,7 @@ class Profile extends Component {
       email: "",
       name: "",
       organization: "",
+      organizations: "",
       screenName: "",
       address: "",
       city: "",
@@ -29,8 +30,9 @@ class Profile extends Component {
       orgFlag: false,
       leaveFlag: false,
       MainName: "",
-      organisationvalue:"",
-      status: ""
+      organisationvalue: "",
+      status: "",
+      sponsors: []
     };
     //Bind the handlers to this class
     this.emailChangeHandler = this.emailChangeHandler.bind(this);
@@ -125,6 +127,16 @@ class Profile extends Component {
         }
         //  console.log("User Data", this.state.UserData);
       });
+
+    axios.get(`http://localhost:8080/organization/names/`).then(response => {
+      console.log(response);
+      //update the state with the response data
+      this.setState({
+        sponsors: response.data.body
+      });
+      console.log("Search :", this.state.sponsors);
+      // console.log("No of results :", this.state.properties.length);
+    });
   }
   orgnameChangeHandler = e => {
     this.setState({
@@ -196,6 +208,10 @@ class Profile extends Component {
       businessTitle: e.target.value
     });
   };
+  handleSelect = e => {
+    console.log(e);
+    this.setState({ organisationvalue: e.target.value });
+  };
   //submit Property handler to send a request to the node backend
   submitUpdate = e => {
     //prevent page from refresh
@@ -246,6 +262,7 @@ class Profile extends Component {
   submitJoin = e => {
     //prevent page from refresh
     e.preventDefault();
+    console.log(this.state.organisationvalue);
     const data = {
       orgname: this.state.organisationvalue,
       screenName: localStorage.getItem("screenName")
@@ -311,29 +328,26 @@ class Profile extends Component {
         }
       });
   };
-  handleSelect= e =>{
-    this.setState({organisationvalue: e.target.value});
-  }
+
   render() {
     var redirect = null;
+    // console.log(this.state.organizations);
+    let details2 = this.state.sponsors.map(sponsor => {
+      // const imgurl1 = require(`../uploads/${property.img}`);
+
+      return (
+        <option value={sponsor.organization_name}>
+          {sponsor.organization_name}
+        </option>
+      );
+    });
     // if (!cookie.load("cookie")) {
     //   redirect = <Redirect to="/login" />;
     // }
-    // let MainName = this.state.UserData.map(user1 =>{
-    //   return(
-    //   <div>
-    //    {user1.name}
-    //   </div>
-    //   );
-    // })
+    // let MainName = this.state.UserData.map(user1 => {
+    //   return <div>{user1.name}</div>;
+    // });
     let details = (
-      // let first_name = "";
-      // let last_name = "";
-      // if(user.name !== undefined){
-      //   let username = user.name.split(" ");
-      //   first_name =  username[0];
-      //   last_name = username[1];
-
       <React.Fragment>
         <form>
           <div
@@ -344,6 +358,7 @@ class Profile extends Component {
               <div id="profileheading" style={{ marginLeft: "15px" }}>
                 <h3>Manage Organization</h3>
               </div>
+
               {this.state.organization === "" ? (
                 <div class="row">
                   <div
@@ -353,15 +368,28 @@ class Profile extends Component {
                     <label className="sr-only" for="firstname">
                       Search Organization
                     </label>
-                    <label style={{fontSize:"15px"}}>
-                    Select organization to join : <br></br>
-                    <select value={this.state.organisationvalue} onChange={this.handleSelect}>
-                    <option value="grapefruit">Grapefruit</option>
-            <option value="lime">Lime</option>
-            <option value="coconut">Coconut</option>
-            <option value="mango">Mango</option>
-                    </select>
+                    <label style={{ fontSize: "15px" }}>
+                      Select organization to join : <br />
                     </label>
+                    <div style={{ fontSize: "15px" }}>
+                      <select
+                        value={this.state.organisationvalue}
+                        onChange={this.handleSelect}
+                      >
+                        {" "}
+                        <option value="Org">Select</option>
+                        {details2}
+                      </select>
+                    </div>
+
+                    {/* {this.state.organizations.map(organization => (
+                      <select
+                        value={this.state.organisationvalue}
+                        onChange={this.handleSelect}
+                      >
+                        <option value="grapefruit">Grapefruit</option>
+                      </select>
+                    ))} */}
                     {/* <input
                       type="text"
                       className="form-control "
@@ -590,6 +618,7 @@ class Profile extends Component {
         </form>
       </React.Fragment>
     );
+
     if (this.state.UserData !== "") {
       return (
         <div>
