@@ -29,6 +29,8 @@ import NavProfile from "./Navbar/navbar5";
 import finalmembers from "./Property/finalmembers";
 import listallhackathon from "./hackathon/allhackathons";
 import submitHackathon from "./hackathon/submitHackathon";
+import resultPage from "./hackathon/resultPage";
+import Hackeval from "./hackathon/hackathonEval";
 //Create a Main Component
 class Main extends Component {
   render() {
@@ -54,7 +56,7 @@ class Main extends Component {
         <Route path="/memberlist" component={Property} />
 
         <Route path="/listhackathon" component={listHackathon} />
-
+        <Route path="/evaluate" component={Hackeval} />
         <Route path="/hackmain" component={mainpage} />
         <Route path="/registerHackathon" component={registerHackathon} />
         <Route path="/payHackathon" component={payHackathon} />
@@ -63,6 +65,7 @@ class Main extends Component {
         <Route path="/redirect" component={redirect} />
         <Route path="/allhackathons" component={listallhackathon} />
         <Route path="/submitHackathon" component={submitHackathon} />
+        <Route path="/resultPage" component={resultPage} />
       </div>
     );
   }
