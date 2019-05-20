@@ -30,7 +30,8 @@ import finalmembers from "./Property/finalmembers";
 import listallhackathon from "./hackathon/allhackathons";
 import submitHackathon from "./hackathon/submitHackathon";
 import resultPage from "./hackathon/resultPage";
-import Hackeval from "./hackathon/hackathonEval";
+import Hackeval from "./hackathon/hackEval";
+import gradeHackathon from "./hackathon/gradehackathon";
 //Create a Main Component
 class Main extends Component {
   render() {
@@ -66,6 +67,7 @@ class Main extends Component {
         <Route path="/allhackathons" component={listallhackathon} />
         <Route path="/submitHackathon" component={submitHackathon} />
         <Route path="/resultPage" component={resultPage} />
+        <Route path="/gradehackathon" component={gradeHackathon} />
       </div>
     );
   }
