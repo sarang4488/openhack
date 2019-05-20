@@ -150,7 +150,7 @@ public class UserService {
 
 
         if(orgStatus.equals("Requested"))
-            return ResponseEntity.ok().body("Request sent of organization owner");
+            return ResponseEntity.ok().body("Request sent to organization owner");
         else if (orgStatus.equals("Approved"))
             return ResponseEntity.ok().body(screenname+" is now part of organization");
         else {
@@ -158,7 +158,7 @@ public class UserService {
             user.setOrganization(null);
             user.setOrgStatus(null);
 
-            return ResponseEntity.ok().body(screenname + " is no longr part of organization");
+            return ResponseEntity.ok().body(screenname + " is no longer part of organization");
         }
     }
 
