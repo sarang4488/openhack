@@ -31,7 +31,7 @@ import listallhackathon from "./hackathon/allhackathons";
 import submitHackathon from "./hackathon/submitHackathon";
 import resultPage from "./hackathon/resultPage";
 import Hackeval from "./hackathon/hackEval";
-import paymentStatus from "./hackathon/paymentStatus";
+import paymentstatus from "./hackathon/paymentStatus";
 import gradeHackathon from "./hackathon/gradehackathon";
 //Create a Main Component
 class Main extends Component {
@@ -70,7 +70,7 @@ class Main extends Component {
         <Route path="/paymentstatus" component={paymentstatus} />
         <Route path="/resultPage" component={resultPage} />
         <Route path="/gradehackathon" component={gradeHackathon} />
-        <Route path="/paymentStatus" component={paymentStatus} />
+        <Route path="/paymentStatus" component={paymentstatus} />
       </div>
     );
   }
