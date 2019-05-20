@@ -18,6 +18,9 @@ public class Team {
     @JoinColumn(name = "hid")
     private Hackathon hackathon;
 
+//    @Column(name = "team_name")
+//    private String team_name;
+
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "team")
     @JsonIgnore
@@ -78,4 +81,12 @@ public class Team {
     public void setCode_url(String code_url) {
         this.code_url = code_url;
     }
+
+//    public String getTeam_name() {
+//        return team_name;
+//    }
+//
+//    public void setTeam_name(String team_name) {
+//        this.team_name = team_name;
+//    }
 }

@@ -85,7 +85,7 @@ public class HackathonController {
 //        emailActivationLink.sendActivationLinkTeamMember(member3_email,member3_name);
 //        emailActivationLink.sendActivationLinkTeamMember(member4_email,member4_name);
 
-        ResponseEntity responseEntity = teamService.registerTeam(hid,leader_screenname,email,member2_screenname,member2_role,member3_screenname,member3_role,member4_screenname,member4_role);
+        ResponseEntity responseEntity = teamService.registerTeam(hid,team_name,leader_screenname,email,member2_screenname,member2_role,member3_screenname,member3_role,member4_screenname,member4_role);
 
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
 
@@ -100,6 +100,12 @@ public class HackathonController {
     @RequestMapping(value = "hackathon/{hid}/closed")
     public ResponseEntity<?> closeHackathon(@PathVariable Long hid){
         ResponseEntity responseEntity = hackathonService.updateHackathonStatus(hid,"closed");
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "hackathon/{hid}/finalized")
+    public ResponseEntity<?> finalizeHackathon(@PathVariable Long hid){
+        ResponseEntity responseEntity = hackathonService.updateHackathonStatus(hid,"final");
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
