@@ -118,6 +118,24 @@ class NavProfile extends Component {
                   View All Hackathons
                 </Link>
               </button>
+              <button class="btn navbar-btn1">
+                <Link
+                  to="/submithackathon"
+                  class="test"
+                  style={{ textDecoration: "none" }}
+                >
+                  Submit Hackathons
+                </Link>
+              </button>
+              <button class="btn navbar-btn1">
+                <Link
+                  to="/gradehackathon"
+                  class="test"
+                  style={{ textDecoration: "none" }}
+                >
+                  Grade Hackathons
+                </Link>
+              </button>
             </li>
             <li>
               {/* <a class="logoimage" href="">

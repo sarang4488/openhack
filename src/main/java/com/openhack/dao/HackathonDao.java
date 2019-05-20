@@ -37,4 +37,10 @@ public class HackathonDao {
         return (Hackathon) query.getResultList().get(0);
     }
 
+    public List readAll(){
+        Query query = this.entityManager.createNativeQuery("select * from hackathon",Hackathon.class);
+        if(query.getResultList().isEmpty()) return null;
+        return query.getResultList();
+    }
+
 }

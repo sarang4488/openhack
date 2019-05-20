@@ -84,11 +84,17 @@ class registerhackathon extends Component {
         }&member4_role=${this.state.Member3role}`
       )
       .then(response => {
-        //update the state with the response data
         console.log(response);
-        this.setState({
-          authFlag: true
-        });
+        //update the state with the response data
+        if (response.data.statusCodeValue === 200) {
+          this.setState({
+            authFlag: true
+          });
+        } else {
+          this.setState({
+            message: response.data.body
+          });
+        }
       });
 
     // if (response.data.statusCodeValue === 200) {
@@ -148,7 +154,9 @@ class registerhackathon extends Component {
               <div class="panel">
                 <h2>Registration</h2>
                 <p>Please enter your team details</p>
-                <p style={{ fontSize: "18px" }}>{this.state.message}</p>
+                <p style={{ fontSize: "18px", color: "red" }}>
+                  {this.state.message}
+                </p>
               </div>
 
               <div class="form-group">

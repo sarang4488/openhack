@@ -57,11 +57,26 @@ public class HackathonController {
     }
 
     @RequestMapping(value = "/hackathon/viewall/{screenname}", method = {RequestMethod.GET})
-    public ResponseEntity<?> getRegsiterhackathons(@PathVariable String screenname){
+    public ResponseEntity<?> getvalidhackathons(@PathVariable String screenname){
 
         ResponseEntity responseEntity = hackathonService.readHackathonPublic(screenname);
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/hackathon/registered/{screenname}", method = {RequestMethod.GET})
+    public ResponseEntity<?> getRegsiterhackathons(@PathVariable String screenname){
+
+        ResponseEntity responseEntity = hackathonService.regsiteredHackathons(screenname);
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/hackathon/grade/{screenname}", method = {RequestMethod.GET})
+    public ResponseEntity<?> getGradableHackathons(@PathVariable String screenname){
+
+        ResponseEntity responseEntity = hackathonService.readHackathonByJudge(screenname);
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
 
     @RequestMapping(value = "/hackathon/{hid}", method = {RequestMethod.GET})
     public ResponseEntity<?> getHackathon(@PathVariable Long hid){
@@ -85,11 +100,12 @@ public class HackathonController {
 //        emailActivationLink.sendActivationLinkTeamMember(member3_email,member3_name);
 //        emailActivationLink.sendActivationLinkTeamMember(member4_email,member4_name);
 
-        ResponseEntity responseEntity = teamService.registerTeam(hid,leader_screenname,email,member2_screenname,member2_role,member3_screenname,member3_role,member4_screenname,member4_role);
+        ResponseEntity responseEntity = teamService.registerTeam(hid,team_name,leader_screenname,email,member2_screenname,member2_role,member3_screenname,member3_role,member4_screenname,member4_role);
 
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
 
     }
+
 
     @RequestMapping(value = "hackathon/{hid}/opened")
     public ResponseEntity<?> openHackathon(@PathVariable Long hid){
@@ -103,10 +119,17 @@ public class HackathonController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="hackathon/{tid}/codesubmission",method= {RequestMethod.POST})
-    public ResponseEntity<?> codeSubmission(@PathVariable long tid,
+    @RequestMapping(value = "hackathon/{hid}/finalized")
+    public ResponseEntity<?> finalizeHackathon(@PathVariable Long hid){
+        ResponseEntity responseEntity = hackathonService.updateHackathonStatus(hid,"final");
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value="hackathon/{hid}/codesubmission/{screenname}",method= {RequestMethod.POST})
+    public ResponseEntity<?> codeSubmission(@PathVariable long hid,
+                                            @PathVariable String screenname,
                                             @RequestParam(value="code_url",required=true) String code_url){
-        ResponseEntity responseEntity=hackathonService.codeSubmission(code_url,tid);
+        ResponseEntity responseEntity=hackathonService.codeSubmission(hid,screenname,code_url);
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 

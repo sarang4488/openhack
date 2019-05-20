@@ -24,7 +24,4 @@ public class TeamController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
-
-
-
 }

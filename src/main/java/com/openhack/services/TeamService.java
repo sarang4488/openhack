@@ -48,6 +48,7 @@ public class TeamService {
 
     @Transactional
     public ResponseEntity<?> registerTeam(Long hid,
+                                          String team_name,
                                           String leader_screenname,
                                           String leader_rold,
                                           String member2_screenname,
@@ -87,7 +88,6 @@ public class TeamService {
         String owner = hackathon.getOwner().getName();
         String [] judges = hackathon.getJudge_screenname().split("\\$");
 
-        teamDao.createItem(team);
 
         long tid = team.getTid();
         String id = ""+Long.toString(tid)+"_"+Long.toString(hackid);
@@ -96,7 +96,7 @@ public class TeamService {
         teamMember1.setTeam(team);
         teamMember1.setMember_id((int)user.getUid());
         teamMember1.setP_status("None");
-        teamMemberDao.createItem(teamMember1);
+
 
         //System.out.println(member2_screenname);
         //System.out.println(member2_screenname.equals("undefined"));
@@ -117,10 +117,9 @@ public class TeamService {
                 teamMember2.setMember_id((int) user2.getUid());
                 teamMember2.setTeam(team);
                 teamMember2.setP_status("None");
-                teamMemberDao.createItem(teamMember2);
             }
             else{
-                return ResponseEntity.badRequest().body(member2_screenname+" (member2) is not a valid member in the system.");
+                return ResponseEntity.badRequest().body(member2_screenname+" is not a valid member in the system.");
             }
 
         }
@@ -142,9 +141,9 @@ public class TeamService {
                 teamMember3.setMember_id((int) user3.getUid());
                 teamMember3.setTeam(team);
                 teamMember3.setP_status("None");
-                teamMemberDao.createItem(teamMember3);
+
             }else{
-                return ResponseEntity.badRequest().body(member3_screenname+" (member 3) is not a valid member in the system.");
+                return ResponseEntity.badRequest().body(member3_screenname+" is not a valid member in the system.");
             }
         }
 
@@ -165,12 +164,21 @@ public class TeamService {
                 teamMember4.setMember_id((int) user4.getUid());
                 teamMember4.setTeam(team);
                 teamMember4.setP_status("None");
-                teamMemberDao.createItem(teamMember4);
+
             }
             else{
-                return ResponseEntity.badRequest().body(member4_screenname+" (member 3) is not a valid member in the system.");
+                return ResponseEntity.badRequest().body(member4_screenname+" is not a valid member in the system.");
             }
         }
+
+        teamDao.createItem(team);
+        teamMemberDao.createItem(teamMember1);
+        if(teamMember2 != null)
+            teamMemberDao.createItem(teamMember2);
+        if(teamMember3 != null)
+            teamMemberDao.createItem(teamMember3);
+        if(teamMember4 != null)
+            teamMemberDao.createItem(teamMember4);
 
         Team updated_team = teamDao.findById(team.getTid());
 

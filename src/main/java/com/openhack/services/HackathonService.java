@@ -2,10 +2,7 @@ package com.openhack.services;
 
 import com.openhack.Response.HackathonResponse;
 import com.openhack.Response.TeamResponse;
-import com.openhack.dao.HackathonDao;
-import com.openhack.dao.OrganizationDao;
-import com.openhack.dao.TeamDao;
-import com.openhack.dao.UserDao;
+import com.openhack.dao.*;
 import com.openhack.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +29,9 @@ public class HackathonService {
 
     @Autowired
     private TeamDao teamDao;
+
+    @Autowired
+    private TeamMemberDao teamMemberDao;
 
 
     @Transactional
@@ -147,6 +147,22 @@ public class HackathonService {
     }
 
     @Transactional
+    public ResponseEntity<?> readHackathonByJudge(String screenname){
+
+        List<HackathonResponse> hackathonResponses = new ArrayList<HackathonResponse>();
+        List hacks = hackathonDao.finditems();
+        for (Object obj:
+                hacks) {
+            Hackathon tmp = (Hackathon)obj;
+            String [] judges = tmp.getJudge_screenname().split("\\$");
+            if(Arrays.asList(judges).contains(screenname))
+                hackathonResponses.add(new HackathonResponse(tmp));
+        }
+
+        return ResponseEntity.ok().body(hackathonResponses);
+    }
+
+    @Transactional
     public ResponseEntity<?> readHackathon(Long id){
         Hackathon hackathon = hackathonDao.findItemById(Optional.ofNullable(id).orElse(-1L));
         HackathonResponse hackathonResponse = new HackathonResponse(hackathon);
@@ -164,15 +180,62 @@ public class HackathonService {
 
         HackathonResponse hackathonResponse = new HackathonResponse(hackathon);
 
-        return ResponseEntity.ok().body(hackathonResponse);
+        return ResponseEntity.ok().body("Hacathon "+hackathon.getName()+" is "+ status);
     }
 
     @Transactional
-    public ResponseEntity<?> codeSubmission(String code_url,long tid){
-        Team team=teamDao.findById(tid);
-        Hackathon hackathon = team.getHackathon();
+    public ResponseEntity<?> regsiteredHackathons(String screenname){
+        User user = userDao.findByScreenname(screenname);
+        TeamMember teamMember = teamMemberDao.findItemByUid((int)user.getUid());
+        List<Hackathon> hackathons = hackathonDao.readAll();
+        List<HackathonResponse> hackathonResponses = new ArrayList<>();
 
-        List<TeamMember> teamMembers = team.getTeamMembers();
+        for (Hackathon hackathon:
+             hackathons) {
+
+            if(hackathon.getHid() == teamMember.getTeam().getHackathon().getHid()){
+                HackathonResponse hackathonResponse = new HackathonResponse(hackathon);
+                hackathonResponses.add(hackathonResponse);
+            }
+
+        }
+
+        return ResponseEntity.ok().body(hackathonResponses);
+
+    }
+
+    @Transactional
+    public ResponseEntity<?> codeSubmission(long hid,String screenname,String code_url){
+
+        User user = userDao.findByScreenname(screenname);
+        Hackathon hackathon = hackathonDao.findItemById(hid);
+        List<Team> teams = teamDao.findTeamsByHackathon(hid);
+
+        if(teams == null){
+            return ResponseEntity.badRequest().body("No teams found for this hackathon");
+        }
+
+        Team hackteam = null;
+
+        for(Team team: teams){
+            List<TeamMember> teamMembers = team.getTeamMembers();
+            for(TeamMember teamMember : teamMembers){
+
+                if(teamMember.getMember_id() == (int)user.getUid()){
+
+                    hackteam = team;
+
+                }
+
+            }
+
+        }
+
+        if(hackteam == null){
+            return ResponseEntity.badRequest().body("User is not part of any team to submit for this hackathon");
+        }
+
+        List<TeamMember> teamMembers = hackteam.getTeamMembers();
         if(teamMembers == null)
             return ResponseEntity.badRequest().body("No Team Members for this team id");
 
@@ -184,12 +247,12 @@ public class HackathonService {
 
 
         if(hackathon.getStatus().equals("opened"))
-            team.setCode_url(code_url);
+            hackteam.setCode_url(code_url);
         else
             return ResponseEntity.badRequest().body("Can't submit. Hackathon is closed");
 
-        TeamResponse teamResponse=new TeamResponse(team);
-        return ResponseEntity.ok().body(teamResponse);
+        TeamResponse teamResponse=new TeamResponse(hackteam);
+        return ResponseEntity.ok().body("Code submitted. Note : you can update the link anytime untill hakcathon is closed");
     }
 
 }
