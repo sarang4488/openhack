@@ -64,7 +64,7 @@ class mainpage extends Component {
         });
         // window.location.reload(1);
       });
-    // window.location.reload(1);
+    //window.location.reload(1);
   }
 
   submitClose(id) {
@@ -127,6 +127,15 @@ class mainpage extends Component {
                 class="btn btn-danger"
               >
                 Close
+              </button>
+              <button
+                onClick={id => {
+                  this.submitFinalize(hackathon.id);
+                }}
+                style={{ marginLeft: "10px" }}
+                class="btn btn-primary"
+              >
+                Finalize
               </button>
             </div>
           </div>
@@ -196,7 +205,10 @@ class mainpage extends Component {
               style={{
                 marginTop: "30px",
                 marginLeft: "40px",
-                fontSize: "15px"
+                fontSize: "15px",
+                width: "30px",
+                backgroundColor: "blue",
+                color: "white"
               }}
             >
               {this.state.message}
