@@ -60,11 +60,30 @@ class mainpage extends Component {
 
         this.setState({
           authFlag: true,
-          message: response.data.statusCode
+          message: response.data.body
         });
         // window.location.reload(1);
       });
     //window.location.reload(1);
+  }
+
+  submitFinalize(id) {
+    const data = id;
+
+    console.log(data);
+    //set the with credentials to true
+    axios.defaults.withCredentials = true;
+    //make a post request with the user data
+    axios
+      .post(`http://localhost:8080/hackathon/${data}/finalized`)
+      .then(response => {
+        console.log("Status Code : ", response);
+        this.setState({
+          authFlag: true,
+          message: response.data.body
+        });
+        // window.location.reload(1);
+      });
   }
 
   submitClose(id) {
@@ -80,7 +99,7 @@ class mainpage extends Component {
         console.log("Status Code : ", response);
         this.setState({
           authFlag: true,
-          message: response.data.statusCode
+          message: response.data.body
         });
         // window.location.reload(1);
       });
@@ -206,7 +225,7 @@ class mainpage extends Component {
                 marginTop: "30px",
                 marginLeft: "40px",
                 fontSize: "15px",
-                width: "30px",
+                width: "200px",
                 backgroundColor: "blue",
                 color: "white"
               }}

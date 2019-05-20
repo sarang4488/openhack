@@ -28,6 +28,7 @@ import redirect from "./Profile/redirect";
 import NavProfile from "./Navbar/navbar5";
 import finalmembers from "./Property/finalmembers";
 import listallhackathon from "./hackathon/allhackathons";
+import submitHackathon from "./hackathon/submitHackathon";
 //Create a Main Component
 class Main extends Component {
   render() {
@@ -61,6 +62,7 @@ class Main extends Component {
         <Route path="/members" component={finalmembers} />
         <Route path="/redirect" component={redirect} />
         <Route path="/allhackathons" component={listallhackathon} />
+        <Route path="/submitHackathon" component={submitHackathon} />
       </div>
     );
   }
