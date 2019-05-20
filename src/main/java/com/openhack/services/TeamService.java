@@ -119,7 +119,7 @@ public class TeamService {
                 teamMember2.setP_status("None");
             }
             else{
-                return ResponseEntity.badRequest().body(member2_screenname+" (member2) is not a valid member in the system.");
+                return ResponseEntity.badRequest().body(member2_screenname+" is not a valid member in the system.");
             }
 
         }
@@ -143,7 +143,7 @@ public class TeamService {
                 teamMember3.setP_status("None");
 
             }else{
-                return ResponseEntity.badRequest().body(member3_screenname+" (member 3) is not a valid member in the system.");
+                return ResponseEntity.badRequest().body(member3_screenname+" is not a valid member in the system.");
             }
         }
 
@@ -167,7 +167,7 @@ public class TeamService {
 
             }
             else{
-                return ResponseEntity.badRequest().body(member4_screenname+" (member 3) is not a valid member in the system.");
+                return ResponseEntity.badRequest().body(member4_screenname+" is not a valid member in the system.");
             }
         }
 
