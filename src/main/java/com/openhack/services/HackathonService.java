@@ -2,10 +2,7 @@ package com.openhack.services;
 
 import com.openhack.Response.HackathonResponse;
 import com.openhack.Response.TeamResponse;
-import com.openhack.dao.HackathonDao;
-import com.openhack.dao.OrganizationDao;
-import com.openhack.dao.TeamDao;
-import com.openhack.dao.UserDao;
+import com.openhack.dao.*;
 import com.openhack.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +29,9 @@ public class HackathonService {
 
     @Autowired
     private TeamDao teamDao;
+
+    @Autowired
+    private TeamMemberDao teamMemberDao;
 
 
     @Transactional
@@ -165,6 +165,27 @@ public class HackathonService {
         HackathonResponse hackathonResponse = new HackathonResponse(hackathon);
 
         return ResponseEntity.ok().body("Hacathon "+hackathon.getName()+" is "+ status);
+    }
+
+    @Transactional
+    public ResponseEntity<?> regsiteredHackathons(String screenname){
+        User user = userDao.findByScreenname(screenname);
+        TeamMember teamMember = teamMemberDao.findItemByUid((int)user.getUid());
+        List<Hackathon> hackathons = hackathonDao.readAll();
+        List<HackathonResponse> hackathonResponses = new ArrayList<>();
+
+        for (Hackathon hackathon:
+             hackathons) {
+
+            if(hackathon.getHid() == teamMember.getTeam().getHackathon().getHid()){
+                HackathonResponse hackathonResponse = new HackathonResponse(hackathon);
+                hackathonResponses.add(hackathonResponse);
+            }
+
+        }
+
+        return ResponseEntity.ok().body(hackathonResponses);
+
     }
 
     @Transactional

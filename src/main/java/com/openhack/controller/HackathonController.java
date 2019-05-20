@@ -56,12 +56,13 @@ public class HackathonController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/hackathon/viewall/{screenname}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/hackathon/registered/{screenname}", method = {RequestMethod.GET})
     public ResponseEntity<?> getRegsiterhackathons(@PathVariable String screenname){
 
-        ResponseEntity responseEntity = hackathonService.readHackathonPublic(screenname);
+        ResponseEntity responseEntity = hackathonService.regsiteredHackathons(screenname);
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
+
 
     @RequestMapping(value = "/hackathon/{hid}", method = {RequestMethod.GET})
     public ResponseEntity<?> getHackathon(@PathVariable Long hid){
@@ -90,6 +91,7 @@ public class HackathonController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
 
     }
+
 
     @RequestMapping(value = "hackathon/{hid}/opened")
     public ResponseEntity<?> openHackathon(@PathVariable Long hid){
