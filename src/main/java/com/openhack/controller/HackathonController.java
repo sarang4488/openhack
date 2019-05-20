@@ -118,10 +118,11 @@ public class HackathonController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="hackathon/{tid}/codesubmission",method= {RequestMethod.POST})
-    public ResponseEntity<?> codeSubmission(@PathVariable long tid,
+    @RequestMapping(value="hackathon/{hid}/codesubmission/{screenname}",method= {RequestMethod.POST})
+    public ResponseEntity<?> codeSubmission(@PathVariable long hid,
+                                            @PathVariable String screenname,
                                             @RequestParam(value="code_url",required=true) String code_url){
-        ResponseEntity responseEntity=hackathonService.codeSubmission(code_url,tid);
+        ResponseEntity responseEntity=hackathonService.codeSubmission(hid,screenname,code_url);
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 

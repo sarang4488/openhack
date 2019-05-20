@@ -205,11 +205,37 @@ public class HackathonService {
     }
 
     @Transactional
-    public ResponseEntity<?> codeSubmission(String code_url,long tid){
-        Team team=teamDao.findById(tid);
-        Hackathon hackathon = team.getHackathon();
+    public ResponseEntity<?> codeSubmission(long hid,String screenname,String code_url){
 
-        List<TeamMember> teamMembers = team.getTeamMembers();
+        User user = userDao.findByScreenname(screenname);
+        Hackathon hackathon = hackathonDao.findItemById(hid);
+        List<Team> teams = teamDao.findTeamsByHackathon(hid);
+
+        if(teams == null){
+            return ResponseEntity.badRequest().body("No teams found for this hackathon");
+        }
+
+        Team hackteam = null;
+
+        for(Team team: teams){
+            List<TeamMember> teamMembers = team.getTeamMembers();
+            for(TeamMember teamMember : teamMembers){
+
+                if(teamMember.getMember_id() == (int)user.getUid()){
+
+                    hackteam = team;
+
+                }
+
+            }
+
+        }
+
+        if(hackteam == null){
+            return ResponseEntity.badRequest().body("User is not part of any team to submit for this hackathon");
+        }
+
+        List<TeamMember> teamMembers = hackteam.getTeamMembers();
         if(teamMembers == null)
             return ResponseEntity.badRequest().body("No Team Members for this team id");
 
@@ -221,12 +247,12 @@ public class HackathonService {
 
 
         if(hackathon.getStatus().equals("opened"))
-            team.setCode_url(code_url);
+            hackteam.setCode_url(code_url);
         else
             return ResponseEntity.badRequest().body("Can't submit. Hackathon is closed");
 
-        TeamResponse teamResponse=new TeamResponse(team);
-        return ResponseEntity.ok().body(teamResponse);
+        TeamResponse teamResponse=new TeamResponse(hackteam);
+        return ResponseEntity.ok().body("Code submitted. Note : you can update the link anytime untill hakcathon is closed");
     }
 
 }
