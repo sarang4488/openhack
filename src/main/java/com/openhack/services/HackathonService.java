@@ -164,7 +164,7 @@ public class HackathonService {
 
         HackathonResponse hackathonResponse = new HackathonResponse(hackathon);
 
-        return ResponseEntity.ok().body(hackathonResponse);
+        return ResponseEntity.ok().body("Hacathon "+hackathon.getName()+" is "+ status);
     }
 
     @Transactional
