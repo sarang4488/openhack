@@ -63,6 +63,13 @@ public class HackathonController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/hackathon/grade/{screenname}", method = {RequestMethod.GET})
+    public ResponseEntity<?> getGradableHackathons(@PathVariable String screenname){
+
+        ResponseEntity responseEntity = hackathonService.readHackathonByJudge(screenname);
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
 
     @RequestMapping(value = "/hackathon/{hid}", method = {RequestMethod.GET})
     public ResponseEntity<?> getHackathon(@PathVariable Long hid){

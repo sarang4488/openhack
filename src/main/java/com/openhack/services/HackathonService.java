@@ -147,6 +147,22 @@ public class HackathonService {
     }
 
     @Transactional
+    public ResponseEntity<?> readHackathonByJudge(String screenname){
+
+        List<HackathonResponse> hackathonResponses = new ArrayList<HackathonResponse>();
+        List hacks = hackathonDao.finditems();
+        for (Object obj:
+                hacks) {
+            Hackathon tmp = (Hackathon)obj;
+            String [] judges = tmp.getJudge_screenname().split("\\$");
+            if(Arrays.asList(judges).contains(screenname))
+                hackathonResponses.add(new HackathonResponse(tmp));
+        }
+
+        return ResponseEntity.ok().body(hackathonResponses);
+    }
+
+    @Transactional
     public ResponseEntity<?> readHackathon(Long id){
         Hackathon hackathon = hackathonDao.findItemById(Optional.ofNullable(id).orElse(-1L));
         HackathonResponse hackathonResponse = new HackathonResponse(hackathon);
