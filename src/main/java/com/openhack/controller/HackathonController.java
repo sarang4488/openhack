@@ -56,6 +56,13 @@ public class HackathonController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/hackathon/viewall/{screenname}", method = {RequestMethod.GET})
+    public ResponseEntity<?> getvalidhackathons(@PathVariable String screenname){
+
+        ResponseEntity responseEntity = hackathonService.readHackathonPublic(screenname);
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
     @RequestMapping(value = "/hackathon/registered/{screenname}", method = {RequestMethod.GET})
     public ResponseEntity<?> getRegsiterhackathons(@PathVariable String screenname){
 
