@@ -208,7 +208,7 @@ public class TeamService {
         teamMemberDao.createItem(teamMember1);
         new Thread(() -> {
             System.out.println("Sending email to "+user.getEmail());
-            emailActivationLink.sendPaymentLink(user.getEmail(),hackathon.getName(),user.getScreenName());
+            emailActivationLink.sendPaymentLink(user.getEmail(),hackathon.getHid(),user.getScreenName());
         }).start();
 
         if(teamMember2 != null){
@@ -217,7 +217,7 @@ public class TeamService {
             String email = user2.getEmail();
             new Thread(() -> {
                 System.out.println("Sending email to "+user.getEmail());
-                emailActivationLink.sendPaymentLink(email,hackathon.getName(),screenname);
+                emailActivationLink.sendPaymentLink(email,hackathon.getHid(),screenname);
             }).start();
         }
         if(teamMember3 != null){
@@ -226,7 +226,7 @@ public class TeamService {
             String email = user3.getEmail();
             new Thread(() -> {
                 System.out.println("Sending email to "+user.getEmail());
-                emailActivationLink.sendPaymentLink(email,hackathon.getName(),screenname);
+                emailActivationLink.sendPaymentLink(email,hackathon.getHid(),screenname);
             }).start();
         }
         if(teamMember4 != null){
@@ -235,7 +235,7 @@ public class TeamService {
             String email = user3.getEmail();
             new Thread(() -> {
                 System.out.println("Sending email to "+user.getEmail());
-                emailActivationLink.sendPaymentLink(email,hackathon.getName(),screenname);
+                emailActivationLink.sendPaymentLink(email,hackathon.getHid(),screenname);
             }).start();
         }
 

@@ -92,6 +92,8 @@ class registerhackathon extends Component {
         if (response.data.statusCodeValue === 200) {
           this.setState({
             authFlag: true
+          },()=>{
+            this.props.history.push("/submitHackathon")
           });
         } else {
           this.setState({
@@ -163,14 +165,14 @@ class registerhackathon extends Component {
     const { description, selectedFile } = this.state;
     //redirect based on successful login
     let redirectVar = null;
-    if (this.state.authFlag) {
-      this.props.history.push({
-        pathname: "/payhackathon",
-        state: {
-          displayprop: this.state.hackid
-        }
-      });
-    }
+    // if (this.state.authFlag) {
+    //   this.props.history.push({
+    //     pathname: "/payhackathon",
+    //     state: {
+    //       displayprop: this.state.hackid
+    //     }
+    //   });
+    // }
 
     return (
       <div>

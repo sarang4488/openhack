@@ -242,7 +242,7 @@ public class HackathonService {
         for (TeamMember teamMember:
              teamMembers) {
             if(teamMember.getP_status().equals("None"))
-                return ResponseEntity.badRequest().body("All team members must pay the fee before code submission");
+                return ResponseEntity.badRequest().body("All team members must pay the fee before code submission. Check email for payment link");
         }
 
 

@@ -4,6 +4,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 import NavbarOwner from "../Navbar/navbar5";
 import { Redirect } from "react-router";
+import queryString from 'query-string';
 
 class payhackathon extends Component {
   //call the constructor method
@@ -13,17 +14,17 @@ class payhackathon extends Component {
     //maintain the state required for this component
     this.state = {
       name: "",
-
       message: "",
-
       descriptionprop: "",
-      authFlag: false
+      authFlag: false,
+      values:{}
     };
     //Bind the handlers to this class
     this.nameChangeHandler = this.nameChangeHandler.bind(this);
 
     this.descriptionChangeHandler = this.descriptionChangeHandler.bind(this);
     this.submitPayment = this.submitPayment.bind(this);
+    this.setVals=this.setVals.bind(this);
   }
   //Call the Will Mount to set the auth Flag to false
   componentWillMount() {
@@ -34,32 +35,50 @@ class payhackathon extends Component {
     });
 
     const data = {
-      hackid: this.props.location.state.displayprop
+      hackid: this.state.hid
     };
     console.log(data.hackid);
   }
 
   componentDidMount() {
-    const data = {
-      screenName: localStorage.getItem("screenName"),
-      hackid: this.props.location.state.displayprop
-    };
-    console.log(data.screenName);
-    console.log(data.hackid);
-    axios
-      .get(
-        `http://localhost:8080/payment/${data.screenName}/amount/${data.hackid}`
-      )
-      .then(response => {
-        console.log(response);
-        //update the state with the response data
-        this.setState({
-          authFlag: true,
-          payment: response.data.body
-          // properties : this.state.properties,
-        });
-      });
+    // console.log("...")
+    // console.log("GDAJDHS",this.state.hid,this.state.screenname)
+    const values=queryString.parse(this.props.location.search)
+const keys=values//Object.keys(values)
+    console.log("VALS",keys)
+    this.setState({
+      hid: values.hid,
+      screenname:values.screenname
+    },()=>{this.setVals()})
   }
+  
+  setVals=()=>{
+    window.localStorage.setItem('screenName', this.state.screenname);
+    // window.localStorage.setItem('screenName', this.state.screenname);
+    const values=this.state.hid
+  console.log("VALS",values)
+  const data = {
+    screenName: this.state.screenname,
+    hackid: this.state.hid
+  };
+  console.log(data.screenName);
+  console.log(data.hackid);
+  axios
+    .get(
+      `http://localhost:8080/payment/${data.screenName}/amount/${data.hackid}`
+    )
+    .then(response => {
+      console.log("AMT",response);
+      //update the state with the response data
+      this.setState({
+        authFlag: true,
+        payment: response.data.body
+        // properties : this.state.properties,
+      });
+    });
+}
+
+
   //username change handler to update state variable with the text entered by the user
   nameChangeHandler = e => {
     this.setState({
@@ -78,8 +97,8 @@ class payhackathon extends Component {
   submitPayment = e => {
     //prevent page from refresh
     const data = {
-      screenName: localStorage.getItem("screenName"),
-      hackid: this.props.location.state.displayprop
+      screenName: this.state.screenname,
+      hackid: this.state.hid
     };
 
     //set the with credentials to true
@@ -87,7 +106,7 @@ class payhackathon extends Component {
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/payment/${data.screenName}/paid/${data.hackid}`
+        `http://localhost:8080/payment/${this.state.screenname}/paid/${this.state.hid}`
       )
       .then(response => {
         console.log("Status Code : ", response);
@@ -95,6 +114,8 @@ class payhackathon extends Component {
           this.setState({
             authFlag: true,
             message: response.data.body
+          },()=>{
+            this.props.history.push("/submitHackathon")
           });
         } else {
           this.setState({
@@ -110,9 +131,9 @@ class payhackathon extends Component {
     const { description, selectedFile } = this.state;
     //redirect based on successful login
     let redirectVar = null;
-    if (this.state.authFlag) {
-      redirectVar = <Redirect to="/submithackathon" />;
-    }
+    // if (this.state.authFlag) {
+    //   redirectVar = <Redirect to="/submithackathon" />;
+    // }
 
     return (
       <div>

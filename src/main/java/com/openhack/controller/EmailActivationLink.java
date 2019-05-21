@@ -38,8 +38,8 @@ public class EmailActivationLink {
         javaMailSender.send(message);
     }
 
-    public void sendPaymentLink(String email,String hackname,String screenname){
-        String html = "Please use the following payment link";
+    public void sendPaymentLink(String email,Long hid,String screenname){
+        String html = "Please use the following payment link http://localhost:3000/payhackathon?screenname="+screenname+"&hid="+hid;
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Payment for hackathon");

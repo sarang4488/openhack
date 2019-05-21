@@ -49,7 +49,7 @@ class Main extends Component {
         <Route path="/profile" component={Profile} />
         <Route path="/login" component={Login} />
 
-        <Route path="/results" component={Results} />
+        {/* <Route path="/results" component={Results} /> */}
         <Route path="/memberlist" component={manageorg} />
 
         <Route path="/listhackathon" component={listHackathon} />
@@ -67,6 +67,7 @@ class Main extends Component {
         <Route path="/gradehackathon" component={gradeHackathon} />
         <Route path="/paymentStatus" component={paymentstatus} />
         <Route path="/home" component={home} />
+        {/* <Route path="payHackathon"component={payHackathon} /> */}
       </div>
     );
   }
