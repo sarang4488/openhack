@@ -3,6 +3,7 @@ package com.openhack.services;
 import com.openhack.Response.HackathonReportResponse;
 import com.openhack.Response.HackathonResponse;
 import com.openhack.Response.TeamResponse;
+import com.openhack.controller.EmailActivationLink;
 import com.openhack.dao.HackathonDao;
 import com.openhack.dao.TeamDao;
 import com.openhack.dao.TeamMemberDao;
@@ -33,6 +34,9 @@ public class TeamService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private EmailActivationLink emailActivationLink;
 
     @Transactional
     public ResponseEntity<?> createTeam(Long hid){
@@ -173,14 +177,25 @@ public class TeamService {
             }
         }
 
+//        emailActivationLink.sendActivationLinkTeamMember(member2_email,member2_name);
+//        emailActivationLink.sendActivationLinkTeamMember(member3_email,member3_name);
+//        emailActivationLink.sendActivationLinkTeamMember(member4_email,member4_name);
+
         teamDao.createItem(team);
         teamMemberDao.createItem(teamMember1);
-        if(teamMember2 != null)
+        new Thread(() -> {
+            System.out.println("Sending email to "+user.getEmail());
+        }).start();
+
+        if(teamMember2 != null){
             teamMemberDao.createItem(teamMember2);
-        if(teamMember3 != null)
+        }
+        if(teamMember3 != null){
             teamMemberDao.createItem(teamMember3);
-        if(teamMember4 != null)
+        }
+        if(teamMember4 != null){
             teamMemberDao.createItem(teamMember4);
+        }
 
         Team updated_team = teamDao.findById(team.getTid());
 

@@ -38,6 +38,10 @@ public class EmailActivationLink {
         javaMailSender.send(message);
     }
 
+    public void sendPaymentLink(String email,String hackname,String screenname){
+        String html = "Please use the following payment link";
+    }
+
     public void sendPaymentInvoice(String email,float amount){
         String html = "Amount : "+Float.toString(amount)+"received";
         SimpleMailMessage message = new SimpleMailMessage();

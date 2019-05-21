@@ -18,9 +18,6 @@ public class HackathonController {
     @Autowired
     private TeamService teamService;
 
-    @Autowired
-    private EmailActivationLink emailActivationLink;
-
     private ResponseHeader responseHeader = new ResponseHeader();
 
 
