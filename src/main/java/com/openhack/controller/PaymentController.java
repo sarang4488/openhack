@@ -46,4 +46,11 @@ public class PaymentController {
         ResponseEntity responseEntity = paymentService.getTeamsPayment(hackname);
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/payment/expensereport/{hackname}", method = {RequestMethod.GET})
+    public ResponseEntity<?> getExpenseReport(@PathVariable String hackname){
+
+        ResponseEntity responseEntity = paymentService.getEarningReport(hackname);
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
 }
