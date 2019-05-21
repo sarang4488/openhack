@@ -72,7 +72,7 @@ class resultpage extends Component {
 
     let teamInfo = this.state.teams
       .map(team => {
-        let members = team.map(m => {
+        let members = Object.keys(team).map(m => {
           <div>
             {m}
             <br />
@@ -117,7 +117,7 @@ class resultpage extends Component {
 
     let teamInfo1 = this.state.teams
       .map(team => {
-        let members = team.map(m => {
+        let members = Object.keys(team).map(m => {
           <div>
             {m}
             <br />
