@@ -1,5 +1,6 @@
 package com.openhack.services;
 
+import com.openhack.Response.ExpenseReport;
 import com.openhack.Response.HackathonPaymentReportResponse;
 import com.openhack.Response.HackathonReportResponse;
 import com.openhack.Response.TeamMemberPaymentReport;
@@ -124,6 +125,40 @@ public class PaymentService {
         }
 
         return ResponseEntity.ok().body(hackathonPaymentReportResponses);
+    }
+
+    @Transactional
+    public ResponseEntity<?> getEarningReport(String hackname){
+
+        Hackathon hackathon = hackathonDao.findItemByName(hackname);
+        List<Team> teams = teamDao.findTeamsByHackathon(hackathon.getHid());
+        String [] sponsers = hackathon.getSponser().split("\\$");
+        Double sponser_earning = 1000.0 * sponsers.length;
+        int payment_count = 0;
+        int not_pay_count = 0;
+        float paid_total = 0;
+        float not_paid_total = 0;
+
+        for (Team team:
+             teams) {
+
+            List<TeamMember> teamMembers = team.getTeamMembers();
+            for (TeamMember teamMember:
+                 teamMembers) {
+
+                if(teamMember.getP_status().equals("None")){
+                    not_pay_count++;
+                }else{
+                    payment_count ++;
+                    paid_total += teamMember.getAmount();
+                }
+
+            }
+
+        }
+
+        ExpenseReport expenseReport = new ExpenseReport(sponser_earning,payment_count,not_pay_count,paid_total);
+        return ResponseEntity.ok().body(expenseReport);
     }
 
 }
