@@ -1,5 +1,7 @@
 package com.openhack.services;
 
+import com.openhack.Response.HackathonReportResponse;
+import com.openhack.Response.HackathonResponse;
 import com.openhack.Response.TeamResponse;
 import com.openhack.dao.HackathonDao;
 import com.openhack.dao.TeamDao;
@@ -225,6 +227,34 @@ public class TeamService {
         }
         return ResponseEntity.ok().body(hackTeams);
 
+    }
+
+    @Transactional
+    public ResponseEntity<?> getFinalTeams(String hackName){
+        Hackathon hackathon = hackathonDao.findItemByName(hackName);
+        List<Team> allTeams = teamDao.findTeams();
+        List<HackathonReportResponse> hackathonReportResponses = new ArrayList<>();
+
+        if(allTeams != null){
+            for (Team team:
+                 allTeams) {
+                if(team.getHackathon().getHid() == hackathon.getHid()){
+
+                    List<String> member_names = new ArrayList<>();
+                    List<TeamMember> teamMembers = team.getTeamMembers();
+
+                    for(TeamMember teamMember : teamMembers){
+                        User user = userDao.findById((long)teamMember.getMember_id());
+                        member_names.add(user.getScreenName());
+                    }
+
+                    HackathonReportResponse hackathonReportResponse = new HackathonReportResponse(team.getTid(),member_names,team.getScore());
+                    hackathonReportResponses.add(hackathonReportResponse);
+                }
+            }
+        }
+
+        return ResponseEntity.ok().body(hackathonReportResponses);
     }
 
 }
