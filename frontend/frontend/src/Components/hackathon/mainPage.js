@@ -14,7 +14,9 @@ class mainpage extends Component {
       imageView: [],
       displayprop: "",
       leaderFlag: false,
-      hackName: ""
+      hackName: "",
+      hackName2: "",
+      payFlag: false
     };
     this.propertyChangeHandler = this.propertyChangeHandler.bind(this);
   }
@@ -114,6 +116,13 @@ class mainpage extends Component {
     });
   };
 
+  submitPaymentReport = name => {
+    this.setState({
+      payFlag: true,
+      hackName2: name
+    });
+  };
+
   render() {
     let foot = <Footer data={this.props.data} />;
     console.log(this.props.location);
@@ -122,7 +131,6 @@ class mainpage extends Component {
     let details = this.state.hackathons.map(hackathon => {
       // const imgurl1 = require(`../uploads/${property.img}`);
 
-      let redi = null;
       if (this.state.leaderFlag) {
         this.props.history.push({
           pathname: "/resultPage",
@@ -132,9 +140,17 @@ class mainpage extends Component {
         });
       }
 
+      if (this.state.payFlag) {
+        this.props.history.push({
+          pathname: "/paymentStatus",
+          state: {
+            hackName2: this.state.hackName2
+          }
+        });
+      }
+
       return (
         <div class="displaypropinfo container-fluid">
-          {redi}
           {/* <div class="col-sm-4">
               <img src={imgurl1} height="200px" width="430px" />
             </div> */}
@@ -187,6 +203,17 @@ class mainpage extends Component {
               class="btn btn-primary"
             >
               View Leaderboard
+            </button>
+          </div>
+          <div class="col-sm-4">
+            <button
+              onClick={id => {
+                this.submitPaymentReport(hackathon.name);
+              }}
+              style={{ float: "right" }}
+              class="btn btn-primary"
+            >
+              Payment Report
             </button>
           </div>
         </div>
