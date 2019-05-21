@@ -107,6 +107,8 @@ class Hackeval extends Component {
               <h3 class="hit-headline">
                 <div>
                   Team id: {org.id}
+                  <br></br>
+                  Submitted URL: {org.submission_url}
                   <button
                     class="btn btn-primary btn-md"
                     style={{ marginLeft: "20px" }}
