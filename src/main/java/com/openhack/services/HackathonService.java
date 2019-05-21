@@ -249,7 +249,7 @@ public class HackathonService {
         if(hackathon.getStatus().equals("opened"))
             hackteam.setCode_url(code_url);
         else
-            return ResponseEntity.badRequest().body("Can't submit. Hackathon is closed");
+            return ResponseEntity.badRequest().body("Can't submit. Hackathon is "+hackathon.getStatus());
 
         TeamResponse teamResponse=new TeamResponse(hackteam);
         return ResponseEntity.ok().body("Code submitted. Note : you can update the link anytime untill hakcathon is closed");

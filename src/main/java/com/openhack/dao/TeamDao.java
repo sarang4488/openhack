@@ -33,6 +33,13 @@ public class TeamDao {
         return query.getResultList();
     }
 
+    public Team findItemByName(String team_name){
+        Query query = this.entityManager.createNativeQuery("select * from team where team_name like :team_name",Team.class);
+        query.setParameter("team_name",team_name);
+        if(query.getResultList().isEmpty()) return null;
+        return (Team) query.getResultList().get(0);
+    }
+
     public Team deleteItem(Long id){
         Team team = this.entityManager.find(Team.class, id);
         this.entityManager.remove(team);

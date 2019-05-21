@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +54,9 @@ public class PaymentService {
             return ResponseEntity.badRequest().body("Payment already received for this hackathon");
 
         teamMember.setP_status("Paid");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String s2 = simpleDateFormat.format(new Date());
+        teamMember.setPayment_date(s2);
 
         Payment payment = new Payment();
         payment.setHackathon(hackathon);
@@ -85,8 +90,9 @@ public class PaymentService {
             }
 
         }
-//        TeamMember teamMember = teamMemberDao.findItemByUid((int)user.getUid());
-//        teamMember.setAmount(amount);
+        TeamMember teamMember = teamMemberDao.findItemByUid((int)user.getUid());
+        System.out.println(teamMember);
+        teamMember.setAmount(amount);
         return ResponseEntity.ok().body(Float.toString(amount));
     }
 
@@ -105,13 +111,13 @@ public class PaymentService {
 
                     for(TeamMember teamMember : teamMembers){
                         User user = userDao.findById((long)teamMember.getMember_id());
-                        TeamMemberPaymentReport teamMemberPaymentReport = new TeamMemberPaymentReport(user.getScreenName(),30,teamMember.getP_status(),"2019-05-20");
+                        TeamMemberPaymentReport teamMemberPaymentReport = new TeamMemberPaymentReport(user.getScreenName(),teamMember.getAmount(),teamMember.getP_status(),teamMember.getPayment_date());
                         teamMemberPaymentReports.add(teamMemberPaymentReport);
                     }
 
                     System.out.println(teamMemberPaymentReports.size());
 
-                    HackathonPaymentReportResponse hackathonPaymentReportResponse = new HackathonPaymentReportResponse(team.getTid(),teamMemberPaymentReports);
+                    HackathonPaymentReportResponse hackathonPaymentReportResponse = new HackathonPaymentReportResponse(team.getTeam_name(),teamMemberPaymentReports);
                     hackathonPaymentReportResponses.add(hackathonPaymentReportResponse);
                 }
             }

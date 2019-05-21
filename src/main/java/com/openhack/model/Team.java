@@ -18,8 +18,8 @@ public class Team {
     @JoinColumn(name = "hid")
     private Hackathon hackathon;
 
-//    @Column(name = "team_name")
-//    private String team_name;
+    @Column(name = "team_name")
+    private String team_name;
 
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "team")
@@ -35,11 +35,12 @@ public class Team {
     public Team() {
     }
 
-    public Team(long tid, Hackathon hackathon, List<TeamMember> teamMembers, float score) {
+    public Team(long tid, Hackathon hackathon, List<TeamMember> teamMembers, float score,String team_name) {
         this.tid = tid;
         this.hackathon = hackathon;
         this.teamMembers = teamMembers;
         this.score = score;
+        this.team_name = team_name;
     }
 
     public long getTid() {
@@ -82,11 +83,11 @@ public class Team {
         this.code_url = code_url;
     }
 
-//    public String getTeam_name() {
-//        return team_name;
-//    }
-//
-//    public void setTeam_name(String team_name) {
-//        this.team_name = team_name;
-//    }
+    public String getTeam_name() {
+        return team_name;
+    }
+
+    public void setTeam_name(String team_name) {
+        this.team_name = team_name;
+    }
 }

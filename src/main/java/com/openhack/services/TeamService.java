@@ -20,6 +20,7 @@ import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
@@ -68,6 +69,11 @@ public class TeamService {
         Hackathon hackathon = hackathonDao.findItemById(hackid);
         String [] screennames = new String[]{leader_screenname,member2_screenname,member3_screenname,member4_screenname};
 
+        Team checkTeam = teamDao.findItemByName(team_name);
+        if(checkTeam != null){
+            return ResponseEntity.badRequest().body("This team is not available for use");
+        }
+
 
         List<String> list_screennames = Arrays.asList(screennames);
 
@@ -113,6 +119,7 @@ public class TeamService {
 
         Team team = new Team();
         team.setHackathon(hackathon);
+        team.setTeam_name(team_name);
 
         String owner = hackathon.getOwner().getName();
         String [] judges = hackathon.getJudge_screenname().split("\\$");
@@ -200,10 +207,6 @@ public class TeamService {
             }
         }
 
-//        emailActivationLink.sendActivationLinkTeamMember(member2_email,member2_name);
-//        emailActivationLink.sendActivationLinkTeamMember(member3_email,member3_name);
-//        emailActivationLink.sendActivationLinkTeamMember(member4_email,member4_name);
-
         teamDao.createItem(team);
         teamMemberDao.createItem(teamMember1);
         new Thread(() -> {
@@ -259,6 +262,8 @@ public class TeamService {
             Hackathon hackathon = team.getHackathon();
             if(hackathon.getStatus().equals("opened"))
                 return ResponseEntity.badRequest().body("Admin has not opened hackthon for grading yet.");
+            else if(hackathon.getStatus().equals("final"))
+                return ResponseEntity.badRequest().body("This hackathon is closed for grading.");
 
             team.setScore(score);
         }
@@ -311,7 +316,9 @@ public class TeamService {
             }
         }
 
-        return ResponseEntity.ok().body(hackathonReportResponses);
+        List<HackathonReportResponse> sortedTeam = hackathonReportResponses.stream().sorted(Comparator.comparingDouble(HackathonReportResponse::getScore)).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(sortedTeam);
     }
 
 }

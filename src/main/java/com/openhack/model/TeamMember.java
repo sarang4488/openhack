@@ -23,20 +23,24 @@ public class TeamMember {
     @Column(name = "p_status")
     private String p_status;
 
-//    @Column(name = "amount")
-//    private float amount;
+    @Column(name = "amount")
+    private float amount;
+
+    @Column(name = "payment_date")
+    private String payment_date;
 
     public TeamMember() {
 
     }
 
-    public TeamMember(long tmid, Team team, int member_id, String member_role, String p_status,float amount) {
+    public TeamMember(long tmid, Team team, int member_id, String member_role, String p_status,float amount,String payment_date) {
         this.tmid = tmid;
         this.team = team;
         this.member_id = member_id;
         this.member_role = member_role;
         this.p_status = p_status;
-        //this.amount = amount;
+        this.amount = amount;
+        this.payment_date = payment_date;
     }
 
     public long getTmid() {
@@ -79,11 +83,19 @@ public class TeamMember {
         this.p_status = p_status;
     }
 
-//    public float getAmount() {
-//        return amount;
-//    }
-//
-//    public void setAmount(float amount) {
-//        this.amount = amount;
-//    }
+    public float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
+    }
+
+    public String getPayment_date() {
+        return payment_date;
+    }
+
+    public void setPayment_date(String payment_date) {
+        this.payment_date = payment_date;
+    }
 }
