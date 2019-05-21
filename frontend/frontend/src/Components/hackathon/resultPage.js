@@ -69,7 +69,7 @@ class resultpage extends Component {
                   </div>
                   <br />
                   <div name="displayprop" style={{ marginRight: "5px" }}>
-                    Team Memebers:
+                    Team Members:
                     <br />
                     {members}{" "}
                   </div>

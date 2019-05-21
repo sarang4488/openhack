@@ -106,7 +106,7 @@ class Hackeval extends Component {
             <div class="headline">
               <h3 class="hit-headline">
                 <div>
-                  {org.id}
+                  Team id: {org.id}
                   <button
                     class="btn btn-primary btn-md"
                     style={{ marginLeft: "20px" }}
@@ -199,6 +199,9 @@ class Hackeval extends Component {
             {navbar}
             <div>
               <h2 style={{ marginLeft: "40%" }}>Evaluate Hackathon</h2>
+              <h4 style={{ marginLeft: "30%" }}>
+                You can Grade teams for the hackathon if you are judge here
+              </h4>
               <p style={{ fontSize: "18px" }}>{this.state.message}</p>
             </div>
             {/*Display the Tbale row based on data recieved*/}

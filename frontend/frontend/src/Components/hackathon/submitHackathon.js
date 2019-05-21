@@ -179,6 +179,7 @@ class SubmitHackathon extends Component {
                                 marginLeft: "200px",
                                 marginTop: "10px"
                               }}
+                              data-dismiss="modal"
                               onClick={id => {
                                 this.onCodeSubmit(org.id);
                               }}

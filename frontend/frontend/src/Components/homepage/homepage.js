@@ -22,19 +22,7 @@ class homepage extends Component {
   //Call the Will Mount to set the auth Flag to false
   componentWillMount() {}
 
-  componentDidMount() {
-    // axios.get(`http://localhost:8080/organization/names/`).then(response => {
-    //   console.log(response);
-    //   //update the state with the response data
-    //   if(this.state.statusCodeVal)
-    //   this.setState({
-    //     sponsors: response.data.body,
-    //     authFlag:true
-    //   });
-    //   console.log("Search :", this.state.sponsors);
-    //   // console.log("No of results :", this.state.properties.length);
-    // });
-  }
+  componentDidMount() {}
 
   render() {
     if (this.state.authFlag) {

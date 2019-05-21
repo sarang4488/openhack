@@ -289,7 +289,7 @@ class Profile extends Component {
         } else {
           this.setState({
             orgFlag: false,
-            message: "Invalid Data "
+            message: response.data.body
           });
         }
       });
@@ -371,6 +371,9 @@ class Profile extends Component {
                     <label style={{ fontSize: "15px" }}>
                       Select organization to join : <br />
                     </label>
+                    <div style={{ fontSize: "15px", color: "red" }}>
+                      {this.state.message}
+                    </div>
                     <div style={{ fontSize: "15px" }}>
                       <select
                         value={this.state.organisationvalue}

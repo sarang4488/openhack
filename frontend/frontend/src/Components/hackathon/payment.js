@@ -13,32 +13,15 @@ class payhackathon extends Component {
     //maintain the state required for this component
     this.state = {
       name: "",
-      location: "",
-      datein: "",
-      dateout: "",
-      guests: "",
+
       message: "",
-      description: "",
-      selectedFile: "",
-      bedrooms: "",
-      bathrooms: "",
-      type: "",
-      amenities: "",
-      price: "",
+
       descriptionprop: "",
       authFlag: false
     };
     //Bind the handlers to this class
     this.nameChangeHandler = this.nameChangeHandler.bind(this);
-    this.locationChangeHandler = this.locationChangeHandler.bind(this);
-    this.checkinChangeHandler = this.checkinChangeHandler.bind(this);
-    this.checkoutChangeHandler = this.checkoutChangeHandler.bind(this);
-    this.guestsChangeHandler = this.guestsChangeHandler.bind(this);
-    this.bedroomsChangeHandler = this.bedroomsChangeHandler.bind(this);
-    this.bathroomsChangeHandler = this.bathroomsChangeHandler.bind(this);
-    this.typeChangeHandler = this.typeChangeHandler.bind(this);
-    this.amenitiesChangeHandler = this.amenitiesChangeHandler.bind(this);
-    this.priceChangeHandler = this.priceChangeHandler.bind(this);
+
     this.descriptionChangeHandler = this.descriptionChangeHandler.bind(this);
     this.submitPayment = this.submitPayment.bind(this);
   }
@@ -84,74 +67,11 @@ class payhackathon extends Component {
     });
   };
   //password change handler to update state variable with the text entered by the user
-  locationChangeHandler = e => {
-    this.setState({
-      location: e.target.value
-    });
-  };
-  //password change handler to update state variable with the text entered by the user
-  checkinChangeHandler = e => {
-    this.setState({
-      checkin: e.target.value
-    });
-  };
-  //password change handler to update state variable with the text entered by the user
-  checkoutChangeHandler = e => {
-    this.setState({
-      checkout: e.target.value
-    });
-  };
-
-  guestsChangeHandler = e => {
-    this.setState({
-      guests: e.target.value
-    });
-  };
 
   descriptionChangeHandler = e => {
     this.setState({
       descriptionprop: e.target.value
     });
-  };
-
-  typeChangeHandler = e => {
-    this.setState({
-      type: e.target.value
-    });
-  };
-
-  bedroomsChangeHandler = e => {
-    this.setState({
-      bedrooms: e.target.value
-    });
-  };
-
-  amenitiesChangeHandler = e => {
-    this.setState({
-      amenities: e.target.value
-    });
-  };
-
-  bathroomsChangeHandler = e => {
-    this.setState({
-      bathrooms: e.target.value
-    });
-  };
-
-  priceChangeHandler = e => {
-    this.setState({
-      price: e.target.value
-    });
-  };
-  //for setting image description
-  onChange = e => {
-    if (e.target.name === "selectedFile") {
-      this.setState({
-        selectedFile: e.target.files[0]
-      });
-    } else {
-      this.setState({ [e.target.name]: e.target.value });
-    }
   };
 
   //submit Property handler to send a request to the node backend
@@ -171,16 +91,15 @@ class payhackathon extends Component {
       )
       .then(response => {
         console.log("Status Code : ", response);
-        if (response.data === 200) {
+        if (response.data.statusCodeValue === 200) {
           this.setState({
             authFlag: true,
-            message:
-              "Congratulations! You have successfully listed your property"
+            message: response.data.body
           });
         } else {
           this.setState({
             authFlag: false,
-            message: "User Already Exist "
+            message: response.data.body
           });
         }
       });
@@ -191,9 +110,9 @@ class payhackathon extends Component {
     const { description, selectedFile } = this.state;
     //redirect based on successful login
     let redirectVar = null;
-    // if(cookie.load('cookie')){
-    //         redirectVar = <Redirect to= "/home"/>
-    //     }
+    if (this.state.authFlag) {
+      redirectVar = <Redirect to="/submithackathon" />;
+    }
 
     return (
       <div>
@@ -213,7 +132,7 @@ class payhackathon extends Component {
               <div class="form-group">
                 Enter Debit/Credit Card Number :
                 <input
-                  onChange={this.descriptionChangeHandler}
+                  onChange={this.nameChangeHandler}
                   type="text"
                   class="form-control"
                   name="descriptionprop"
@@ -234,7 +153,7 @@ class payhackathon extends Component {
               <div class="form-group">
                 Enter CVV code :
                 <input
-                  onChange={this.typeChangeHandler}
+                  onChange={this.nameChangeHandler}
                   type="text"
                   class="form-control"
                   name="type"
@@ -244,7 +163,7 @@ class payhackathon extends Component {
               <div class="form-group">
                 Enter Postal Code :
                 <input
-                  onChange={this.typeChangeHandler}
+                  onChange={this.nameChangeHandler}
                   type="text"
                   class="form-control"
                   name="type"
