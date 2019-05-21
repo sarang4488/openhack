@@ -58,9 +58,12 @@ class PaymentStatus extends Component {
         console.log("Mapping members", m);
         return (
           <div>
+            <br />
             {m.member_name}:<br />
             Payment Status: {m.p_status}
+            <br />
             Amount: {m.amount}
+            <br />
             Payment Date: {m.payment_date}
           </div>
         );
