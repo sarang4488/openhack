@@ -74,6 +74,7 @@ class Login extends Component {
             authFlag: true,
             email: response.data
           });
+          cookie.save("onboarded", true, { path: "/" });
           localStorage.setItem("screenName", response.data.body.screenname);
           localStorage.setItem("email", response.data.body.email);
         } else {
@@ -97,7 +98,7 @@ class Login extends Component {
       redirectVar = (
         <Redirect
           to={{
-            pathname: "/list"
+            pathname: "/"
           }}
         />
       );

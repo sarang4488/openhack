@@ -73,7 +73,7 @@ class NavProfile extends Component {
             </Link>
           </li>
           <li>
-            <Link to="/login" class="test" onClick={this.handleLogout}>
+            <Link to="/" class="test" onClick={this.handleLogout}>
               Logout
             </Link>
           </li>
