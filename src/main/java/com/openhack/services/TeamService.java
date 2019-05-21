@@ -66,6 +66,29 @@ public class TeamService {
 
         long hackid = Optional.ofNullable(hid).orElse(-1L);
         Hackathon hackathon = hackathonDao.findItemById(hackid);
+        String [] screennames = new String[]{leader_screenname,member2_screenname,member3_screenname,member4_screenname};
+
+
+        List<String> list_screennames = Arrays.asList(screennames);
+
+        List<Team> teams = teamDao.findTeams();
+        if(teams != null){
+            for (Team team:
+                 teams) {
+                if(team.getHackathon().getHid() == hid) {
+                    List<TeamMember> teamMembers = team.getTeamMembers();
+                    for (TeamMember teamMember :
+                            teamMembers) {
+                        User user = userDao.findById((long) teamMember.getMember_id());
+                        if (list_screennames.contains(user.getScreenName())) {
+                            return ResponseEntity.badRequest().body("User " + user.getName() + " has registered for hackathon "+team.getHackathon().getName()+" already");
+                        }
+                    }
+                }
+            }
+        }
+
+
         User user = userDao.findByScreenname(leader_screenname);
         User user2=null;
         User user3=null;

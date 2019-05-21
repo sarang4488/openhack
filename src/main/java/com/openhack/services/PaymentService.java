@@ -85,6 +85,8 @@ public class PaymentService {
             }
 
         }
+//        TeamMember teamMember = teamMemberDao.findItemByUid((int)user.getUid());
+//        teamMember.setAmount(amount);
         return ResponseEntity.ok().body(Float.toString(amount));
     }
 

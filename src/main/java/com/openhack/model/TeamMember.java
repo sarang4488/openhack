@@ -23,16 +23,20 @@ public class TeamMember {
     @Column(name = "p_status")
     private String p_status;
 
+//    @Column(name = "amount")
+//    private float amount;
+
     public TeamMember() {
 
     }
 
-    public TeamMember(long tmid, Team team, int member_id, String member_role, String p_status) {
+    public TeamMember(long tmid, Team team, int member_id, String member_role, String p_status,float amount) {
         this.tmid = tmid;
         this.team = team;
         this.member_id = member_id;
         this.member_role = member_role;
         this.p_status = p_status;
+        //this.amount = amount;
     }
 
     public long getTmid() {
@@ -74,4 +78,12 @@ public class TeamMember {
     public void setP_status(String p_status) {
         this.p_status = p_status;
     }
+
+//    public float getAmount() {
+//        return amount;
+//    }
+//
+//    public void setAmount(float amount) {
+//        this.amount = amount;
+//    }
 }
