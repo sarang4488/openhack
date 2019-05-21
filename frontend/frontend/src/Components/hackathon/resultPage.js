@@ -47,6 +47,7 @@ class resultpage extends Component {
         });
       });
   }
+
   render() {
     let foot = <Footer data={this.props.data} />;
     console.log(this.props.location);
@@ -54,7 +55,6 @@ class resultpage extends Component {
     let members = null;
     let teamInfo = this.state.teams
       .map(team => {
-        console.log();
         members = team.team_members.map(m => {
           return <div>{m}</div>;
         });
