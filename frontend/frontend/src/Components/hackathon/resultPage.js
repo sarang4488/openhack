@@ -51,7 +51,7 @@ class resultpage extends Component {
   };
 
   componentDidMount() {
-    const data = null;
+    let data = null;
     if (this.props.location != undefined) {
       data = this.props.location.state.hackName;
     }
