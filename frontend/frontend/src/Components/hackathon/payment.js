@@ -54,7 +54,7 @@ class payhackathon extends Component {
         console.log(response);
         //update the state with the response data
         this.setState({
-          authFlag: true,
+          //   authFlag: true,
           payment: response.data.body
           // properties : this.state.properties,
         });
