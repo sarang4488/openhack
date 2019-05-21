@@ -158,6 +158,17 @@ class mainpage extends Component {
               </button>
             </div>
           </div>
+          <div class="col-sm-4">
+            <button
+              onClick={id => {
+                this.submitLeaderboard(hackathon.id);
+              }}
+              style={{ float: "right" }}
+              class="btn btn-primary"
+            >
+              View Leaderboard
+            </button>
+          </div>
         </div>
       );
     });
