@@ -44,9 +44,10 @@ public class SignUpController {
             return new ResponseEntity<>(responseEntity,responseHeader.getHeader(),HttpStatus.CREATED);
         }
 
-        emailActivationLink.sendActivationLink(email);
-
-
+        new Thread(() -> {
+            System.out.println("Sending activation email to "+email);
+            emailActivationLink.sendActivationLink(email);
+        }).start();
 
         return new ResponseEntity<>(ResponseEntity.ok().body("Please activate account using link sent to email"),responseHeader.getHeader(), HttpStatus.CREATED);
 

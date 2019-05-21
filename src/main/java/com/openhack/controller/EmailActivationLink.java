@@ -40,6 +40,11 @@ public class EmailActivationLink {
 
     public void sendPaymentLink(String email,String hackname,String screenname){
         String html = "Please use the following payment link";
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Payment for hackathon");
+        message.setText(html);
+        javaMailSender.send(message);
     }
 
     public void sendPaymentInvoice(String email,float amount){
