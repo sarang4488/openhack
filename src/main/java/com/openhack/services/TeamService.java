@@ -67,6 +67,10 @@ public class TeamService {
 
         long hackid = Optional.ofNullable(hid).orElse(-1L);
         Hackathon hackathon = hackathonDao.findItemById(hackid);
+
+        if(!hackathon.getStatus().equals("created"))
+            return ResponseEntity.badRequest().body("This hackathon is in progress/completed.");
+
         String [] screennames = new String[]{leader_screenname,member2_screenname,member3_screenname,member4_screenname};
 
         Team checkTeam = teamDao.findItemByName(team_name);
