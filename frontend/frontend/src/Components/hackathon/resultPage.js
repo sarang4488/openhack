@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../App.css";
 import axios from "axios";
-import Navbar4 from "../Navbar/navbar2";
+import Navbar4 from "../Navbar/navbar5";
 import cookie from "react-cookies";
 import Footer from "../Footer/footer";
 class resultpage extends Component {

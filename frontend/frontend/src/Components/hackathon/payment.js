@@ -41,6 +41,7 @@ class payhackathon extends Component {
   }
 
   componentDidMount() {
+<<<<<<< HEAD
     // console.log("...")
     // console.log("GDAJDHS",this.state.hid,this.state.screenname)
     const values=queryString.parse(this.props.location.search)
@@ -50,6 +51,27 @@ const keys=values//Object.keys(values)
       hid: values.hid,
       screenname:values.screenname
     },()=>{this.setVals()})
+=======
+    const data = {
+      screenName: localStorage.getItem("screenName"),
+      hackid: this.props.location.state.displayprop
+    };
+    console.log(data.screenName);
+    console.log(data.hackid);
+    axios
+      .get(
+        `http://localhost:8080/payment/${data.screenName}/amount/${data.hackid}`
+      )
+      .then(response => {
+        console.log(response);
+        //update the state with the response data
+        this.setState({
+          //   authFlag: true,
+          payment: response.data.body
+          // properties : this.state.properties,
+        });
+      });
+>>>>>>> 6801f4dac3ad44c67a8b9cda97a4aafa3beed0b3
   }
   
   setVals=()=>{
