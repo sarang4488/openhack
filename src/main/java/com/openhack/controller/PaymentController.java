@@ -39,4 +39,11 @@ public class PaymentController {
 
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/payment/report/{hackname}", method = {RequestMethod.GET})
+    public ResponseEntity<?> getPaymentReport(@PathVariable String hackname){
+
+        ResponseEntity responseEntity = paymentService.getTeamsPayment(hackname);
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
 }

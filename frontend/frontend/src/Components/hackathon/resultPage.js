@@ -8,10 +8,31 @@ class resultpage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      teams: [{ Name: "Team 1",participantName:["Member 1","Member 2","Member 3","Member 4"],score:"Score comes here"}, { Name: "Team 2",participantName:["Member 1","Member 2","Member 3","Member 4"],score:"Score comes here"},{ Name: "Team 3",participantName:["Member 1","Member 2","Member 3","Member 4"],score:"Score comes here" },{ Name: "Team 4",participantName:["Member 1","Member 2","Member 3","Member 4"],score:"Score comes here" } ],
+      teams: [
+        {
+          Name: "Team 1",
+          participantName: ["Member 1", "Member 2", "Member 3", "Member 4"],
+          score: "Score comes here"
+        },
+        {
+          Name: "Team 2",
+          participantName: ["Member 1", "Member 2", "Member 3", "Member 4"],
+          score: "Score comes here"
+        },
+        {
+          Name: "Team 3",
+          participantName: ["Member 1", "Member 2", "Member 3", "Member 4"],
+          score: "Score comes here"
+        },
+        {
+          Name: "Team 4",
+          participantName: ["Member 1", "Member 2", "Member 3", "Member 4"],
+          score: "Score comes here"
+        }
+      ],
       authFlag: false,
       imageView: [],
-      displayprop: ""
+      displayprop: []
     };
     this.propertyChangeHandler = this.propertyChangeHandler.bind(this);
   }
@@ -28,105 +49,117 @@ class resultpage extends Component {
     });
     console.log("Successful test - ", this.state.displayprop);
   };
+
   componentDidMount() {
-    // axios.get('http://localhost:3031/results')
-    //         .then((response) => {
-    //         //update the state with the response data
-    //         this.setState({
-    //             authFlag : true,
-    //             properties : this.state.properties,
-    //         });
-    //         console.log("Search :",this.state.properties)
-    //         console.log("No of results :",this.state.properties.length)
-    //     });
+    const data = null;
+    if (this.props.location != undefined) {
+      data = this.props.location.state.hackName;
+    }
+    axios.get(`http://localhost:8080/teamreport/${data}`).then(response => {
+      console.log(
+        "The status code for teamreport get request is: ",
+        response.statusCodeValue
+      );
+      this.setState({
+        displayprop: response.data.body
+      });
+    });
   }
   render() {
     let foot = <Footer data={this.props.data} />;
     console.log(this.props.location);
     let navbar = <Navbar4 data={this.props.data} />;
-    
-    let details = this.state.teams.map(team => {
-      // const imgurl1 = require(`../uploads/${property.img}`);
-      return (
-        <div class="displaypropinfo container-fluid">
-       
-          {/* <div class="col-sm-4"><img src={imgurl1} height="200px" width="430px"></img></div> */}
-          <div class="col-sm-8">
-            <div class="headline">
-              <h3 class="hit-headline">
-                
+
+    let teamInfo = this.state.teams
+      .map(team => {
+        let members = team.map(m => {
+          <div>
+            {m}
+            <br />
+          </div>;
+        });
+        return (
+          <div class="displaypropinfo container-fluid">
+            {/* <div class="col-sm-4"><img src={imgurl1} height="200px" width="430px"></img></div> */}
+            <div class="col-sm-8">
+              <div class="headline">
+                <h3 class="hit-headline">
                   <div
                     name="displayprop"
-                    style={{marginRight:"5px"}}
+                    style={{ marginRight: "5px" }}
                     data-value={team.Name}
                   >
                     {team.Name}
-                    </div>
-                    <br></br>
-                    <div
-                    name="displayprop"
-                    style={{marginRight:"5px"}}
-                    data-value={team.participantName}
-                  > 
-                    {team.participantName}
-                    </div>
-                    <br></br>
-                    <div
-                    name="displayprop"
-                    style={{marginRight:"5px"}}
-                    data-value={team.score}
-                  > 
-                    {team.score}
-                    </div>
-              </h3>
-            </div>
-            
-           
-          </div>
-        </div>
-      );
-    }).slice(0,3);
-    let details1 = this.state.teams.map(team => {
-      // const imgurl1 = require(`../uploads/${property.img}`);
-      return (
-        <div class="displaypropinfo container-fluid">
-       
-          {/* <div class="col-sm-4"><img src={imgurl1} height="200px" width="430px"></img></div> */}
-          <div class="col-sm-8">
-            <div class="headline">
-              <h3 class="hit-headline">
-                
+                  </div>
+                  <br />
                   <div
                     name="displayprop"
-                    style={{marginRight:"5px"}}
+                    style={{ marginRight: "5px" }}
+                    data-value={team.participantName}
+                  >
+                    {members}
+                  </div>
+                  <br />
+                  <div
+                    name="displayprop"
+                    style={{ marginRight: "5px" }}
+                    data-value={team.score}
+                  >
+                    {team.score}
+                  </div>
+                </h3>
+              </div>
+            </div>
+          </div>
+        );
+      })
+      .slice(0, 3);
+
+    let teamInfo1 = this.state.teams
+      .map(team => {
+        let members = team.map(m => {
+          <div>
+            {m}
+            <br />
+          </div>;
+        });
+        return (
+          <div class="displaypropinfo container-fluid">
+            {/* <div class="col-sm-4"><img src={imgurl1} height="200px" width="430px"></img></div> */}
+            <div class="col-sm-8">
+              <div class="headline">
+                <h3 class="hit-headline">
+                  <div
+                    name="displayprop"
+                    style={{ marginRight: "5px" }}
                     data-value={team.Name}
                   >
                     {team.Name}
-                    </div>
-                    <br></br>
-                    <div
+                  </div>
+                  <br />
+                  <div
                     name="displayprop"
-                    style={{marginRight:"5px"}}
+                    style={{ marginRight: "5px" }}
                     data-value={team.participantName}
-                  > 
-                    {team.participantName}
-                    </div>
-                    <br></br>
-                    <div
+                  >
+                    {members}
+                  </div>
+                  <br />
+                  <div
                     name="displayprop"
-                    style={{marginRight:"5px"}}
+                    style={{ marginRight: "5px" }}
                     data-value={team.score}
-                  > 
+                  >
                     {team.score}
-                    </div>
-              </h3>
+                  </div>
+                </h3>
+              </div>
             </div>
-            
-           
           </div>
-        </div>
-      );
-    }).slice(3,100);
+        );
+      })
+      .slice(3, 100);
+
     let redirectVar = null;
     if (this.state.displayprop != "") {
       this.props.history.push({
@@ -144,11 +177,15 @@ class resultpage extends Component {
 
           <div class="main-div1" style={{ backgroundColor: "#F7F7F8" }}>
             {navbar}
-           <div style={{textAlign:"center",fontSize:"30px"}}>Top 3 Teams</div>
+            <div style={{ textAlign: "center", fontSize: "30px" }}>
+              Top 3 Teams
+            </div>
             {/*Display the Tbale row based on data recieved*/}
-            {details}
-            <div style={{textAlign:"center",fontSize:"30px"}}>Other Team Results</div>
-            {details1}
+            {teamInfo}
+            <div style={{ textAlign: "center", fontSize: "30px" }}>
+              Other Team Results
+            </div>
+            {teamInfo1}
           </div>
           {foot}
         </div>

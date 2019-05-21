@@ -12,7 +12,9 @@ class mainpage extends Component {
       hackathons: [],
       authFlag: false,
       imageView: [],
-      displayprop: ""
+      displayprop: "",
+      leaderFlag: false,
+      hackName: ""
     };
     this.propertyChangeHandler = this.propertyChangeHandler.bind(this);
   }
@@ -105,6 +107,13 @@ class mainpage extends Component {
       });
   }
 
+  submitLeaderboard = name => {
+    this.setState({
+      leaderFlag: true,
+      hackName: name
+    });
+  };
+
   render() {
     let foot = <Footer data={this.props.data} />;
     console.log(this.props.location);
@@ -113,8 +122,19 @@ class mainpage extends Component {
     let details = this.state.hackathons.map(hackathon => {
       // const imgurl1 = require(`../uploads/${property.img}`);
 
+      let redi = null;
+      if (this.state.leaderFlag) {
+        this.props.history.push({
+          pathname: "/resultPage",
+          state: {
+            hackName: this.state.hackName
+          }
+        });
+      }
+
       return (
         <div class="displaypropinfo container-fluid">
+          {redi}
           {/* <div class="col-sm-4">
               <img src={imgurl1} height="200px" width="430px" />
             </div> */}
@@ -161,7 +181,7 @@ class mainpage extends Component {
           <div class="col-sm-4">
             <button
               onClick={id => {
-                this.submitLeaderboard(hackathon.id);
+                this.submitLeaderboard(hackathon.name);
               }}
               style={{ float: "right" }}
               class="btn btn-primary"

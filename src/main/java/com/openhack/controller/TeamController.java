@@ -24,4 +24,10 @@ public class TeamController {
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/teamreport/{hackname}", method = {RequestMethod.GET})
+    public ResponseEntity<?> getFinalTeamList(@PathVariable String hackname){
+        ResponseEntity responseEntity = teamService.getFinalTeams(hackname);
+        return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
+    }
+
 }

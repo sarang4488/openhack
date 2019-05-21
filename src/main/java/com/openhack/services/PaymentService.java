@@ -1,5 +1,8 @@
 package com.openhack.services;
 
+import com.openhack.Response.HackathonPaymentReportResponse;
+import com.openhack.Response.HackathonReportResponse;
+import com.openhack.Response.TeamMemberPaymentReport;
 import com.openhack.dao.*;
 import com.openhack.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +22,9 @@ public class PaymentService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private TeamDao teamDao;
 
     @Autowired
     private HackathonDao hackathonDao;
@@ -78,6 +86,36 @@ public class PaymentService {
 
         }
         return ResponseEntity.ok().body(Float.toString(amount));
+    }
+
+    @Transactional
+    public ResponseEntity<?> getTeamsPayment(String hackName){
+        Hackathon hackathon = hackathonDao.findItemByName(hackName);
+        List<Team> allTeams = teamDao.findTeams();
+        List<HackathonPaymentReportResponse> hackathonPaymentReportResponses = new ArrayList<>();
+
+        if(allTeams != null){
+            for (Team team:
+                    allTeams) {
+                if(team.getHackathon().getHid() == hackathon.getHid()){
+                    List<TeamMember> teamMembers = team.getTeamMembers();
+                    List<TeamMemberPaymentReport> teamMemberPaymentReports = new ArrayList<>();
+
+                    for(TeamMember teamMember : teamMembers){
+                        User user = userDao.findById((long)teamMember.getMember_id());
+                        TeamMemberPaymentReport teamMemberPaymentReport = new TeamMemberPaymentReport(user.getScreenName(),30,teamMember.getP_status(),"2019-05-20");
+                        teamMemberPaymentReports.add(teamMemberPaymentReport);
+                    }
+
+                    System.out.println(teamMemberPaymentReports.size());
+
+                    HackathonPaymentReportResponse hackathonPaymentReportResponse = new HackathonPaymentReportResponse(team.getTid(),teamMemberPaymentReports);
+                    hackathonPaymentReportResponses.add(hackathonPaymentReportResponse);
+                }
+            }
+        }
+
+        return ResponseEntity.ok().body(hackathonPaymentReportResponses);
     }
 
 }
