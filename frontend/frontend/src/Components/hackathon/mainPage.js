@@ -251,6 +251,12 @@ class mainpage extends Component {
 
           <div class="main-div1" style={{ backgroundColor: "#F7F7F8" }}>
             {navbar}
+            <div>
+              <h2 style={{ marginLeft: "38%" }}>Manage Your Hackathons</h2>
+              <h4 style={{ marginLeft: "33%" }}>
+                You can open, close and finalize hackathons you created here
+              </h4>
+            </div>
             <div
               style={{
                 marginTop: "30px",

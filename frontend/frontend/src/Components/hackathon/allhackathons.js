@@ -157,7 +157,14 @@ class ListAllHackathon extends Component {
 
           <div class="main-div1" style={{ backgroundColor: "#F7F7F8" }}>
             {navbar}
-
+            <div>
+              <h2 style={{ marginLeft: "42%" }}>View Hackathons</h2>
+              <h4 style={{ marginLeft: "32%" }}>
+                You can Register for Hackathons where you are not judge or owner
+                here
+              </h4>
+              <p style={{ fontSize: "18px" }}>{this.state.message}</p>
+            </div>
             {/*Display the Tbale row based on data recieved*/}
             {details}
           </div>

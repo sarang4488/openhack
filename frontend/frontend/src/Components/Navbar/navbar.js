@@ -56,7 +56,7 @@ class Navbar extends Component {
         </ul>
       </li>
     );
-    if (cookie.load("onboarded")) {
+    if (localStorage.getItem("screenName")) {
       dropDown = (
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown">

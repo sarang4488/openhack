@@ -14,6 +14,8 @@ class registerhackathon extends Component {
       name: "",
       teamName: "",
       authFlag: false,
+      rolevalue: "",
+      rolevalue1: "",
       maxTeam: 0
     };
     //Bind the handlers to this class
@@ -69,6 +71,7 @@ class registerhackathon extends Component {
       name: localStorage.getItem("screenName")
     };
     console.log(data.name);
+    console.log(this.state);
     axios
       .post(
         `http://localhost:8080/hackathon/${
@@ -104,6 +107,16 @@ class registerhackathon extends Component {
     // }
   };
 
+  handleSelect = e => {
+    console.log(e);
+    this.setState({ rolevalue: e.target.value });
+  };
+
+  handleSelect1 = e => {
+    console.log(e);
+    this.setState({ rolevalue1: e.target.value });
+  };
+
   createTable = () => {
     let table = [];
     console.log(this.state.maxTeam);
@@ -118,13 +131,28 @@ class registerhackathon extends Component {
             name={"Member" + i + "name"}
             placeholder={"Member" + " " + i + " " + "name"}
           />
-          <input
+
+          <label style={{ fontSize: "15px" }}>
+            Assign Role: <br />
+          </label>
+          <div style={{ fontSize: "15px" }}>
+            <select name={"Member" + i + "role"} onChange={this.ChangeHandler}>
+              <option value="select">Select</option>
+              <option value="productmanager">Product Manager</option>
+              <option value="engineer">Engineer</option>
+              <option value="fullstack">Full Stack</option>
+              <option value="designer">Designer</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          {/* <input
             onChange={this.ChangeHandler}
             type="text"
             class="form-control"
             name={"Member" + i + "role"}
             placeholder={"Member" + " " + i + " " + "role"}
-          />
+          /> */}
         </div>
       );
     }
@@ -177,13 +205,30 @@ class registerhackathon extends Component {
                   placeholder="Leader Name"
                   value={this.state.name}
                 />
-                <input
+
+                <label style={{ fontSize: "15px" }}>
+                  Assign Role: <br />
+                </label>
+                <div style={{ fontSize: "15px" }}>
+                  <select
+                    value={this.state.rolevalue}
+                    onChange={this.handleSelect}
+                  >
+                    <option value="select">Select</option>
+                    <option value="productmanager">Product Manager</option>
+                    <option value="engineer">Engineer</option>
+                    <option value="fullstack">Full Stack</option>
+                    <option value="designer">Designer</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                {/* <input
                   onChange={this.teamLeadRoleChangeHandler}
                   type="text"
                   class="form-control"
                   name="descriptionprop"
                   placeholder="Team Lead Role"
-                />
+                /> */}
               </div>
               {this.createTable()}
               {/* <div class="form-group">

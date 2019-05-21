@@ -49,12 +49,12 @@ class NavProfile extends Component {
             src="images/default-profile-pic2.png"
             style={{ marginRight: "2px" }}
           />
-          {cookie.load("cookie")} <span class="caret" />
+          {localStorage.getItem("screenName")} <span class="caret" />
         </a>
         <ul class="dropdown-menu">
           <li>
             <Link to="/profile" class="test">
-              My profile
+              My Profile
             </Link>
           </li>
           <li>

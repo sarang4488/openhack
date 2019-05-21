@@ -33,6 +33,7 @@ import resultPage from "./hackathon/resultPage";
 import Hackeval from "./hackathon/hackEval";
 import paymentstatus from "./hackathon/paymentStatus";
 import gradeHackathon from "./hackathon/gradehackathon";
+import home from "./homepage/home";
 //Create a Main Component
 class Main extends Component {
   render() {
@@ -71,6 +72,7 @@ class Main extends Component {
         <Route path="/resultPage" component={resultPage} />
         <Route path="/gradehackathon" component={gradeHackathon} />
         <Route path="/paymentStatus" component={paymentstatus} />
+        <Route path="/home" component={home} />
       </div>
     );
   }

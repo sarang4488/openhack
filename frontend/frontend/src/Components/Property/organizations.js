@@ -146,7 +146,9 @@ class Organizations extends Component {
             {navbar}
             <div>
               <h2 style={{ marginLeft: "36%" }}>Manage your Organisations</h2>
-
+              <h4 style={{ marginLeft: "36%" }}>
+                You can view all organisations you created here
+              </h4>
               <p style={{ fontSize: "18px" }}>{this.state.message}</p>
             </div>
 

@@ -158,7 +158,12 @@ class GradeHackathon extends Component {
 
           <div class="main-div1" style={{ backgroundColor: "#F7F7F8" }}>
             {navbar}
-
+            <div>
+              <h2 style={{ marginLeft: "42%" }}>Grade Hackathons</h2>
+              <h4 style={{ marginLeft: "38%" }}>
+                You can Grade Hackathons you are judge for here
+              </h4>
+            </div>
             {/*Display the Tbale row based on data recieved*/}
             {details}
           </div>

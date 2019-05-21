@@ -14,7 +14,8 @@ class homepage extends Component {
     //maintain the state required for this component
     this.state = {
       authFlag: false,
-      error: false
+      error: false,
+      displayprop: ""
     };
   }
 
@@ -36,10 +37,11 @@ class homepage extends Component {
   }
 
   render() {
-    // if (this.state.authFlag) {
-    //   window.location.reload(1);
-    //   this.state.authFlag == false;
-    // }
+    if (this.state.authFlag) {
+      this.props.history.push({
+        pathname: "/profile"
+      });
+    }
     let redirectVar = null;
     let errorMessage = null;
     if (this.state.error) {

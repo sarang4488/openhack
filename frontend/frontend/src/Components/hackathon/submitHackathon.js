@@ -196,8 +196,12 @@ class SubmitHackathon extends Component {
           <div class="main-div1" style={{ backgroundColor: "#F7F7F8" }}>
             {navbar}
             <div>
-              <h2 style={{ marginLeft: "42%" }}>Your Hackathons</h2>
+              <h2 style={{ marginLeft: "42%" }}>Submit Your Hackathons</h2>
+              <h4 style={{ marginLeft: "38%" }}>
+                You can submit Hackathons you have registered for here
+              </h4>
             </div>
+
             {/*Display the Tbale row based on data recieved*/}
             {details}
             {foot}
