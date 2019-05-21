@@ -29,6 +29,7 @@ import resultPage from "./hackathon/resultPage";
 import Hackeval from "./hackathon/hackEval";
 import paymentstatus from "./hackathon/paymentStatus";
 import gradeHackathon from "./hackathon/gradehackathon";
+import hackreport from "./hackathon/hackreport";
 import home from "./homepage/home";
 //Create a Main Component
 class Main extends Component {
@@ -67,6 +68,7 @@ class Main extends Component {
         <Route path="/gradehackathon" component={gradeHackathon} />
         <Route path="/paymentStatus" component={paymentstatus} />
         <Route path="/home" component={home} />
+        <Route path="/hackreport" component={hackreport}/>
         {/* <Route path="payHackathon"component={payHackathon} /> */}
       </div>
     );
