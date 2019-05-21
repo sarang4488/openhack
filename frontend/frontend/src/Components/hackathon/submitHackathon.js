@@ -21,6 +21,8 @@ class SubmitHackathon extends Component {
       messageFlag: false,
       imageView: [],
       url: "",
+      leaderFlag: false,
+      hackName: "",
       displayprop: ""
     };
     this.propertyChangeHandler = this.propertyChangeHandler.bind(this);
@@ -46,6 +48,13 @@ class SubmitHackathon extends Component {
   URLChangeHandler = e => {
     this.setState({
       url: e.target.value
+    });
+  };
+
+  submitLeaderboard = name => {
+    this.setState({
+      leaderFlag: true,
+      hackName: name
     });
   };
 
@@ -98,6 +107,15 @@ class SubmitHackathon extends Component {
     let foot = <Footer data={this.props.data} />;
     // console.log(this.props.location);
     let navbar = <Navbar4 data={this.props.data} />;
+
+    if (this.state.leaderFlag) {
+      this.props.history.push({
+        pathname: "/resultPage",
+        state: {
+          hackName: this.state.hackName
+        }
+      });
+    }
     let details = this.state.hackathons.map(org => {
       // const imgurl1 = require(`../uploads/${property.img}`);
       return (
@@ -120,6 +138,15 @@ class SubmitHackathon extends Component {
                     data-target="#myModal"
                   >
                     Submit Your Code
+                  </button>
+                  <button
+                    class="btn btn-warning btn-md"
+                    style={{ marginLeft: "20px" }}
+                    onClick={id => {
+                      this.submitLeaderboard(org.name);
+                    }}
+                  >
+                    View Leaderboard
                   </button>
                 </div>
                 <div class="modal fade" id="myModal" role="dialog">

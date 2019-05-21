@@ -8,28 +8,7 @@ class resultpage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      teams: [
-        {
-          Name: "Team 1",
-          participantName: ["Member 1", "Member 2", "Member 3", "Member 4"],
-          score: "Score comes here"
-        },
-        {
-          Name: "Team 2",
-          participantName: ["Member 1", "Member 2", "Member 3", "Member 4"],
-          score: "Score comes here"
-        },
-        {
-          Name: "Team 3",
-          participantName: ["Member 1", "Member 2", "Member 3", "Member 4"],
-          score: "Score comes here"
-        },
-        {
-          Name: "Team 4",
-          participantName: ["Member 1", "Member 2", "Member 3", "Member 4"],
-          score: "Score comes here"
-        }
-      ],
+      teams: [],
       authFlag: false,
       imageView: [],
       displayprop: []
@@ -51,32 +30,33 @@ class resultpage extends Component {
   };
 
   componentDidMount() {
-    let data = null;
-    if (this.props.location != undefined) {
-      data = this.props.location.state.hackName;
-    }
-    axios.get(`http://localhost:8080/teamreport/${data}`).then(response => {
-      console.log(
-        "The status code for teamreport get request is: ",
-        response.statusCodeValue
-      );
-      this.setState({
-        displayprop: response.data.body
+    const data = {
+      hackName: this.props.location.state.hackName
+    };
+
+    console.log("props: ", this.props.location.state.hackName);
+    axios
+      .get(`http://localhost:8080/teamreport/${data.hackName}`)
+      .then(response => {
+        console.log(
+          "The status code for teamreport get request is: ",
+          response.statusCodeValue
+        );
+        this.setState({
+          teams: response.data.body
+        });
       });
-    });
   }
+
   render() {
     let foot = <Footer data={this.props.data} />;
     console.log(this.props.location);
     let navbar = <Navbar4 data={this.props.data} />;
-
+    let members = null;
     let teamInfo = this.state.teams
       .map(team => {
-        let members = Object.keys(team).map(m => {
-          <div>
-            {m}
-            <br />
-          </div>;
+        members = team.team_members.map(m => {
+          return <div>{m}</div>;
         });
         return (
           <div class="displaypropinfo container-fluid">
@@ -84,28 +64,18 @@ class resultpage extends Component {
             <div class="col-sm-8">
               <div class="headline">
                 <h3 class="hit-headline">
-                  <div
-                    name="displayprop"
-                    style={{ marginRight: "5px" }}
-                    data-value={team.Name}
-                  >
-                    {team.Name}
+                  <div name="displayprop" style={{ marginRight: "5px" }}>
+                    Team Name: {team.team_name}
                   </div>
                   <br />
-                  <div
-                    name="displayprop"
-                    style={{ marginRight: "5px" }}
-                    data-value={team.participantName}
-                  >
-                    {members}
+                  <div name="displayprop" style={{ marginRight: "5px" }}>
+                    Team Memebers:
+                    <br />
+                    {members}{" "}
                   </div>
                   <br />
-                  <div
-                    name="displayprop"
-                    style={{ marginRight: "5px" }}
-                    data-value={team.score}
-                  >
-                    {team.score}
+                  <div name="displayprop" style={{ marginRight: "5px" }}>
+                    Score: {team.score}
                   </div>
                 </h3>
               </div>
@@ -117,11 +87,13 @@ class resultpage extends Component {
 
     let teamInfo1 = this.state.teams
       .map(team => {
-        let members = Object.keys(team).map(m => {
-          <div>
-            {m}
-            <br />
-          </div>;
+        let members = team.team_members.map(m => {
+          return (
+            <div>
+              {m}
+              <br />
+            </div>
+          );
         });
         return (
           <div class="displaypropinfo container-fluid">
@@ -129,19 +101,11 @@ class resultpage extends Component {
             <div class="col-sm-8">
               <div class="headline">
                 <h3 class="hit-headline">
-                  <div
-                    name="displayprop"
-                    style={{ marginRight: "5px" }}
-                    data-value={team.Name}
-                  >
-                    {team.Name}
+                  <div name="displayprop" style={{ marginRight: "5px" }}>
+                    {team.team_name}
                   </div>
                   <br />
-                  <div
-                    name="displayprop"
-                    style={{ marginRight: "5px" }}
-                    data-value={team.participantName}
-                  >
+                  <div name="displayprop" style={{ marginRight: "5px" }}>
                     {members}
                   </div>
                   <br />

@@ -116,7 +116,7 @@ public class TeamService {
             if(Arrays.asList(judges).contains(member2_screenname))
                 return ResponseEntity.badRequest().body(member2_screenname+" is a judge. A judge cannot be registerd fot the same hackathon");
 
-            user2 = userDao.findByScreenname(member4_screenname);
+            user2 = userDao.findByScreenname(member2_screenname);
             teamMember2 = new TeamMember();
 
             if(user2 != null ) {
@@ -140,7 +140,7 @@ public class TeamService {
             if(Arrays.asList(judges).contains(member3_screenname))
                 return ResponseEntity.badRequest().body(member3_screenname+" is a judge. A judge cannot be registerd fot the same hackathon");
 
-            user3 = userDao.findByScreenname(member4_screenname);
+            user3 = userDao.findByScreenname(member3_screenname);
             teamMember3 = new TeamMember();
 
             if(user3 != null) {
@@ -185,16 +185,35 @@ public class TeamService {
         teamMemberDao.createItem(teamMember1);
         new Thread(() -> {
             System.out.println("Sending email to "+user.getEmail());
+            emailActivationLink.sendPaymentLink(user.getEmail(),hackathon.getName(),user.getScreenName());
         }).start();
 
         if(teamMember2 != null){
             teamMemberDao.createItem(teamMember2);
+            String screenname = user2.getScreenName();
+            String email = user2.getEmail();
+            new Thread(() -> {
+                System.out.println("Sending email to "+user.getEmail());
+                emailActivationLink.sendPaymentLink(email,hackathon.getName(),screenname);
+            }).start();
         }
         if(teamMember3 != null){
             teamMemberDao.createItem(teamMember3);
+            String screenname = user3.getScreenName();
+            String email = user3.getEmail();
+            new Thread(() -> {
+                System.out.println("Sending email to "+user.getEmail());
+                emailActivationLink.sendPaymentLink(email,hackathon.getName(),screenname);
+            }).start();
         }
         if(teamMember4 != null){
             teamMemberDao.createItem(teamMember4);
+            String screenname = user4.getScreenName();
+            String email = user3.getEmail();
+            new Thread(() -> {
+                System.out.println("Sending email to "+user.getEmail());
+                emailActivationLink.sendPaymentLink(email,hackathon.getName(),screenname);
+            }).start();
         }
 
         Team updated_team = teamDao.findById(team.getTid());

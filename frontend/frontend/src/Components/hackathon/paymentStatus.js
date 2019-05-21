@@ -8,10 +8,7 @@ class PaymentStatus extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      teams: [
-        { Name: "Team 1", participantName: ["Member 1"] },
-        { Name: "Team 2", participantName: ["Member 1"] }
-      ],
+      teams: [],
       authFlag: false,
       imageView: [],
       displayprop: ""
@@ -31,25 +28,46 @@ class PaymentStatus extends Component {
     });
     console.log("Successful test - ", this.state.displayprop);
   };
+
   componentDidMount() {
-    // axios.get('http://localhost:3031/results')
-    //         .then((response) => {
-    //         //update the state with the response data
-    //         this.setState({
-    //             authFlag : true,
-    //             properties : this.state.properties,
-    //         });
-    //         console.log("Search :",this.state.properties)
-    //         console.log("No of results :",this.state.properties.length)
-    //     });
+    const data = {
+      hackName2: this.props.location.state.hackName2
+    };
+
+    console.log("props: ", this.props.location.state.hackName2);
+    axios
+      .get(`http://localhost:8080/payment/report/${data.hackName2}`)
+      .then(response => {
+        console.log(
+          "The status code for payment report get request is: ",
+          response.statusCodeValue
+        );
+        this.setState({
+          teams: response.data.body
+        });
+      });
   }
+
   render() {
     let foot = <Footer data={this.props.data} />;
     console.log(this.props.location);
     let navbar = <Navbar4 data={this.props.data} />;
-
-    let details = this.state.teams.map(team => {
-      // const imgurl1 = require(`../uploads/${property.img}`);
+    let members = null;
+    let teamInfo = this.state.teams.map(team => {
+      members = team.team_members.map(m => {
+        console.log("Mapping members", m);
+        return (
+          <div>
+            <br />
+            {m.member_name}:<br />
+            Payment Status: {m.p_status}
+            <br />
+            Amount: {m.amount}
+            <br />
+            Payment Date: {m.payment_date}
+          </div>
+        );
+      });
       return (
         <div class="displaypropinfo container-fluid">
           {/* <div class="col-sm-4"><img src={imgurl1} height="200px" width="430px"></img></div> */}
@@ -61,26 +79,20 @@ class PaymentStatus extends Component {
                   style={{ marginRight: "5px" }}
                   data-value={team.Name}
                 >
-                  {team.Name}
+                  {team.team_name}
                 </div>
                 <br />
-                <div
-                  name="displayprop"
-                  style={{ marginRight: "5px" }}
-                  data-value={team.participantName}
-                >
-                  {team.participantName}
+                <div name="displayprop" style={{ marginRight: "5px" }}>
+                  {members}
                   <br />
                 </div>
               </h3>
             </div>
           </div>
-          <div class="headline col-sm-2">Status</div>
-          <div class="headline col-sm-2">Amount</div>
-          <div class="headline col-sm-2">Time of Payment</div>
         </div>
       );
     });
+
     let redirectVar = null;
     if (this.state.displayprop != "") {
       this.props.history.push({
@@ -98,11 +110,8 @@ class PaymentStatus extends Component {
 
           <div class="main-div1" style={{ backgroundColor: "#F7F7F8" }}>
             {navbar}
-            <div style={{ textAlign: "center", fontSize: "30px" }}>
-              Payment Status
-            </div>
             {/*Display the Tbale row based on data recieved*/}
-            {details}
+            {teamInfo}
           </div>
           {foot}
         </div>
