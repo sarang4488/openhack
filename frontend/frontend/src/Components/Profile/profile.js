@@ -59,7 +59,7 @@ class Profile extends Component {
     };
     console.log("User Info:", localStorage.getItem("screenName"));
     axios
-      .get(`http://localhost:8080/user/${data.screenName}`)
+      .get(`http://18.217.156.108:8080/user/${data.screenName}`)
       .then(response => {
         console.log("Status Code : ", response);
         console.log("Status", response.data.body);
@@ -128,7 +128,7 @@ class Profile extends Component {
         //  console.log("User Data", this.state.UserData);
       });
 
-    axios.get(`http://localhost:8080/organization/names/`).then(response => {
+    axios.get(`http://18.217.156.108:8080/organization/names/`).then(response => {
       console.log(response);
       //update the state with the response data
       this.setState({
@@ -233,7 +233,7 @@ class Profile extends Component {
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/user/${data.screenName}/?purl=${
+        `http://18.217.156.108:8080/user/${data.screenName}/?purl=${
           this.state.purl
         }&title=${this.state.businessTitle}&street=${this.state.street}&city=${
           this.state.city
@@ -273,7 +273,7 @@ class Profile extends Component {
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/organization/${data.orgname}/join/${
+        `http://18.217.156.108:8080/organization/${data.orgname}/join/${
           data.screenName
         }`
       )
@@ -307,7 +307,7 @@ class Profile extends Component {
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/organization/${data.orgname}/leave/${
+        `http://18.217.156.108:8080/organization/${data.orgname}/leave/${
           data.screenName
         }`
       )

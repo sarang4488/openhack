@@ -53,7 +53,7 @@ class registerhackathon extends Component {
     });
 
     axios
-      .get(`http://localhost:8080/hackathon/${data.hackid}`)
+      .get(`http://18.217.156.108:8080/hackathon/${data.hackid}`)
       .then(response => {
         console.log(response);
         //update the state with the response data
@@ -74,7 +74,7 @@ class registerhackathon extends Component {
     console.log(this.state);
     axios
       .post(
-        `http://localhost:8080/hackathon/${
+        `http://18.217.156.108:8080/hackathon/${
           data.hackid
         }/register/?leader_screenname=${data.name}&leader_role=${
           this.state.leadRole

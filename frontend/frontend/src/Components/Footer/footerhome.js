@@ -29,14 +29,14 @@ class Footerhome extends Component {
                 >
                   Use of this website constitutes acceptance of the OpenHack.com{" "}
                   <a
-                    href="https://www.homeaway.com/info/about-us/legal/terms-conditions"
+                   href=""
                     style={{ color: "white" }}
                   >
                     Terms and Conditions
                   </a>{" "}
                   and{" "}
                   <a
-                    href="https://www.homeaway.com/info/about-us/legal/privacy-policy"
+                    href=""
                     style={{ color: "white" }}
                   >
                     Privacy Policy

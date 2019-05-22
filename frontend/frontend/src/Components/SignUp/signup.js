@@ -76,7 +76,7 @@ class SignUp extends Component {
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/signup/?name=${this.state.name}&email=${
+        `http://18.217.156.108:8080/signup/?name=${this.state.name}&email=${
           this.state.email
         }&password=${this.state.password}&screenname=${this.state.screenName}`
       )

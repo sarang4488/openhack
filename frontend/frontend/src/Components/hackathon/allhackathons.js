@@ -34,7 +34,7 @@ class ListAllHackathon extends Component {
       screenName: window.localStorage.getItem("screenName")
     };
     axios
-      .get(`http://localhost:8080/hackathon/viewall/${data.screenName}`)
+      .get(`http://18.217.156.108:8080/hackathon/viewall/${data.screenName}`)
       .then(response => {
         console.log(response);
         //update the state with the response data

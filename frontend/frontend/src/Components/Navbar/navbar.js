@@ -28,15 +28,7 @@ class Navbar extends Component {
   render() {
     console.log(this.props.email);
     let redirectVar = null;
-    if (this.state.authFlag) {
-      redirectVar = (
-        <Redirect
-          to={{
-            pathname: "/listyourproperty"
-          }}
-        />
-      );
-    }
+  
     let dropDown = (
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown">

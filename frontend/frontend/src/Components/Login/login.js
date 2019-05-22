@@ -95,14 +95,14 @@ class Login extends Component {
     if (this.state.authFlag) {
       console.log("test");
       //redirectVar= <Redirect to= "/home"/>
-      // this.props.history.push({
-      //   pathname: "/home",
-      //   state: {
-      //     displayprop: "log"
-      //   }
-      // });
+      this.props.history.push({
+        pathname: "/home",
+        state: {
+          displayprop: "log"
+        }
+      });
     } else {
-     // redirectVar = <Redirect to="/login" />;
+      redirectVar = <Redirect to="/login" />;
     }
     let errorMessage = null;
     if (this.state.error) {

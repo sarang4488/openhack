@@ -94,7 +94,7 @@ class ListHackathon extends Component {
     };
     console.log(data);
     axios
-      .get(`http://localhost:8080/user/names/?screenname=${data.screenName}`)
+      .get(`http://18.217.156.108:8080/user/names/?screenname=${data.screenName}`)
       .then(response => {
         console.log(response);
         //update the state with the response data
@@ -105,7 +105,7 @@ class ListHackathon extends Component {
         // console.log("No of results :", this.state.properties.length);
       });
 
-    axios.get(`http://localhost:8080/organization/names/`).then(response => {
+    axios.get(`http://18.217.156.108:8080/organization/names/`).then(response => {
       console.log(response);
       //update the state with the response data
       this.setState({
@@ -315,7 +315,7 @@ class ListHackathon extends Component {
       // make a post request with the user data
       axios
         .post(
-          `http://localhost:8080/hackathon/?name=${data.name}&description=${
+          `http://18.217.156.108:8080/hackathon/?name=${data.name}&description=${
             data.description
           }&start_date=${data.startDate}&end_date=${
             data.endDate

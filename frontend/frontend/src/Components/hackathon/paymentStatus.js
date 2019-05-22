@@ -36,7 +36,7 @@ class PaymentStatus extends Component {
 
     console.log("props: ", this.props.location.state.hackName2);
     axios
-      .get(`http://localhost:8080/payment/report/${data.hackName2}`)
+      .get(`http://18.217.156.108:8080/payment/report/${data.hackName2}`)
       .then(response => {
         console.log(
           "The status code for payment report get request is: ",

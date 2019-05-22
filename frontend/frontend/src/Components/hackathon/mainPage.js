@@ -37,7 +37,7 @@ class mainpage extends Component {
       owner: localStorage.getItem("screenName")
     };
     axios
-      .get(`http://localhost:8080/hackathon/names/${data.owner}`)
+      .get(`http://18.217.156.108:8080/hackathon/names/${data.owner}`)
       .then(response => {
         //update the state with the response data
         console.log(response);
@@ -58,7 +58,7 @@ class mainpage extends Component {
     axios.defaults.withCredentials = true;
     //make a post request with the user data
     axios
-      .post(`http://localhost:8080/hackathon/${data}/opened`)
+      .post(`http://18.217.156.108:8080/hackathon/${data}/opened`)
       .then(response => {
         console.log("Status Code : ", response);
 
@@ -79,7 +79,7 @@ class mainpage extends Component {
     axios.defaults.withCredentials = true;
     //make a post request with the user data
     axios
-      .post(`http://localhost:8080/hackathon/${data}/finalized`)
+      .post(`http://18.217.156.108:8080/hackathon/${data}/finalized`)
       .then(response => {
         console.log("Status Code : ", response);
         this.setState({
@@ -98,7 +98,7 @@ class mainpage extends Component {
     axios.defaults.withCredentials = true;
     //make a post request with the user data
     axios
-      .post(`http://localhost:8080/hackathon/${data}/closed`)
+      .post(`http://18.217.156.108:8080/hackathon/${data}/closed`)
       .then(response => {
         console.log("Status Code : ", response);
         this.setState({

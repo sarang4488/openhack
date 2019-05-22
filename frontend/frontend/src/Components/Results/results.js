@@ -9,7 +9,7 @@
 //   constructor(props) {
 //     super(props);
 //     this.state = {
-//       properties: [
+//       users: [
 //         { Name: "Sarang", requestsPending: 2 },
 //         { Name: "Darryl", requestsPending: 4 }
 //       ],

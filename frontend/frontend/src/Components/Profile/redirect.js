@@ -20,7 +20,7 @@ class RedirectPage extends Component {
     };
 
     axios
-      .get(`http://localhost:8080/activate?email=${data.email}`)
+      .get(`http://18.217.156.108:8080/activate?email=${data.email}`)
       .then(response => {
         console.log("Status Code : ", response.data.body.screenname);
         // console.log(response.data);

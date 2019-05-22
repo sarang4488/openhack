@@ -63,7 +63,7 @@ class SubmitHackathon extends Component {
       screenName: localStorage.getItem("screenName")
     };
     axios
-      .get(`http://localhost:8080/hackathon/registered/${data.screenName}`)
+      .get(`http://18.217.156.108:8080/hackathon/registered/${data.screenName}`)
       .then(response => {
         console.log(response);
         //update the state with the response data
@@ -86,7 +86,7 @@ class SubmitHackathon extends Component {
     console.log(data);
     axios
       .post(
-        `http://localhost:8080/hackathon/${data.id}/codesubmission/${
+        `http://18.217.156.108:8080/hackathon/${data.id}/codesubmission/${
           data.screenName
         }?code_url=${data.url}`
       )

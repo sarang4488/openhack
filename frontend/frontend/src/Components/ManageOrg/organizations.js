@@ -43,7 +43,7 @@ class Organizations extends Component {
       screenName: localStorage.getItem("screenName")
     };
     axios
-      .get(`http://localhost:8080/organization/owner/${data.screenName}`)
+      .get(`http://18.217.156.108:8080/organization/owner/${data.screenName}`)
       .then(response => {
         console.log(response);
         //update the state with the response data
@@ -72,7 +72,7 @@ class Organizations extends Component {
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/organization?name=${
+        `http://18.217.156.108:8080/organization?name=${
           this.state.name
         }&owner_name=${this.state.owner}&description=${this.state.description}`
       )

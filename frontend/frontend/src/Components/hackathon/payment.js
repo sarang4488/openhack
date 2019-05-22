@@ -65,7 +65,7 @@ const keys=values//Object.keys(values)
   console.log(data.hackid);
   axios
     .get(
-      `http://localhost:8080/payment/${data.screenName}/amount/${data.hackid}`
+      `http://18.217.156.108:8080/payment/${data.screenName}/amount/${data.hackid}`
     )
     .then(response => {
       console.log("AMT",response);
@@ -106,7 +106,7 @@ const keys=values//Object.keys(values)
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/payment/${this.state.screenname}/paid/${this.state.hid}`
+        `http://18.217.156.108:8080/payment/${this.state.screenname}/paid/${this.state.hid}`
       )
       .then(response => {
         console.log("Status Code : ", response);

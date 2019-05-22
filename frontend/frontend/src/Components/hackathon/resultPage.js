@@ -36,7 +36,7 @@ class resultpage extends Component {
 
     console.log("props: ", this.props.location.state.hackName);
     axios
-      .get(`http://localhost:8080/teamreport/${data.hackName}`)
+      .get(`http://18.217.156.108:8080/teamreport/${data.hackName}`)
       .then(response => {
         console.log(
           "The status code for teamreport get request is: ",

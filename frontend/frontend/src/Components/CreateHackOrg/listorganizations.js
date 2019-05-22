@@ -81,7 +81,7 @@ class listorganizations extends Component {
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/organization?name=${
+        `http://18.217.156.108:8080/organization?name=${
           this.state.name
         }&owner_name=${this.state.owner}&description=${this.state.description}`
       )

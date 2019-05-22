@@ -53,7 +53,7 @@ class Hackeval extends Component {
     // const data = {
     //   screenName: localStorage.getItem("screenName")
     // };
-    axios.get(`http://localhost:8080/team/${data.hackname}`).then(response => {
+    axios.get(`http://18.217.156.108:8080/team/${data.hackname}`).then(response => {
       console.log(response);
       //update the state with the response data
       this.setState({
@@ -74,7 +74,7 @@ class Hackeval extends Component {
     console.log(data);
     axios
       .post(
-        `http://localhost:8080/hackathon/${data.id}/score?score=${data.grade}`
+        `http://18.217.156.108:8080/hackathon/${data.id}/score?score=${data.grade}`
       )
       .then(response => {
         console.log(response);

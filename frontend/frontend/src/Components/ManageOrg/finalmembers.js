@@ -39,7 +39,7 @@ class FinalMembers extends Component {
     };
     axios
       .get(
-        `http://localhost:8080/organization/${
+        `http://18.217.156.108:8080/organization/${
           this.props.location.state.organization
         }?screenname=${data.screenName}`
       )
@@ -65,7 +65,7 @@ class FinalMembers extends Component {
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/organization/${
+        `http://18.217.156.108:8080/organization/${
           this.state.organization
         }/approve/${data}`
       )
@@ -96,7 +96,7 @@ class FinalMembers extends Component {
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/organization/${
+        `http://18.217.156.108:8080/organization/${
           this.state.organization
         }/leave/${data}`
       )

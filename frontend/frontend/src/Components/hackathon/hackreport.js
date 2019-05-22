@@ -29,7 +29,7 @@ class hackreport extends Component {
 
     console.log("props: ", this.props.location.state.hackName3);
     axios
-      .get(`http://localhost:8080/payment/expensereport/${data.hackName}`)
+      .get(`http://18.217.156.108:8080/payment/expensereport/${data.hackName}`)
       .then(response => {
         //update the state with the response data
         this.setState({

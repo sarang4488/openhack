@@ -147,7 +147,7 @@ class ListHackathon extends Component {
     //make a post request with the user data
     axios
       .post(
-        `http://localhost:8080/hackathon/?name=${data.name}&description=${
+        `http://18.217.156.108:8080/hackathon/?name=${data.name}&description=${
           data.description
         }&start_date=${data.startDate}&end_date=${
           data.endDate
