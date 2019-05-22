@@ -123,6 +123,13 @@ class mainpage extends Component {
     });
   };
 
+  submitEarningReport = name => {
+    this.setState({
+      earningFlag: true,
+      hackName3: name
+    });
+  };
+
   render() {
     let foot = <Footer data={this.props.data} />;
     console.log(this.props.location);
@@ -145,6 +152,15 @@ class mainpage extends Component {
           pathname: "/paymentStatus",
           state: {
             hackName2: this.state.hackName2
+          }
+        });
+      }
+
+      if (this.state.earningFlag) {
+        this.props.history.push({
+          pathname: "/hackreport",
+          state: {
+            hackName3: this.state.hackName3
           }
         });
       }
@@ -199,7 +215,7 @@ class mainpage extends Component {
               onClick={id => {
                 this.submitLeaderboard(hackathon.name);
               }}
-              style={{ float: "right" }}
+              style={{ float: "right", width: "180px" }}
               class="btn btn-primary"
             >
               View Leaderboard
@@ -210,10 +226,21 @@ class mainpage extends Component {
               onClick={id => {
                 this.submitPaymentReport(hackathon.name);
               }}
-              style={{ float: "right" }}
-              class="btn btn-primary"
+              style={{ float: "right", width: "180px", marginTop: "5px" }}
+              class="btn btn-warning"
             >
               Payment Report
+            </button>
+          </div>
+          <div class="col-sm-4">
+            <button
+              onClick={id => {
+                this.submitEarningReport(hackathon.name);
+              }}
+              style={{ float: "right", width: "180px", marginTop: "5px" }}
+              class="btn btn-success"
+            >
+              Hackathon Earning Report
             </button>
           </div>
         </div>
