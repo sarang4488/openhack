@@ -4,6 +4,7 @@ import com.openhack.Response.ExpenseReport;
 import com.openhack.Response.HackathonPaymentReportResponse;
 import com.openhack.Response.HackathonReportResponse;
 import com.openhack.Response.TeamMemberPaymentReport;
+import com.openhack.controller.EmailActivationLink;
 import com.openhack.dao.*;
 import com.openhack.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,15 +39,30 @@ public class PaymentService {
     @Autowired
     private OrganizationDao organizationDao;
 
+    @Autowired
+    private EmailActivationLink emailActivationLink;
+
     @Transactional
     public ResponseEntity<?> createPayment(String screenname,Long hid){
         User user = userDao.findByScreenname(screenname);
         Hackathon hackathon = hackathonDao.findItemById(Optional.ofNullable(hid).orElse(-1L));
 
-        System.out.println(user.getUid());
+        TeamMember teamMember = null;
+
+        List<Team> teams = teamDao.findTeamsByHackathon(hid);
+        for(Team team:teams){
+            List<TeamMember> teamMembers = team.getTeamMembers();
+            for (TeamMember tmp:
+                 teamMembers) {
+
+                User u = userDao.findById((long)tmp.getMember_id());
+                if(u.getScreenName().equals(screenname)){
+                    teamMember = tmp;
+                }
 
 
-        TeamMember teamMember = teamMemberDao.findItemByUid((int)user.getUid());
+            }
+        }
 
 
         System.out.println(teamMember == null);
@@ -65,8 +81,41 @@ public class PaymentService {
 
         paymentDao.createItem(payment);
 
+        String email = user.getEmail();
+        Long id = hid;
+        String hname = hackathon.getName();
+        new Thread(() -> {
+            System.out.println("Sending payment invoice to "+email);
+            emailActivationLink.sendPaymentInvoice(email,hname);
+        }).start();
+
         return ResponseEntity.ok().body("Payment Successfull");
 
+    }
+
+    public float getamount(String screenname,Long hid){
+        User user = userDao.findByScreenname(screenname);
+        Hackathon hackathon = hackathonDao.findItemById(Optional.ofNullable(hid).orElse(-1L));
+
+        float fee = hackathon.getFee();
+        int discount = hackathon.getDiscount();
+        float amount = fee;
+        if(user != null) {
+
+            String [] org_names = hackathon.getSponser().split("$");
+            for (String org_name:
+                    org_names) {
+
+                if(user.getOrganization() != null) {
+                    if (user.getOrganization().getName().equals(org_name) && user.getOrgStatus().equals("Approved") && discount != 0) {
+                        amount = (fee * discount) / 100;
+                    }
+                }
+            }
+
+        }
+
+        return amount;
     }
 
     @Transactional
@@ -137,7 +186,7 @@ public class PaymentService {
         int payment_count = 0;
         int not_pay_count = 0;
         float paid_total = 0;
-        float not_paid_total = 200;
+        float not_paid_total = 0;
 
         for (Team team:
              teams) {
@@ -146,8 +195,11 @@ public class PaymentService {
             for (TeamMember teamMember:
                  teamMembers) {
 
+                User user = userDao.findById((long)teamMember.getMember_id());
+
                 if(teamMember.getP_status().equals("None")){
                     not_pay_count++;
+                    not_paid_total += getamount(user.getScreenName(),hackathon.getHid());
                 }else{
                     payment_count ++;
                     paid_total += teamMember.getAmount();

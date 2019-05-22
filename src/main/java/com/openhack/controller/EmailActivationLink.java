@@ -61,11 +61,11 @@ public class EmailActivationLink {
         javaMailSender.send(message);
     }
 
-    public void sendPaymentInvoice(String email,float amount){
-        String html = "Amount : "+Float.toString(amount)+"received";
+    public void sendPaymentInvoice(String email,String hackname){
+        String html = "Payment received for hackathon : "+hackname;
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
-        message.setSubject("Activation for OpenHack");
+        message.setSubject("Payment invoice");
         message.setText(html);
 
         System.out.println(javaMailSender);
