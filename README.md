@@ -47,7 +47,9 @@ Now run command npm start. Your frontend will be up and running.
 Flow Instruction : 
 
 After registering, an email link will be sent and only after that will you be able to log in.
+
 After login, views the profile page from where you can navigate to different pages using the navbar buttons and the navbar dropdown.
+
 Manage Hackathon page allows an admin to open, close and finalize a hackathon.You can also view the leaderboard, payment report and hackathon earning report from this page.
+
 On registering for a hackathon, the particular team member will receive the payment link and they are redirected to the code submission page.They will only be able to submit the code if all of them have paid the fee.
-The rest of the flow is pretty much easy to understand and are basic.
