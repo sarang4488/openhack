@@ -6,7 +6,7 @@ public class ResponseHeader {
 
     public HttpHeaders getHeader(){
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "http://localhost:3000");
+        responseHeaders.set("Access-Control-Allow-Origin", "http://18.222.29.3:3000");
         responseHeaders.set("Access-Control-Allow-Credentials", "true");
         responseHeaders.set(
                 "Access-Control-Allow-Methods",
