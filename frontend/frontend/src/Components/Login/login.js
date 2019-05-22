@@ -62,7 +62,7 @@ class Login extends Component {
     //make a post request with the user data
     axios
       .get(
-        `http://localhost:8080/login/?email=${this.state.email}&password=${
+        `http://18.217.156.108:8080/login/?email=${this.state.email}&password=${
           this.state.password
         }`
       )
