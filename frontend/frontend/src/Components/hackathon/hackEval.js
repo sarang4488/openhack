@@ -12,10 +12,7 @@ class Hackeval extends Component {
         { Name: "Sarang", requestsPending: 2 },
         { Name: "Darryl", requestsPending: 4 }
       ],
-      hackathons: [
-        { name: "Hack1", requestsPending: 2 },
-        { name: "Hack2", requestsPending: 4 }
-      ],
+      hackathons: [],
       authFlag: false,
       messageFlag: false,
       imageView: [],
@@ -107,7 +104,7 @@ class Hackeval extends Component {
               <h3 class="hit-headline">
                 <div>
                   Team id: {org.id}
-                  <br></br>
+                  <br />
                   Submitted URL: {org.submission_url}
                   <button
                     class="btn btn-primary btn-md"
@@ -204,7 +201,9 @@ class Hackeval extends Component {
               <h4 style={{ marginLeft: "30%" }}>
                 You can Grade teams for the hackathon if you are judge here
               </h4>
-              <p style={{ fontSize: "18px" }}>{this.state.message}</p>
+              <p style={{ fontSize: "18px", color: "red" }}>
+                {this.state.message}
+              </p>
             </div>
             {/*Display the Tbale row based on data recieved*/}
             {details}

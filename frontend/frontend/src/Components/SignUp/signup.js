@@ -150,7 +150,7 @@ class SignUp extends Component {
                       type="text"
                       class="form-control"
                       name="name"
-                      placeholder="First Name"
+                      placeholder="Full Name"
                       style={{
                         width: "48%",
                         display: "inline-block",
@@ -164,7 +164,7 @@ class SignUp extends Component {
                       type="text"
                       class="form-control"
                       name="screenName"
-                      placeholder="Last Name"
+                      placeholder="Screen Name"
                       style={{ width: "48%", display: "inline-block" }}
                     />
                     <input

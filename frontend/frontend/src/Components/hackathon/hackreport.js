@@ -8,11 +8,12 @@ class hackreport extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      teams: [{ paidfee: 700,unpaidfee:100,sponsors:"2"}],
+      teams: {},
       authFlag: false,
       imageView: [],
-      profit:"",
-      displayprop: ""
+      profit: "",
+      displayprop: "",
+      hackName: ""
     };
   }
 
@@ -22,94 +23,75 @@ class hackreport extends Component {
     });
   }
   componentDidMount() {
-    // axios.get('http://localhost:3031/results')
-    //         .then((response) => {
-    //         //update the state with the response data
-    //         this.setState({
-    //             authFlag : true,
-    //             properties : this.state.properties,
-    //         });
-    //         console.log("Search :",this.state.properties)
-    //         console.log("No of results :",this.state.properties.length)
-    //     });
+    const data = {
+      hackName: this.props.location.state.hackName3
+    };
+
+    console.log("props: ", this.props.location.state.hackName3);
+    axios
+      .get(`http://localhost:8080/payment/expensereport/${data.hackName}`)
+      .then(response => {
+        //update the state with the response data
+        this.setState({
+          authFlag: true,
+          teams: response.data.body
+        });
+        console.log("Search :", this.state.teams);
+      });
   }
   render() {
     let foot = <Footer data={this.props.data} />;
     console.log(this.props.location);
     let navbar = <Navbar4 data={this.props.data} />;
-    
-    let details = this.state.teams.map(team => {
-      // const imgurl1 = require(`../uploads/${property.img}`);
-      return (
-        <div class="displaypropinfo container-fluid">
-       
-          {/* <div class="col-sm-4"><img src={imgurl1} height="200px" width="430px"></img></div> */}
-          <div class="headline col-sm-3" style={{textAlign:"center"}}>
-          Total Paid Registration Fees
-          
-            <div class="headline">
-              <h3 class="hit-headline">
-                
-                  <div
-                    name="displayprop"
-                    style={{marginRight:"5px"}}
-                  >
-                    {team.paidfee}
-                    </div>
-                   
-              </h3>
-            </div>  
-          </div>
-          <div class="headline col-sm-3" style={{textAlign:"center"}}>
-          Total Unpaid Registration Fees
-          <div class="headline">
-              <h3 class="hit-headline">
-                
-                  <div
-                    name="displayprop"
-                    style={{marginRight:"5px"}}
-                  >
-                    {team.unpaidfee}
-                    </div>
-                   
-              </h3>
-            </div> 
-         
-          </div>
-          <div class="headline col-sm-3" style={{textAlign:"center"}}>
-           Sponsor Revenue
 
-             <div class="headline">
-              <h3 class="hit-headline">
-                
-                  <div
-                    name="displayprop"
-                    style={{marginRight:"5px"}}
-                  >
-                    {team.sponsors*1000}
-                    </div>
-                   
-              </h3>
-            </div> 
-          </div>
-          <div class="headline col-sm-3" style={{textAlign:"center"}}>
-           PROFIT
-           <div class="headline">
-              <h3 class="hit-headline">
-                
-                  <div
-                    name="displayprop"
-                    style={{marginRight:"5px"}}
-                  >
-                    {team.paidfee + team.sponsors*1000}
-                    </div>
-                   
-              </h3>
-            </div>
+    let details = (
+      // const imgurl1 = require(`../uploads/${property.img}`);
+      <div class="displaypropinfo container-fluid">
+        {/* <div class="col-sm-4"><img src={imgurl1} height="200px" width="430px"></img></div> */}
+        <div class="headline col-sm-3" style={{ textAlign: "center" }}>
+          Total Paid Registration Fees
+          <div class="headline">
+            <h3 class="hit-headline">
+              <div name="displayprop" style={{ marginRight: "5px" }}>
+                {this.state.teams.paid_total}
+              </div>
+            </h3>
           </div>
         </div>
-      );
-    });
+        <div class="headline col-sm-3" style={{ textAlign: "center" }}>
+          Total Unpaid Registration Fees
+          <div class="headline">
+            <h3 class="hit-headline">
+              <div name="displayprop" style={{ marginRight: "5px" }}>
+                {this.state.teams.not_paid_total}
+              </div>
+            </h3>
+          </div>
+        </div>
+        <div class="headline col-sm-3" style={{ textAlign: "center" }}>
+          Sponsor Revenue
+          <div class="headline">
+            <h3 class="hit-headline">
+              <div name="displayprop" style={{ marginRight: "5px" }}>
+                {this.state.teams.number_of_sponsers * 1000}
+              </div>
+            </h3>
+          </div>
+        </div>
+        <div class="headline col-sm-3" style={{ textAlign: "center" }}>
+          PROFIT
+          <div class="headline">
+            <h3 class="hit-headline">
+              <div name="displayprop" style={{ marginRight: "5px" }}>
+                {this.state.teams.paid_total +
+                  this.state.teams.number_of_sponsers * 1000}
+              </div>
+            </h3>
+          </div>
+        </div>
+      </div>
+    );
+
     let redirectVar = null;
 
     if (this.state.properties !== "") {
@@ -119,7 +101,9 @@ class hackreport extends Component {
 
           <div class="main-div1" style={{ backgroundColor: "#F7F7F8" }}>
             {navbar}
-           <div style={{textAlign:"center",fontSize:"30px"}}>Hackathon Earning Report</div>
+            <div style={{ textAlign: "center", fontSize: "30px" }}>
+              Hackathon Earning Report
+            </div>
             {/*Display the Tbale row based on data recieved*/}
             {details}
           </div>
