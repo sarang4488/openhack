@@ -325,4 +325,32 @@ public class TeamService {
         return ResponseEntity.ok().body(sortedTeam);
     }
 
+    @Transactional
+    public ResponseEntity<?> emailTeamMembers(long hid){
+        Hackathon hackathon = hackathonDao.findItemById(hid);
+        List<Team> allTeams = teamDao.findTeams();
+
+
+        if(allTeams != null){
+            for (Team team:
+                    allTeams) {
+
+                List<TeamMember> teamMembers = team.getTeamMembers();
+                for(TeamMember teamMember : teamMembers){
+                    User user = userDao.findById((long)teamMember.getMember_id());
+
+                    new Thread(() -> {
+                        System.out.println("Sending email to "+user.getEmail());
+                        emailActivationLink.sendHackFinalNotification(user.getEmail(), hackathon.getName());
+                    }).start();
+
+                }
+
+            }
+        }
+
+        return ResponseEntity.ok().body("Email sent");
+
+    }
+
 }

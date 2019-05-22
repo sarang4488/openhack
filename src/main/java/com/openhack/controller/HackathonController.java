@@ -119,6 +119,11 @@ public class HackathonController {
     @RequestMapping(value = "hackathon/{hid}/finalized")
     public ResponseEntity<?> finalizeHackathon(@PathVariable Long hid){
         ResponseEntity responseEntity = hackathonService.updateHackathonStatus(hid,"final");
+
+        if(responseEntity.getStatusCode() == HttpStatus.OK){
+            ResponseEntity responseEntity1 = teamService.emailTeamMembers(hid);
+        }
+
         return new ResponseEntity<>(responseEntity, responseHeader.getHeader(), HttpStatus.CREATED);
     }
 

@@ -26,6 +26,20 @@ public class EmailActivationLink {
         javaMailSender.send(message);
     }
 
+    public void sendHackFinalNotification(String email,String hackname){
+
+        String html = hackname+" is over. Login to view results at http://localhost:3000/ ";
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject(hackname+" completion");
+        message.setText(html);
+
+        System.out.println(javaMailSender);
+
+        javaMailSender.send(message);
+    }
+
     public void sendActivationLinkTeamMember(String email,String name){
         String html = "Registration link for hackathon : "+name+" http://";
         SimpleMailMessage message = new SimpleMailMessage();
