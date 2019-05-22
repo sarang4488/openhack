@@ -8,6 +8,7 @@ Sarang Grover (013726102) <sarang.grover@sjsu.edu>
 Shabari Girish Ganapathy (013006877) <shabari.girish.ganapathy@sjsu.edu>
 
 GitHub Url: https://github.com/shabari8695/cmpe275project
+Url of deployed application: http://18.222.29.3:3000
 
 
 OpenHack: A distributed enterprise application is basically a hackathon management service designed specifically to 
